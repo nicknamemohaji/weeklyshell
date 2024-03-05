@@ -17,7 +17,11 @@ jobs:
         run: |
           sudo apt update
           sudo apt install build-essential -y
+          echo checking files: $(find . -name \*.c);
           for f in $(find . -name \*.c); do gcc -Wall -Wextra -Werror -fsyntax-only $f; done
           
       - name: check for 42 norminette requirements 
-        run: norminette .
+        run: |
+          echo checking files: $(find .);
+          norminette .
+          echo $(git ls-files)
