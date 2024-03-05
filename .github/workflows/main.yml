@@ -12,16 +12,19 @@ jobs:
           sudo apt install python3 -y
           python3 -m pip install --upgrade pip setuptools
           python3 -m pip install --upgrade norminette
+          
+      - name: check for 42 norminette requirements 
+        run: |
+          echo $(git ls-files)
+          echo checking files: $(find .);
+          norminette .
       
+  check_compile_error:
+    runs-on: ubuntu-latest
+    steps:
       - name: check for compilation errors
         run: |
           sudo apt update
           sudo apt install build-essential -y
           echo checking files: $(find . -name \*.c);
           for f in $(find . -name \*.c); do gcc -Wall -Wextra -Werror -fsyntax-only $f; done
-          
-      - name: check for 42 norminette requirements 
-        run: |
-          echo checking files: $(find .);
-          norminette .
-          echo $(git ls-files)
