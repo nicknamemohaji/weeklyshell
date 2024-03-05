@@ -9,7 +9,7 @@ jobs:
       - name: install 42 norminette
         run: |
           sudo apt update
-          sudp apt install python3 -y
+          sudo apt install python3 -y
           python3 -m pip install --upgrade pip setuptools
           python3 -m pip install --upgrade norminette
       
