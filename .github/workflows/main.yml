@@ -2,9 +2,17 @@ on:
   pull_request:
     branches:
     - main
-  push:
 jobs:
   check_42_norm:
     runs-on: kyungjle-hosted
     steps:
-      - run: norminette .
+      - name: install 42 norminette
+        run: |
+          python3 -m pip install --upgrade pip setuptools
+          python3 -m pip install --upgrade norminette
+      
+      - name: check for compilation errors
+        run: for f in $(find . -name \*.c); do gcc -Wall -Wextra -Werror -fsyntax-only $f; done
+          
+      - name: check for 42 norminette requirements 
+        run: norminette .
