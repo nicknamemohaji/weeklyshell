@@ -4,15 +4,20 @@ on:
     - main
 jobs:
   check_42_norm:
-    runs-on: kyungjle-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: install 42 norminette
         run: |
+          sudo apt update
+          sudp apt install python3 -y
           python3 -m pip install --upgrade pip setuptools
           python3 -m pip install --upgrade norminette
       
       - name: check for compilation errors
-        run: for f in $(find . -name \*.c); do gcc -Wall -Wextra -Werror -fsyntax-only $f; done
+        run: |
+          sudo apt update
+          sudo apt install build-essentials -y
+          for f in $(find . -name \*.c); do gcc -Wall -Wextra -Werror -fsyntax-only $f; done
           
       - name: check for 42 norminette requirements 
         run: norminette .
