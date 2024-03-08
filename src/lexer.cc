@@ -16,7 +16,7 @@ static token get_next_token(lexer *plexer)
 
 	skip_whitespace(plexer);
 	t.type = get_token_type(plexer);
-	if (LPAR <= t.type && t.type <= WCARD) // single char
+	if (LPAR <= t.type && t.type <= RDICT_WRITE) // single char
 	{
 		t.field.push_back(plexer->input[plexer->cur_ptr]);
 		plexer->cur_ptr++;

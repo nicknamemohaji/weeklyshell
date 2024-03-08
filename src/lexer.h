@@ -11,7 +11,6 @@ enum token_type
 	PIPE,
 	RDICT_READ,
 	RDICT_WRITE,
-	WCARD,
 	OPRT_AND,
 	OPRT_OR,
 	RDICT_HEREDOC,

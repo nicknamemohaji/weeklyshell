@@ -6,8 +6,6 @@ static int get_token_type2(lexer *plexer, const char *pc)
 {
 	if (*pc == '&' && *(pc + 1) == '&')
 		return (OPRT_AND);
-	else if (*pc == '*')
-		return (WCARD);
 	else if (strncmp(pc, "echo", 4) == 0 && isspace(*(pc + 4)))
 		return (KEY_ECHO);
 	else if (strncmp(pc, "env", 3) == 0 && isspace(*(pc + 3)))
