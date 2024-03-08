@@ -3,9 +3,7 @@
 
 int is_letter(const char c)
 {
-	if (('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z') || c == '*' || c == '$' || c == '_' || c == '\'' || c == '\"')
-		return (1);
-	return (0);
+	return (!isspace(c) && c != '&' && c != '|' && c != ';' && c != '<' && c != '>' && c != '(' && c != ')');
 }
 
 int get_ident(lexer *plexer, token *ptoken)
