@@ -7,6 +7,8 @@
 void sighandler(int sig, siginfo_t *info, void *ucontext);
 void sighandler_setup(void);
 
+struct sigaction oldact;
+
 int main(void)
 {
     printf("pid: %d\n", getpid());
@@ -20,6 +22,10 @@ int main(void)
         printf("waiting for signal\n");
         pause();
     }
+    printf("restoring signal handlers\n");
+    sigaction(SIGINT, &oldact, NULL);
+    sigaction(SIGQUIT, &oldact, NULL);
+    while (1) ;
 	return 0;
 }
 
@@ -38,12 +44,11 @@ void sighandler_setup(void)
 	action.sa_mask = mask;
 
     // register signals
-	if (
-        sigaction(SIGINT, &action, NULL) != 0       // ctrl + c
-		|| sigaction(SIGTSTP, &action, NULL) != 0   // ctrl + z
-		|| sigaction(SIGQUIT, &action, NULL) != 0   // ctrl + '\'
-    )
+	if (sigaction(SIGINT, &action, &oldact) != 0)    // ctrl + c
 		exit(1);
+    action.sa_handler = SIG_IGN;
+    if (sigaction(SIGQUIT, &action, NULL) != 0)   // ctrl + '\'
+        exit(1);
 }
 
 void sighandler(int sig, siginfo_t *info, void *ucontext)
