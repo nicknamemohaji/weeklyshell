@@ -14,7 +14,6 @@ static token get_next_token(lexer *plexer)
 {
 	token t;
 
-	skip_whitespace(plexer);
 	t.type = get_token_type(plexer);
 	if (LPAR <= t.type && t.type <= RDICT_WRITE) // single char
 	{
@@ -50,8 +49,12 @@ std::vector<token> tokenize(const char *cstr)
 	plexer->input_size = strlen(cstr);
 	plexer->cur_ptr = 0;
 	plexer->next_ptr = 1;
+	skip_whitespace(plexer);
 	while (plexer->cur_ptr < plexer->input_size)
+	{
 		token_stream.push_back(get_next_token(plexer));
+		skip_whitespace(plexer);
+	}
 	delete (plexer);
 	return token_stream;
 }
