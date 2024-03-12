@@ -17,15 +17,15 @@ HEADER_DIR = includes/
 INCLUDES = -I $(HEADER_DIR) -I $(LIBFT_DIR)
 LIBRARIES = -lft -lreadline -L.
 
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address $(INCLUDES) $(LIBRARIES)
-CC = gcc
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CC = cc
 
 $(NAME): libft.a $(OBJECTS)
-	$(CC) $(CFLAGS) $^ -o $(NAME)
+	$(CC) $(CFLAGS) $^ -o $(NAME) $(INCLUDES) $(LIBRARIES)
 	echo $(NAME) Compiled!
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $*.o $(INCLUDES) $(LIBRARIES)
+	$(CC) -c $< -o $*.o $(CFLAGS) $(INCLUDES)
 	
 libft.a:
 	@$(MAKE) -C $(LIBFT_DIR) all -j8
