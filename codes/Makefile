@@ -5,16 +5,20 @@ INPUT_FILES = 	input/input_readline.c \
 				input/input_sighandler.c \
 				input/input_validator.c
 PARSER_FILES = 
-LOADER_FILES = 
+LOADER_FILES = 	loader/ldexec_findexec.c
+UTIL_FILES = 	utils/do_exit.c \
+				utils/free_ft_split.c \
+				utils/ld_chdir.c
 FILES = main.c \
 		$(INPUT_FILES) \
 		$(PARSER_FILES) \
-		$(LOADER_FILES)
+		$(LOADER_FILES) \
+		$(UTIL_FILES)
 OBJECTS = $(FILES:.c=.o)
 LIBFT_DIR = libft/
 
 HEADER_DIR = includes/
-INCLUDES = -I $(HEADER_DIR) -I $(LIBFT_DIR)
+INCLUDES = -I $(HEADER_DIR) -I $(LIBFT_DIR)headers/
 LIBRARIES = -lft -lreadline -L.
 
 CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address

@@ -1,41 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/12 22:17:43 by kyungjle          #+#    #+#             */
+/*   Created: 2024/03/13 19:54:44 by nicknamemoh       #+#    #+#             */
 /*   Updated: 2024/03/13 21:10:22 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef UTILS_H
+# define UTILS_H
 
-int	main(int argc, char *argv[], char *envp[])
-{
-	// t_ld_map_env	env;
-	char			*input;
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <errno.h>
 
-	(void)argc;
-	(void)argv;
-	(void)envp;
-	// env = ldpre_env_load(envp);
-	while (1)
-	{
-		input = input_readline_f();
-		if (input == NULL)
-			break ;
-		if (input_validate(input) == TRUE)
-		{
-			// loader_wrapper(input, env);
-			printf("input: %s\n", input);
-		}
-		else
-			printf(TERM_COLOR_RED "Syntax Error" TERM_COLOR_END "\n");
-		free(input);
-	}
-	free(input);
-	rl_clear_history();
-	return (0);
-}
+# include "libft.h"
+# include "types.h"
+
+// free_ft_split.c
+void	free_ft_split(char **ptr);
+
+// ld_chdir.c
+t_bool	ld_chdir(char *path);
+
+// do_exit.c
+void	do_exit(char *errorstr);
+
+#endif

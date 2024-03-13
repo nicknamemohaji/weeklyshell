@@ -1,41 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free_ft_split.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/12 22:17:43 by kyungjle          #+#    #+#             */
+/*   Created: 2024/03/13 19:53:33 by nicknamemoh       #+#    #+#             */
 /*   Updated: 2024/03/13 21:10:22 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "utils.h"
 
-int	main(int argc, char *argv[], char *envp[])
+void	free_ft_split(char **ptr);
+
+/*
+void	free_ft_split(char **ptr)
+:param ptr: result of ft_split function to be freed
+*/
+void	free_ft_split(char **ptr)
 {
-	// t_ld_map_env	env;
-	char			*input;
+	char	**ptr_ptr;
 
-	(void)argc;
-	(void)argv;
-	(void)envp;
-	// env = ldpre_env_load(envp);
-	while (1)
-	{
-		input = input_readline_f();
-		if (input == NULL)
-			break ;
-		if (input_validate(input) == TRUE)
-		{
-			// loader_wrapper(input, env);
-			printf("input: %s\n", input);
-		}
-		else
-			printf(TERM_COLOR_RED "Syntax Error" TERM_COLOR_END "\n");
-		free(input);
-	}
-	free(input);
-	rl_clear_history();
-	return (0);
+	ptr_ptr = ptr;
+	while (*ptr != NULL)
+		free(*(ptr++));
+	free(*ptr);
+	free(ptr_ptr);
 }
