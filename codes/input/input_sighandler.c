@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_sighandler.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:19:05 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/03/12 22:19:06 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/03/14 02:43:00 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	input_sighandler_setup(struct sigaction oldacts[2])
 		perror("error while registering sighandler");
 		exit(EXIT_FAILURE);
 	}
+	g_sigint = FALSE;
 }
 
 /*
@@ -62,6 +63,7 @@ void	input_sighandler_restore(struct sigaction oldacts[2])
 {
 	sigaction(SIGINT, &oldacts[OLDACT_SIGINT], NULL);
 	sigaction(SIGQUIT, &oldacts[OLDACT_SIGQUIT], NULL);
+	g_sigint = FALSE;
 }
 
 /*
@@ -80,6 +82,7 @@ void	input_sighandler(int sig, siginfo_t *info, void *ucontext)
 	(void) ucontext;
 	(void) info;
 	(void) sig;
+	g_sigint = TRUE;
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);

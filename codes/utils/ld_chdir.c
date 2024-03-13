@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 20:13:08 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/13 21:10:22 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/14 01:45:23 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,7 @@ static t_bool	check_access(char *path)
 	errno = 0;
 	if (access(path, F_OK | X_OK) != 0)
 	{
-		if (errno == ENOENT)
-			printf("ld_chdir: %s: no such file\n", path);
-		else if (errno == ENOTDIR)
-			printf("ld_chdir: %s: not a directory\n", path);
-		else if (errno == EACCES)
-			printf("ld_chdir: %s: permission denied\n", path);
-		else
-			do_exit("ld_chdir.check_access.access");
+		ld_errno_file("ld_chdir.check_access.access", path);
 		return (FALSE);
 	}
 	else

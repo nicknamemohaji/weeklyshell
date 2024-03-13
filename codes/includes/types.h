@@ -6,12 +6,15 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:18:03 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/03/13 16:43:39 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/14 02:42:55 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TYPES_H
 # define TYPES_H
+
+# define STDIN_FD 0
+# define STDOUT_FD 1
 
 typedef enum e_bool
 {
@@ -19,16 +22,31 @@ typedef enum e_bool
 	FALSE = 0
 }	t_bool;
 
+// import sig_atomic_t type
+# include <signal.h>
+volatile sig_atomic_t g_sigint = FALSE;
+
 typedef enum e_exitcode
 {
 	SUCCESS = 0
 }	t_exitcode;
 
-typedef struct s_node
+// import flags for O_TRUNC, O_APPEND
+# include <fcntl.h>
+typedef enum e_filemode
 {
-	struct s_node	*next;
-	void			*data;
-}	t_node;
+	OUT_TRUNC = O_TRUNC,
+	OUT_APPEND = O_APPEND,
+	IN_OPEN = -1,
+	IN_HEREDOC = -2
+}	t_filemode;
+
+typedef struct s_ld_redir_node
+{
+	struct s_ld_redir_node	*next;
+	char					*filename;
+	t_filemode				mode;
+}	t_ld_redir_node;
 
 /*
 pipes are created and closed in loader/preprocessor module.
@@ -45,11 +63,6 @@ typedef struct s_ld_array_pipe
 
 /*
 redirections can occur multiple times, so store them in linked list.
-node's content will be:
-{
-	t_node *next;
-	char *data;		// this will contain path
-}
 
 - if any of the file creation or open fails, execution stops
 - redirections will be handled in FIFO manner,
@@ -59,9 +72,18 @@ redirection should happen after heredoc is created.
 */
 typedef struct s_ld_array_redir
 {
-	t_node	*stdin;
-	t_node	*stdout;
+	t_ld_redir_node	*stdin;
+	t_ld_redir_node	*stdout;
 }	t_ld_array_redir;
+
+typedef struct s_ld_struct_exec
+{
+	t_ld_array_redir	redir;
+	t_ld_array_pipe		pipe;
+	char				*path;
+	char				**argv;
+	char				**envp;
+}	t_ld_struct_exec;
 
 /*
 environment variables are stored as map structure
