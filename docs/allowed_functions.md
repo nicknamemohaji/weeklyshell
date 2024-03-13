@@ -5,14 +5,35 @@
 ## readline 관련
 
 - `char *readline(const char *prompt)`
+    - param `prompt`: 사용자에게 출력하는 내용
+    - return: 개행이 있었을 때, 사용자가 입력한 버퍼(`rl_line_buffer`)를 리턴함
+    - 라이브러리 사용의 시작
+        - interactive terminal의 기본이 되는 readline 함수
 - `int rl_on_new_line(void)`
-- `void rl_redisplay(void)`
+    - 라이브러리에 프로그램이 출력했음을 알림
+        - 프롬포트 / 사용자 입력과 관련없는 출력
+        - 내부적으로 마커를 수정하는 듯
+    - 시그널 핸들러에서 사용
+        - SIGINT 발생시 이전 입력을 놔두고 다음 프롬프트를 출력할 때 사용
 - `void rl_replace_line (const char *text, int clear_undo)`
+    - param `text`: 버퍼의 내용을 `text`로 바꿈
+    - param `clear_undo`: undo 히스토리를 수정할 지 결정하는 플래그(minishell에서는 사용하지 않음)
+    - 시그널 핸들러에서 사용
+        - SIGINT 발생시 사용자가 입력했던 내용을 지우는 용도로 사용
+        - (setjmp/longjmp 사용이 불가능하므로 핸들러에서 버퍼를 비워야 함)
+- `void rl_redisplay(void)`
+    - 버퍼의 내용을 바꾼 이후 상황을 적용
+    - 시그널 핸들러에서 사용
+        - `rl_replace_line`을 통해 버퍼를 바꾼 이후 바뀐 프롬포트 적용
 
 ## history 관련
 
 - `void add_history(const char *string)`
+    - interactive terminal에서 사용하는 히스토리
+    - `add_history`를 통해 등록하면 위아래 커서를 통해 이전에 입력한 값들을 재사용 가능
 - `void rl_clear_history(void)`
+    - readline 라이브러리가 가지고 있는 히스토리 자료들을 해제함
+    - 릭을 줄이기 위해 사용... 효과가 있는지는 모르겠음 😶 (사실 readline에서 발생하는 릭은 신경 안써도 되기는 🤐)
 
 ---
 
@@ -144,7 +165,13 @@ struct stat {
 
 # 시그널
 
-signal, sigaction, sigemptyset, sigaddset, kill
+> `<signal.h>`
+
+- ~~signal~~
+- sigaction
+- sigemptyset
+- sigaddset
+- ~~kill~~
 
 ---
 
@@ -158,11 +185,24 @@ isatty, ttyname, ttyslot
 
 - `int ioctl(int fd, unsigned long request, ...)`
 
+## termios
+
+> `<termios.h>`
+
+- tcsetattr
+- tcgetattr
+- ~~tgetent~~
+- ~~tgetflag~~
+- ~~tgetnum~~
+- ~~tgetstr~~
+- ~~tgoto~~
+- ~~tputs~~
+
 ---
 
 # 기타
 
-exit, getenv, tcsetattr, tcgetattr, tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
+exit, getenv
 
 ## 동적할당
 
