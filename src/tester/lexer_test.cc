@@ -1,7 +1,7 @@
-
+// g++ -g ../lexer_test.cc ../get_token_type.cc ../get_token.cc ../lexer.cc -o lexer_tester
 #include <iostream>
 #include <array>
-#include "lexer.h"
+#include "../lexer.h"
 
 std::array<std::string, 21> token_type =
 	{
