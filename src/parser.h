@@ -1,5 +1,4 @@
 
-#include <string>
 #include <vector>
 #include "lexer.h"
 
@@ -9,7 +8,6 @@ enum precedence
 	LOWEST,
 	PIPE_AND_RDICT,
 	LOGIC,
-	PAREN,
 	PREFIX
 };
 
@@ -22,29 +20,36 @@ int get_precedence(int token_type);
 
 enum node_type
 {
-	COMMAND,
+	NODE_ERROR,
+	NODE_WORD,
+	NODE_COMMAND,
+	NODE_FILE,
+	EXP_SUBSHELL,
 	EXP_IN_PIPE,
-	EXP_IN_RREAD,
-	EXP_IN_RHEREDOC,
-	EXP_IN_RWRITE,
-	EXP_IN_RAPPEND,
 	EXP_IN_AND,
 	EXP_IN_OR,
+	EXP_IN_RWRITE,
+	EXP_IN_RAPPEND,
 	EXP_PRE_RREAD,
-	EXP_PRE_RHEREDOC
+	EXP_PRE_RHEREDOC,
+	EXP_PRE_RWRITE,
+	EXP_PRE_RAPPEND
 };
+
+int get_prefix_node_type(int token_type);
+int get_infix_node_type(int token_type);
 
 typedef struct ast_node
 {
 	token *pt;
-	std::vector<std::string> cmd; // supposed to be char **
+	std::vector<std::string> *pcmd; // supposed to be char **
 	int node_type;
 	ast_node *left; // 둘 다 nullptr이면 leaf
 	ast_node *right;
 } ast_node;
 
 ast_node *new_ast_node();
-void delete_ast_node();
+void delete_ast_node(ast_node *self);
 
 typedef struct parser
 {
@@ -56,13 +61,15 @@ typedef struct parser
 
 parser *new_parser(std::vector<token> *ptstream);
 void delete_parser(parser *self);
+void move_next_token(parser *self);
 
-void move_next(parser *self);
-
+ast_node *parse(std::vector<token> *ptoken_stream);
 ast_node *parse_expression(parser *self, int precede);
-ast_node *parse_parenthesis(parser *self, int precede);
-
-ast_node *parse_prefix(parser *self, int precede);
-ast_node *parse_infix(parser *self, int precede);
-
+ast_node *parse_parenthesis(parser *self);
+ast_node *parse_prefix(parser *self);
+ast_node *parse_infix(parser *self, ast_node *left);
 ast_node *parse_command(parser *self);
+ast_node *parse_file(parser *self);
+
+ast_node *ast_syntax_error(ast_node *tree);
+ast_node *ast_malloc_error(ast_node *tree);
