@@ -1,20 +1,10 @@
 
 #include "lexer.h"
 
+/*
+	from < to
+*/
 static void pull_two_token_back(std::vector<token> *ptoken_stream, int from, int to)
-{
-	const token temp_token1 = (*ptoken_stream)[from];
-	const token temp_token2 = (*ptoken_stream)[from + 1];
-	int idx;
-
-	idx = from;
-	while (--idx >= to)
-		(*ptoken_stream)[idx + 2] = (*ptoken_stream)[idx];
-	(*ptoken_stream)[to] = temp_token1;
-	(*ptoken_stream)[to + 1] = temp_token2;
-}
-
-static void pull_two_token_front(std::vector<token> *ptoken_stream, int from, int to)
 {
 	const token temp_token1 = (*ptoken_stream)[from];
 	const token temp_token2 = (*ptoken_stream)[from + 1];
@@ -27,12 +17,28 @@ static void pull_two_token_front(std::vector<token> *ptoken_stream, int from, in
 	(*ptoken_stream)[to + 1] = temp_token2;
 }
 
+/*
+	to < from
+*/
+static void pull_two_token_front(std::vector<token> *ptoken_stream, int from, int to)
+{
+	const token temp_token1 = (*ptoken_stream)[from];
+	const token temp_token2 = (*ptoken_stream)[from + 1];
+	int idx;
+
+	idx = from + 2;
+	while (--idx > to + 1)
+		(*ptoken_stream)[idx] = (*ptoken_stream)[idx - 2];
+	(*ptoken_stream)[to] = temp_token1;
+	(*ptoken_stream)[to + 1] = temp_token2;
+}
+
 static void move_left_redirect(std::vector<token> *ptoken_stream)
 {
 	int to;
 	int idx;
 
-	idx = 0;
+	idx = -1;
 	to = 0;
 	while (++idx < ptoken_stream->size() - 1)
 	{
@@ -51,7 +57,7 @@ static void move_right_redirect(std::vector<token> *ptoken_stream)
 	int to;
 	int idx;
 
-	idx = ptoken_stream->size() - 2;
+	idx = ptoken_stream->size() - 0;
 	to = ptoken_stream->size() - 2;
 	while (--idx >= 0)
 	{
