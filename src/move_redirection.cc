@@ -27,7 +27,7 @@ static void pull_two_token_front(std::vector<token> *ptoken_stream, int from, in
 	(*ptoken_stream)[to + 1] = temp_token2;
 }
 
-void move_redirection_token(std::vector<token> *ptoken_stream)
+static void move_left_redirect(std::vector<token> *ptoken_stream)
 {
 	int to;
 	int idx;
@@ -35,17 +35,38 @@ void move_redirection_token(std::vector<token> *ptoken_stream)
 	idx = 0;
 	to = 0;
 	while (++idx < ptoken_stream->size() - 1)
+	{
 		if ((*ptoken_stream)[idx].type == RDICT_READ || (*ptoken_stream)[idx].type == RDICT_HEREDOC)
 		{
 			pull_two_token_front(ptoken_stream, idx, to);
 			to += 2;
 		}
+		else if ((*ptoken_stream)[idx].type == PIPE)
+			to = idx + 1;
+	}
+}
+
+static void move_right_redirect(std::vector<token> *ptoken_stream)
+{
+	int to;
+	int idx;
+
 	idx = ptoken_stream->size() - 2;
 	to = ptoken_stream->size() - 2;
 	while (--idx >= 0)
+	{
 		if ((*ptoken_stream)[idx].type == RDICT_WRITE || (*ptoken_stream)[idx].type == RDICT_APPEND)
 		{
 			pull_two_token_back(ptoken_stream, idx, to);
 			to -= 2;
 		}
+		else if ((*ptoken_stream)[idx].type == PIPE)
+			to = idx - 2;
+	}
+}
+
+void move_redirection_token(std::vector<token> *ptoken_stream)
+{
+	move_left_redirect(ptoken_stream);
+	move_right_redirect(ptoken_stream);
 }
