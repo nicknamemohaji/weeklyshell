@@ -12,6 +12,7 @@ ast_node *parse(std::vector<token> *ptoken_stream)
 {
 	parser *p;
 	ast_node *tree;
+	token end_token;
 
 	// create parser
 	p = new_parser(ptoken_stream);
@@ -26,6 +27,8 @@ ast_node *parse(std::vector<token> *ptoken_stream)
 		return ast_syntax_error(NULL);
 	}
 	move_redirection_token(ptoken_stream);
+	end_token.type = END;
+	ptoken_stream->push_back(end_token);
 	tree = parse_expression(p, LOWEST);
 	// parse expression
 	delete_parser(p);

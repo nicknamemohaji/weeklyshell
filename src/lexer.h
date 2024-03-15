@@ -22,7 +22,8 @@ enum token_type
 	KEY_UNSET,
 	KEY_ENV,
 	KEY_EXIT,
-	IDENT
+	IDENT,
+	END
 };
 
 // struct for token
