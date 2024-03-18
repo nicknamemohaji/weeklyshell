@@ -1,0 +1,28 @@
+{
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "C/C++: g++ 활성 파일 빌드",
+            "command": "/usr/bin/g++",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "parser_tester.cc", "print_ast.cc", "../ast_node.cc", "../get_node_type.cc", "../get_precedence.cc", "../get_token_type.cc", "../get_token.cc", "../is_lexical_error.cc", "../lexer.cc", "../move_redirection.cc", "../parse_command.cc", "../parse_expression.cc", "../parse_file.cc", "../parse_infix.cc", "../parse_parenthesis.cc", "../parse_prefix.cc", "../parse.cc", "../parser_error.cc", "../parser.cc",
+                "-o",
+                "${fileDirname}/parser_tester"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "디버거에서 생성된 작업입니다."
+        }
+    ],
+    "version": "2.0.0"
+}
