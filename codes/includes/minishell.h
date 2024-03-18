@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:18:00 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/03/13 21:10:22 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/19 01:49:34 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@
 # include "types.h"
 # include "input.h"
 # include "loader.h"
+# include "utils.h"
 
 #endif

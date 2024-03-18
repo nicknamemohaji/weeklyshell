@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fp_conversion_wrapper.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:13:09 by kyungjle          #+#    #+#             */
-/*   Updated: 2023/10/18 00:13:07 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/03/18 19:23:10 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	fp_valid_conversion(char *s)
 	s++;
 	while ((*s == '#' || *s == ' ' || *s == '+'
 			|| *s == '-' || *s == '0' || *s == '.') && *s != 0)
-	s++;
+		s++;
 	if (*s == 0)
 		return (0);
 	if ('0' <= *s && *s <= '9')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 21:32:47 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/02/16 18:47:51 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/03/18 19:23:29 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	{
 		i = 0;
 		while (i < n)
-		{			
+		{
 			((char *) dest)[i] = ((char *) src)[i];
 			i++;
 		}

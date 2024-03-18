@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   input_readline.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:19:01 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/03/12 22:19:03 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:04:31 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
+#include "utils.h"
 
 static char	*make_prompt_f(void);
 char		*input_readline_f(void);

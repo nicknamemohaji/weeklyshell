@@ -2,7 +2,6 @@ NAME = minishell
 
 INPUT_FILES = 	input/input_readline.c \
 				input/input_terminal.c \
-				input/input_sighandler.c \
 				input/input_validator.c
 PARSER_FILES = 
 LOADER_FILES = 	loader/ldexec_findexec.c \
@@ -10,8 +9,11 @@ LOADER_FILES = 	loader/ldexec_findexec.c \
 				loader/ldexec_heredoc.c
 UTIL_FILES = 	utils/do_exit.c \
 				utils/free_ft_split.c \
+				utils/input_sighandler.c \
 				utils/ld_chdir.c \
-				utils/ld_errno_file.c
+				utils/ld_errno_file.c \
+				utils/ld_map_functions.c \
+				utils/ld_map_functions2.c
 FILES = main.c \
 		$(INPUT_FILES) \
 		$(PARSER_FILES) \
@@ -27,9 +29,13 @@ LIBRARIES = -lft -lreadline -L.
 CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 CC = cc
 
+all: $(NAME)
+
 $(NAME): libft.a $(OBJECTS)
 	$(CC) $(CFLAGS) $^ -o $(NAME) $(INCLUDES) $(LIBRARIES)
-	echo $(NAME) Compiled!
+	@echo
+	@echo
+	@echo $(NAME) Compiled!
 
 %.o: %.c
 	$(CC) -c $< -o $*.o $(CFLAGS) $(INCLUDES)

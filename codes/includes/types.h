@@ -6,12 +6,17 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:18:03 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/03/14 02:42:55 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/18 19:24:47 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TYPES_H
 # define TYPES_H
+
+// import flags for O_TRUNC, O_APPEND
+# include <fcntl.h>
+// import sig_atomic_t type
+# include <signal.h>
 
 # define STDIN_FD 0
 # define STDOUT_FD 1
@@ -22,17 +27,12 @@ typedef enum e_bool
 	FALSE = 0
 }	t_bool;
 
-// import sig_atomic_t type
-# include <signal.h>
-volatile sig_atomic_t g_sigint = FALSE;
+extern volatile sig_atomic_t	g_sigint;
 
 typedef enum e_exitcode
 {
 	SUCCESS = 0
 }	t_exitcode;
-
-// import flags for O_TRUNC, O_APPEND
-# include <fcntl.h>
 typedef enum e_filemode
 {
 	OUT_TRUNC = O_TRUNC,

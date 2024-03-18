@@ -6,47 +6,46 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 01:11:55 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/14 02:43:07 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/18 19:22:31 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "loader.h"
+#include "utils.h"
 
 int				ldexec_run(t_ld_struct_exec exec);
 static void		redir_pipe(t_ld_array_pipe pipe);
-static t_bool	redir_redir(t_ld_array_redir redir);
-static t_bool	redir_redir_stdin(t_ld_redir_node *node);
+static t_bool	redir_redir(t_ld_array_redir redir,
+					t_ld_array_pipe pipe, char *heredoc_tmpfile);
+static t_bool	redir_redir_stdin(t_ld_redir_node *node, char *heredoc_tmpfile);
 static t_bool	redir_redir_stdout(t_ld_redir_node *node);
 
 int	ldexec_run(t_ld_struct_exec exec)
 {
-	// TODO
-	// 1. match norm
-	// 2. add comments on functions
-	// 3. unlink temporary heredoc files
-	pid_t	pid;
-	int		exitcode;
+	pid_t				pid;
+	char				*heredoc_tmpfile;
+	struct sigaction	oldacts[2];
 
+	heredoc_tmpfile = ldexec_heredoc_assign();
+	input_sigign_setup(oldacts);
 	pid = fork();
 	if (pid < 0)
 		do_exit("ldexec_run.fork");
 	else if (pid == 0)
 	{
-		redir_pipe(exec.pipe);
-		if (redir_redir(exec.redir) == FALSE)
-			return (127);
-		pid = execve(exec.path, exec.argv, exec.envp);
-		if (pid < 0)
+		if (redir_redir(exec.redir, exec.pipe, heredoc_tmpfile) == FALSE)
+			exit(EXIT_FAILURE);
+		if (execve(exec.path, exec.argv, exec.envp) < 0)
 			do_exit("ldexec_run.execve");
 	}
-	if (exec.pipe.stdin != -1)
-		close(exec.pipe.stdin);
-	if (exec.pipe.stdout != -1)
-		close(exec.pipe.stdout);
-	pid = wait(&exitcode);
-	if (pid < 0)
+	close(exec.pipe.stdin);
+	close(exec.pipe.stdout);
+	if (wait(&pid) < 0)
 		do_exit("ldexec_run.wait");
-	return (exitcode);
+	unlink(heredoc_tmpfile);
+	free(heredoc_tmpfile);
+	input_sighandler_restore(oldacts);
+	return (pid);
 }
 
 static void	redir_pipe(t_ld_array_pipe pipe)
@@ -63,16 +62,18 @@ static void	redir_pipe(t_ld_array_pipe pipe)
 	}
 }
 
-static t_bool	redir_redir(t_ld_array_redir redir)
+static t_bool	redir_redir(t_ld_array_redir redir,
+					t_ld_array_pipe pipe, char *heredoc_tmpfile)
 {
-	if (redir_redir_stdin(redir.stdin) == FALSE)
+	if (redir_redir_stdin(redir.stdin, heredoc_tmpfile) == FALSE)
 		return (FALSE);
 	if (redir_redir_stdout(redir.stdout) == FALSE)
 		return (FALSE);
+	redir_pipe(pipe);
 	return (TRUE);
 }
 
-static t_bool	redir_redir_stdin(t_ld_redir_node *node)
+static t_bool	redir_redir_stdin(t_ld_redir_node *node, char *heredoc_tmpfile)
 {
 	int		fd;
 
@@ -80,9 +81,11 @@ static t_bool	redir_redir_stdin(t_ld_redir_node *node)
 	{
 		if (node->mode == IN_HEREDOC)
 		{
-			fd = ldexec_heredoc_tmpfile();
+			fd = open(heredoc_tmpfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			if (ldexec_heredoc(fd, node->filename) == FALSE)
 				return (FALSE);
+			node->filename = heredoc_tmpfile;
+			close(fd);
 		}
 		fd = open(node->filename, O_RDONLY);
 		if (fd < 0)
@@ -94,6 +97,7 @@ static t_bool	redir_redir_stdin(t_ld_redir_node *node)
 			do_exit("ldexec_run.redir_redir.dup2");
 		node = node->next;
 	}
+	return (TRUE);
 }
 
 static t_bool	redir_redir_stdout(t_ld_redir_node *node)
@@ -112,4 +116,5 @@ static t_bool	redir_redir_stdout(t_ld_redir_node *node)
 			do_exit("ldexec_run.redir_redir.dup2");
 		node = node->next;
 	}
+	return (TRUE);
 }

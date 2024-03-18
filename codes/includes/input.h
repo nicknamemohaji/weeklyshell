@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:17:56 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/03/12 22:17:58 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/03/18 17:53:07 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <signal.h>
 # include <termios.h>
 
 # include "types.h"
@@ -33,13 +32,6 @@
 
 // input_readline.c
 char	*input_readline_f(void);
-
-// input_sighandler.c
-void	input_sighandler_setup(struct sigaction oldacts[2]);
-void	input_sighandler_restore(struct sigaction oldacts[2]);
-void	input_sighandler(int sig, siginfo_t *info, void *ucontext);
-# define OLDACT_SIGINT 0
-# define OLDACT_SIGQUIT 1
 
 // input_terminal.c
 void	input_terminal_setup(struct termios *oldterm);

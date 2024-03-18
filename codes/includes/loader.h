@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:47:14 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/14 02:20:32 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/18 19:14:51 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*ldexec_exec_find_f(char *cmd, t_bool *need_free, const char *path);
 int		ldexec_run(t_ld_struct_exec exec);
 
 // ldexec_heredoc.c
-char	*ldexec_heredoc_tmpfile(void);
+char	*ldexec_heredoc_assign(void);
 t_bool	ldexec_heredoc(int fd, char *delim);
 
 #endif

@@ -6,41 +6,39 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 02:12:31 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/14 02:43:07 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/18 19:21:12 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "loader.h"
-#include "input.h"
+#include "utils.h"
 
-int		ldexec_heredoc_tmpfile(void);
+char	*ldexec_heredoc_assign(void);
 t_bool	ldexec_heredoc(int fd, char *delim);
 
-int	ldexec_heredoc_tmpfile(void)
+char	*ldexec_heredoc_assign(void)
 {
-	int		fd;
 	int		tmpnum;
 	char	*tmpnum_str;
-	char	*tmpfile;
+	char	*tmpfile_name;
 
 	tmpnum = 0;
 	while (tmpnum++ < 4242)
 	{
-		tmpnum_str = ft_atoi(tmpnum);
-		tmpfile = ft_strjoin("/tmp/weeklyshell_heredoc_", tmpnum_str);
+		tmpnum_str = ft_itoa(tmpnum);
+		if (tmpnum_str == NULL)
+			do_exit("ldexec_heredoc.itoa");
+		tmpfile_name = ft_strjoin("/tmp/weeklyshell_heredoc_", tmpnum_str);
+		if (tmpfile_name == NULL)
+			do_exit("ldexec_heredoc.strjoin");
 		free(tmpnum_str);
-		fd = open(tmpfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (fd > 0)
-			break ;
-		free(tmpfile);
+		if (access(tmpfile_name, F_OK) == -1)
+			return (tmpfile_name);
+		free(tmpfile_name);
 	}
-	free(tmpfile);
-	if (fd < 0)
-	{
-		printf("cannot create temporary file(tried %d times)\n", tmpnum);
-		do_exit("ldexec_heredoc.open");
-	}
-	return (fd);
+	printf("cannot create temporary file(tried %d times)\n", tmpnum);
+	do_exit("ldexec_heredoc.open");
+	return (NULL);
 }
 
 t_bool	ldexec_heredoc(int fd, char *delim)
@@ -60,7 +58,8 @@ t_bool	ldexec_heredoc(int fd, char *delim)
 			ret = FALSE;
 			break ;
 		}
-		if (ft_strncmp(&buf, delim, delim_len) == 0)
+		if (readcount - 1 == delim_len
+			&& ft_strncmp(buf, delim, delim_len) == 0)
 		{
 			ret = TRUE;
 			break ;

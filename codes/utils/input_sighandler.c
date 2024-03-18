@@ -6,12 +6,13 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:19:05 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/03/14 02:43:00 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/18 19:10:28 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "input.h"
+#include "utils.h"
 
+void	input_sigign_setup(struct sigaction oldacts[2]);
 void	input_sighandler_setup(struct sigaction oldacts[2]);
 void	input_sighandler_restore(struct sigaction oldacts[2]);
 void	input_sighandler(int sig, siginfo_t *info, void *ucontext);
@@ -30,26 +31,34 @@ void	input_sighandler_setup(struct sigaction oldacts[2])
 	struct sigaction	action;
 	sigset_t			mask;
 
-	if (sigemptyset(&mask) != 0 || sigaddset(&mask, SIGINT))
-	{
-		perror("error while prerparing sighandler");
-		exit(EXIT_FAILURE);
-	}
+	g_sigint = FALSE;
+	if (sigemptyset(&mask) != 0 || sigaddset(&mask, SIGINT) != 0)
+		do_exit("utils.input_sighandler_setup");
 	action.sa_flags = 0 | SA_SIGINFO;
 	action.sa_mask = mask;
 	action.sa_sigaction = input_sighandler;
 	if (sigaction(SIGINT, &action, &oldacts[OLDACT_SIGINT]) != 0)
-	{
-		perror("error while registering sighandler");
-		exit(EXIT_FAILURE);
-	}
+		do_exit("utils.input_sighandler_setup");
 	action.sa_handler = SIG_IGN;
 	if (sigaction(SIGQUIT, &action, &oldacts[OLDACT_SIGQUIT]) != 0)
-	{
-		perror("error while registering sighandler");
-		exit(EXIT_FAILURE);
-	}
+		do_exit("utils.input_sighandler_setup");
+}
+
+void	input_sigign_setup(struct sigaction oldacts[2])
+{
+	struct sigaction	action;
+	sigset_t			mask;
+
 	g_sigint = FALSE;
+	if (sigemptyset(&mask) != 0)
+		do_exit("utils.input_sigign_setup");
+	action.sa_flags = 0 | SA_RESTART;
+	action.sa_mask = mask;
+	action.sa_handler = SIG_IGN;
+	if (sigaction(SIGINT, &action, &oldacts[OLDACT_SIGINT]) != 0)
+		do_exit("utils.input_sigign_setup");
+	if (sigaction(SIGQUIT, &action, &oldacts[OLDACT_SIGQUIT]) != 0)
+		do_exit("utils.input_sigign_setup");
 }
 
 /*
