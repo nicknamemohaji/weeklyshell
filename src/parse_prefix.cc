@@ -18,7 +18,6 @@ ast_node *parse_prefix(parser *self)
 		return ast_malloc_error(exp);
 	exp->node_type = node_type;
 	exp->pt = self->pcur_token;
-	move_next_token(self);
 	exp->left = parse_file(self);
 	move_next_token(self);
 	exp->right = parse_expression(self, PREFIX);
