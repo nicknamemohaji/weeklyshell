@@ -16,16 +16,6 @@ ast_node *parse(std::vector<token> *ptoken_stream)
 
 	// create parser
 	p = new_parser(ptoken_stream);
-	/*
-		preprocessing required
-		redirection 관련 처리를 위해서 redirection과 그에 따르는 word하나를 다른 연산자 만나기 전까지 밀어낸다.
-		즉 swap을 반복한다.
-	*/
-	if (is_lexical_error(ptoken_stream))
-	{
-		delete_parser(p);
-		return ast_syntax_error(NULL);
-	}
 	move_redirection_token(ptoken_stream);
 	end_token.type = END;
 	ptoken_stream->push_back(end_token);

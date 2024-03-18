@@ -51,4 +51,3 @@ int get_keyword(lexer *plexer, token *ptoken);
 std::vector<token> tokenize(const char *cstr);
 
 void move_redirection_token(std::vector<token> *ptoken_stream);
-int is_lexical_error(std::vector<token> *ptoken_stream);
