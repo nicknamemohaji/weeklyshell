@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:17:43 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/03/19 01:50:08 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/19 02:27:25 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,18 @@ int	main(int argc, char *argv[], char *envp[])
 	env = ldpre_env_fromenvp_f(envp);
 
 	// TEST
+	printf("PATH before: %s\n", ldpre_env_fetch("PATH", env));
+	ldpre_env_add(strdup("PATH"), strdup("/"), env);
+	printf("PATH after modi: %s\n", ldpre_env_fetch("PATH", env));
+	ldpre_env_remove("PATH", env);
+	printf("PATH after delete: %s\n", ldpre_env_fetch("PATH", env));
+
+	// TEST
 	printf("pid %d\n", getpid());
 	t_ld_struct_exec exec = {
 		.path = "/bin/cat",
 		.argv = (char *[]){"cat", "-", "Makefile", NULL},
-		.envp = envp,
+		.envp = ldpre_env_toenvp_f(env),
 		.pipe = (t_ld_array_pipe){-1, -1},
 		.redir = (t_ld_array_redir){
 			.stdin = &(t_ld_redir_node){

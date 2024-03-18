@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:50:17 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/19 01:48:24 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/19 02:26:47 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	ldpre_env_add(char *key, char *value, t_ld_map_env *map)
 		do_exit("ldpre_env_add.malloc");
 	node->key = key;
 	node->value = value;
+	node->next = NULL;
 	ld_map_node_attach(map, node);
 	return ;
 }
@@ -80,5 +81,6 @@ t_bool	ldpre_env_remove(char *key, t_ld_map_env *map)
 	free(node[0]->key);
 	free(node[0]->value);
 	free(node[0]);
+	map->count--;
 	return (TRUE);
 }

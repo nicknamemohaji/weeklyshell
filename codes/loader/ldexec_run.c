@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 01:11:55 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/18 19:22:31 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/19 02:13:21 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	ldexec_run(t_ld_struct_exec exec)
 	unlink(heredoc_tmpfile);
 	free(heredoc_tmpfile);
 	input_sighandler_restore(oldacts);
+	free_ft_split(exec.envp);
 	return (pid);
 }
 
