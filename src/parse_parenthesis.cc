@@ -20,6 +20,5 @@ ast_node *parse_parenthesis(parser *self)
 	move_next_token(self);
 	if (subshell->left == NULL || self->pcur_token->type != RPAR)
 		return (ast_syntax_error(subshell));
-	move_next_token(self);
 	return subshell;
 }
