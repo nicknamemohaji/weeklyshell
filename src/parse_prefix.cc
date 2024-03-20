@@ -7,10 +7,10 @@ ast_node *parse_prefix(parser *self)
 	int node_type;
 
 	node_type = get_prefix_node_type(self->pcur_token->type);
-	if (node_type == NODE_ERROR)
-		return ast_syntax_error(NULL);
-	else if (self->pcur_token->type == LPAR)
+	if (self->pcur_token->type == LPAR)
 		return parse_parenthesis(self);
+	else if (node_type == NODE_ERROR)
+		return ast_syntax_error(NULL);
 	else if (node_type == NODE_WORD)
 		return parse_command(self);
 	exp = new_ast_node();
