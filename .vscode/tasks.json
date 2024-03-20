@@ -7,7 +7,7 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
-                "parser_tester.cc", "print_ast.cc", "../ast_node.cc", "../get_node_type.cc", "../get_precedence.cc", "../get_token_type.cc", "../get_token.cc", "../is_lexical_error.cc", "../lexer.cc", "../move_redirection.cc", "../parse_command.cc", "../parse_expression.cc", "../parse_file.cc", "../parse_infix.cc", "../parse_parenthesis.cc", "../parse_prefix.cc", "../parse.cc", "../parser_error.cc", "../parser.cc",
+                "parser_tester.cc", "print_ast.cc", "../ast_node.cc", "../get_node_type.cc", "../get_precedence.cc", "../get_token_type.cc", "../get_token.cc", "../lexer.cc", "../move_redirection.cc", "../parse_command.cc", "../parse_expression.cc", "../parse_file.cc", "../parse_infix.cc", "../parse_parenthesis.cc", "../parse_prefix.cc", "../parse.cc", "../parser_error.cc", "../parser.cc",
                 "-o",
                 "${fileDirname}/parser_tester"
             ],
