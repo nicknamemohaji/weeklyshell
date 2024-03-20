@@ -20,7 +20,7 @@ ast_node *parse_prefix(parser *self)
 	exp->pt = self->pcur_token;
 	exp->left = parse_file(self);
 	move_next_token(self);
-	exp->right = parse_expression(self, PREFIX);
+	exp->right = parse_expression(self, P_PREFIX);
 	if (exp->left == NULL || exp->right == NULL)
 	{
 		delete_ast_node(exp);

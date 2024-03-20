@@ -4,11 +4,12 @@
 
 enum precedence
 {
-	NO_MATCH,
-	LOWEST,
-	PIPE_AND_RDICT,
-	LOGIC,
-	PREFIX
+	P_NO_MATCH,
+	P_LOWEST,
+	P_PIPE,
+	P_RDICT,
+	P_LOGIC,
+	P_PREFIX
 };
 
 int get_precedence(int token_type);
