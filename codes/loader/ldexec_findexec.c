@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:47:55 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/13 21:10:22 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/21 00:02:33 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,7 @@ char	*ldexec_exec_find_f(char *cmd, t_bool *need_free, const char *path)
 	if (ret != NULL)
 		return (ret);
 	ret = check_env_path_f(cmd, path);
-	if (ret != NULL)
-		return (ret);
-	return (NULL);
+	return (ret);
 }
 
 /*
@@ -150,8 +148,6 @@ static char	*check_env_path_f(char *cmd, const char *path)
 		}
 		free(cmd_with_path);
 	}
-	if (ret != NULL)
-		ret = ft_strdup(ret);
 	free_ft_split(paths_ptr);
 	return (ret);
 }

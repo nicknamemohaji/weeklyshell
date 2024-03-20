@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:18:03 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/03/18 19:24:47 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/20 23:21:55 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef enum e_exitcode
 {
 	SUCCESS = 0
 }	t_exitcode;
+
 typedef enum e_filemode
 {
 	OUT_TRUNC = O_TRUNC,
@@ -41,11 +42,24 @@ typedef enum e_filemode
 	IN_HEREDOC = -2
 }	t_filemode;
 
+typedef struct s_ld_param_node
+{
+	char					*content;
+	struct s_ld_param_node	*next;
+}	t_ld_param_node;
+
+typedef struct s_ld_dir_node
+{
+	char					*name;
+	char					*name_ptr;
+	struct s_ld_dir_node	*next;
+}	t_ld_dir_node;
+
 typedef struct s_ld_redir_node
 {
-	struct s_ld_redir_node	*next;
 	char					*filename;
 	t_filemode				mode;
+	struct s_ld_redir_node	*next;
 }	t_ld_redir_node;
 
 /*

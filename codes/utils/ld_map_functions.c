@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:09:12 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/19 02:28:06 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/19 17:12:32 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ t_ld_map_env	*ldpre_env_fromenvp_f(char **envp)
 		node->next = NULL;
 		ld_map_node_attach(ret, node);
 		node->key = ft_substr(*envp, 0, ft_strchr(*envp, '=') - *envp);
-		node->value = ft_substr(*envp, ft_strlen(node->key) + 1, ft_strlen(*envp));
+		node->value = ft_substr(*envp,
+				ft_strlen(node->key) + 1, ft_strlen(*envp));
 		envp++;
 		count++;
 	}

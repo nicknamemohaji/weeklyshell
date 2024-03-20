@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 02:12:31 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/18 19:21:12 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/19 18:56:08 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char	*ldexec_heredoc_assign(void)
 
 t_bool	ldexec_heredoc(int fd, char *delim)
 {
+	// TODO heredoc shell variable expansion
 	char				buf[100];
 	int					readcount;
 	const int			delim_len = ft_strlen(delim);

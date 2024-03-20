@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 20:13:08 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/14 01:45:23 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/20 22:10:11 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ t_bool	ld_chdir(char *path)
 	idx = -1;
 	while (++idx < count - 1)
 	{
-		printf("moving to %s\n", splitted_path[idx]);
 		if (check_access(splitted_path[idx]) == FALSE)
 		{
 			free_ft_split(splitted_path_ptr);
