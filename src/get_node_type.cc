@@ -10,7 +10,7 @@ int get_prefix_node_type(int token_type)
 	else if (token_type == RDICT_READ)
 		return (EXP_PRE_RREAD);
 	else if (token_type == RDICT_HEREDOC)
-		return (EXP_PRE_RAPPEND);
+		return (EXP_PRE_RHEREDOC);
 	else if (KEY_ECHO <= token_type && token_type <= IDENT)
 		return (NODE_WORD);
 	else
