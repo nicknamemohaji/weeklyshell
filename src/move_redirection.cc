@@ -47,7 +47,7 @@ static void move_left_redirect(std::vector<token> *ptoken_stream)
 			pull_two_token_front(ptoken_stream, idx, to);
 			to += 2;
 		}
-		else if ((*ptoken_stream)[idx].type == PIPE)
+		else if ((*ptoken_stream)[idx].type == PIPE || (*ptoken_stream)[idx].type == LPAR || (*ptoken_stream)[idx].type == RPAR || (*ptoken_stream)[idx].type == OPRT_AND || (*ptoken_stream)[idx].type == OPRT_OR)
 			to = idx + 1;
 	}
 }
@@ -66,7 +66,7 @@ static void move_right_redirect(std::vector<token> *ptoken_stream)
 			pull_two_token_back(ptoken_stream, idx, to);
 			to -= 2;
 		}
-		else if ((*ptoken_stream)[idx].type == PIPE)
+		else if ((*ptoken_stream)[idx].type == PIPE || (*ptoken_stream)[idx].type == LPAR || (*ptoken_stream)[idx].type == RPAR || (*ptoken_stream)[idx].type == OPRT_AND || (*ptoken_stream)[idx].type == OPRT_OR)
 			to = idx - 2;
 	}
 }
