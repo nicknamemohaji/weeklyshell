@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 19:54:44 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/19 01:00:41 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/21 13:47:55 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,6 @@ void			free_ld_map(t_ld_map_env *map);
 char			*ldpre_env_fetch(char *key, t_ld_map_env *map);
 void			ldpre_env_add(char *key, char *value, t_ld_map_env *map);
 t_bool			ldpre_env_remove(char *key, t_ld_map_env *map);
+t_ld_map_node	**ldpre_env_findkey(char *key, t_ld_map_env *map);
 
 #endif

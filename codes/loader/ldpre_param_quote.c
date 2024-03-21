@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 18:18:30 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/20 23:53:10 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/21 12:42:29 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 char		*ldpre_param_quote_f(char *arg, t_ld_map_env *env);
 static char	*quote_removal_f(char *s, char **ptr, t_ld_map_env *env);
 
+/*
+Caller should free the returned pointer after use.
+*/
 char	*ldpre_param_quote_f(char *arg, t_ld_map_env *env)
 {
 	t_ld_param_node	start;

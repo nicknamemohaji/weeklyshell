@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:13:58 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/20 23:50:26 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/21 14:20:04 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,22 @@
 char		*ldpre_param_expansion_f(char *arg, t_ld_map_env *env);
 static char	*nodes_new_string_f(char *s, char **ptr);
 static char	*nodes_new_expansion_f(char *s, char **ptr, t_ld_map_env *env);
-char		*ldpre_param_nodes_join_f(t_ld_param_node *node);
-void		ldpre_param_nodes_free(t_ld_param_node *node);
+static char	*nodes_new_expansion2_f(char *s, char **ptr, t_ld_map_env *env);
 
+/*
+char	*ldpre_param_expansion_f(char *arg, t_ld_map_env *env)
+:param arg: raw string to expand
+:param env: environement variables
+:return: expanded string
+
+Performs basic shell parameter expansion
+- substitutes `$VAR` to value in map
+- always expands given string, so don't call this function directly
+	- quote removal function shoud check for single quote and call this
+	- heredoc function should check delimiter and call this
+
+Caller should free the returned pointer after use.
+*/
 char	*ldpre_param_expansion_f(char *arg, t_ld_map_env *env)
 {
 	t_ld_param_node	start;
@@ -29,7 +42,7 @@ char	*ldpre_param_expansion_f(char *arg, t_ld_map_env *env)
 
 	arg_ptr = arg;
 	start.next = NULL;
-	prev = &(start);
+	prev = &start;
 	while (*arg != '\0')
 	{
 		node = ft_calloc(1, sizeof(t_ld_param_node));
@@ -48,6 +61,15 @@ char	*ldpre_param_expansion_f(char *arg, t_ld_map_env *env)
 	return (ret);
 }
 
+/*
+static char	*nodes_new_string_f(char *s, char **ptr)
+:param s: string to check
+:param ptr: arg pointer of caller
+:return: parsed string
+
+Parses normal string(not environment variable) from given string s,
+and moves caller's `arg` pointer to next character of parsed value
+*/
 static char	*nodes_new_string_f(char *s, char **ptr)
 {
 	char	*ret;
@@ -56,13 +78,28 @@ static char	*nodes_new_string_f(char *s, char **ptr)
 	end_pos = ft_strchr(s, '$');
 	if (end_pos == NULL)
 		end_pos = s + ft_strlen(s);
+	*ptr = end_pos;
 	ret = ft_substr(s, 0, end_pos - s);
 	if (ret == NULL)
 		do_exit("ldpre_param_expansion.nodes_new_string_f.malloc");
-	*ptr = end_pos;
 	return (ret);
 }
 
+/*
+static char	*nodes_new_expansion_f(char *s, char **ptr, t_ld_map_env *env)
+:param s: string to check
+:param ptr: arg pointer of caller
+:param env: environment variable map
+:return: parsed string
+
+Parses environment variable from given string s,
+and moves caller's `arg` pointer to next character of parsed value.
+
+Parsed environment variable key will be substituded to env value
+- key parsing follows rule: [a-zA-Z_]{1}[0-9a-zA-Z_]+
+	- exception: `$?`
+- if key does not exist in environment, it will be substituded to null string
+*/
 static char	*nodes_new_expansion_f(char *s, char **ptr, t_ld_map_env *env)
 {
 	char	*ret;
@@ -71,58 +108,45 @@ static char	*nodes_new_expansion_f(char *s, char **ptr, t_ld_map_env *env)
 
 	end_pos = s;
 	if (!(ft_isalpha(*end_pos) || *end_pos == '_'))
-	{
-		*ptr += 2;
-		return (NULL);
-	}
+		return (nodes_new_expansion2_f(s, ptr, env));
 	while (*end_pos != '\0' && (ft_isalnum(*end_pos) || *end_pos == '_'))
 		end_pos++;
 	*ptr = end_pos;
 	key = ft_substr(s, 0, end_pos - s);
+	if (key == NULL)
+		do_exit("ldpre_param_expansion.nodes_new_expansion_f.malloc");
 	ret = ldpre_env_fetch(key, env);
 	free(key);
 	if (ret != NULL)
+	{
 		ret = ft_strdup(ret);
+		if (ret == NULL)
+			do_exit("ldpre_param_expansion.nodes_new_expansion_f.malloc");
+	}
 	return (ret);
 }
 
-char	*ldpre_param_nodes_join_f(t_ld_param_node *node)
-{
-	int				length;
-	char			*ret;
-	t_ld_param_node	*node_ptr;
+/*
+static char	*nodes_new_expansion2_f(char *s, char **ptr, t_ld_map_env *env)
+:param s: string to check
+:param ptr: arg pointer of caller
+:param env: environment variable map
+:return: parsed string
 
-	length = 0;
-	node_ptr = node;
-	while (node_ptr != NULL)
+Handles execiptional case when key is not valid - `$?`
+*/
+static char	*nodes_new_expansion2_f(char *s, char **ptr, t_ld_map_env *env)
+{
+	char	*ret;
+
+	if (*s == '?')
 	{
-		if (node_ptr->content != NULL)
-			length += ft_strlen(node_ptr->content);
-		node_ptr = node_ptr->next;
+		*ptr += 2;
+		ret = ldexec_env_exitcode_fetch_f(env);
 	}
-	ret = ft_calloc(length + 1, sizeof(char));
+	else
+		ret = ft_strdup("$");
 	if (ret == NULL)
-		do_exit("ldpre_param_expansion.ldpre_param_nodes_join_f.malloc");
-	while (node != NULL)
-	{
-		if (node->content != NULL)
-			ft_strlcat(ret, node->content,
-				ft_strlen(ret) + ft_strlen(node->content) + 1);
-		node = node->next;
-	}
+		do_exit("ldpre_param_expansion.nodes_new_expansion_f.malloc");
 	return (ret);
-}
-
-void	ldpre_param_nodes_free(t_ld_param_node *node)
-{
-	t_ld_param_node	*node_ptr;
-
-	while (node != NULL)
-	{
-		node_ptr = node;
-		node = node->next;
-		if (node_ptr->content != NULL)
-			free(node_ptr->content);
-		free(node_ptr);
-	}
 }

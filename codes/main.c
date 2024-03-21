@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:17:43 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/03/21 00:26:19 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/21 14:16:06 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,12 @@ int	main(int argc, char *argv[], char *envp[])
 
 	// TEST exec
 	t_bool need_free;
+	char** __envp = ldpre_env_toenvp_f(env);
 	printf("pid %d path (%s)\n", getpid(), ldpre_env_fetch("PATH", env));
 	t_ld_struct_exec exec = {
 		.path = ldexec_exec_find_f("cat", &need_free, ldpre_env_fetch("PATH", env)),
 		.argv = (char *[]){"cat", "-", "main.c", NULL},
-		.envp = ldpre_env_toenvp_f(env),
+		.envp = __envp,
 		.pipe = (t_ld_array_pipe){-1, -1},
 		.redir = (t_ld_array_redir){
 			.stdin = &(t_ld_redir_node){
@@ -83,6 +84,7 @@ int	main(int argc, char *argv[], char *envp[])
 	printf("path %s need_free %d\n", exec.path, need_free);
 	if (need_free == TRUE)
 		free(exec.path);
+	free_ft_split(__envp);
 	
 	while (1)
 	{

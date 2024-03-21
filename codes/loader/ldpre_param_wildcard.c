@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 20:55:30 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/21 00:25:33 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/21 12:42:37 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ static void	match_middle(char *pattern,
 static void	match_suffix(char *suffix,
 				t_ld_dir_node *node, t_ld_dir_node *prev);
 
+/*
+Caller should free the returned pointer after use.
+*/
 char	**ldpre_param_wildcard_f(char *arg)
 {
 	t_ld_dir_node	start;
@@ -44,7 +47,7 @@ char	**ldpre_param_wildcard_f(char *arg)
 		free(pattern);
 	}
 	match_suffix(arg, start.next, &start);
-	ret = ldpre_param_wildcard_result(start.next);
+	ret = ldpre_param_wildcard_result_f(start.next);
 	ldpre_param_wc_free_dirlist(start.next);
 	free(arg_ptr);
 	return (ret);

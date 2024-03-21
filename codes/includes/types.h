@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:18:03 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/03/20 23:21:55 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/21 13:02:11 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,6 @@ typedef enum e_bool
 
 extern volatile sig_atomic_t	g_sigint;
 
-typedef enum e_exitcode
-{
-	SUCCESS = 0
-}	t_exitcode;
-
 typedef enum e_filemode
 {
 	OUT_TRUNC = O_TRUNC,
@@ -42,12 +37,14 @@ typedef enum e_filemode
 	IN_HEREDOC = -2
 }	t_filemode;
 
+// used by loader.preprocessor.param.expansion
 typedef struct s_ld_param_node
 {
 	char					*content;
 	struct s_ld_param_node	*next;
 }	t_ld_param_node;
 
+// used by loader.preprocessor.param.wildcard
 typedef struct s_ld_dir_node
 {
 	char					*name;
@@ -55,14 +52,9 @@ typedef struct s_ld_dir_node
 	struct s_ld_dir_node	*next;
 }	t_ld_dir_node;
 
-typedef struct s_ld_redir_node
-{
-	char					*filename;
-	t_filemode				mode;
-	struct s_ld_redir_node	*next;
-}	t_ld_redir_node;
-
 /*
+used by loader.executor
+
 pipes are created and closed in loader/preprocessor module.
 
 - default value is -1, to express 'no pipes'
@@ -75,7 +67,17 @@ typedef struct s_ld_array_pipe
 	int	stdout;
 }	t_ld_array_pipe;
 
+// used by loader.executor
+typedef struct s_ld_redir_node
+{
+	char					*filename;
+	t_filemode				mode;
+	struct s_ld_redir_node	*next;
+}	t_ld_redir_node;
+
 /*
+used by loader.executor
+
 redirections can occur multiple times, so store them in linked list.
 
 - if any of the file creation or open fails, execution stops
@@ -90,6 +92,7 @@ typedef struct s_ld_array_redir
 	t_ld_redir_node	*stdout;
 }	t_ld_array_redir;
 
+// used by loader.executor
 typedef struct s_ld_struct_exec
 {
 	t_ld_array_redir	redir;
@@ -100,6 +103,8 @@ typedef struct s_ld_struct_exec
 }	t_ld_struct_exec;
 
 /*
+used by loader.preprocessor.environment
+
 environment variables are stored as map structure
 
 helper functions:

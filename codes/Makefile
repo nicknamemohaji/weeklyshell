@@ -5,11 +5,13 @@ INPUT_FILES = 	input/input_readline.c \
 				input/input_validator.c
 PARSER_FILES = 
 LOADER_FILES = 	loader/ldpre_param_expansion.c \
+				loader/ldpre_param_expansion2.c \
 				loader/ldpre_param_quote.c \
 				loader/ldpre_param_wildcard.c \
 				loader/ldpre_param_wildcard2.c \
 				loader/ldexec_findexec.c \
 				loader/ldexec_run.c \
+				loader/ldexec_env_exitcode.c \
 				loader/ldexec_heredoc.c
 UTIL_FILES = 	utils/do_exit.c \
 				utils/free_ft_split.c \

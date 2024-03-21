@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   input_terminal.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:19:08 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/03/12 22:19:09 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/03/21 11:48:24 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
+#include "utils.h"
 
 void	input_terminal_setup(struct termios *oldterm);
 void	input_terminal_restore(struct termios *oldterm);
@@ -23,10 +24,12 @@ void	input_terminal_setup(struct termios *oldterm)
 {
 	struct termios	term;
 
-	tcgetattr(STDIN_FILENO, &term);
+	if (tcgetattr(STDIN_FILENO, &term) != 0)
+		do_exit("input_terminal_setup.tcgetattr");
 	*oldterm = term;
 	term.c_lflag |= (ECHO | ECHOCTL);
-	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &term) != 0)
+		do_exit("input_terminal_setup.tcsetattr");
 }
 
 /*
@@ -35,5 +38,6 @@ void	input_terminal_restore(struct termios *oldterm)
 */
 void	input_terminal_restore(struct termios *oldterm)
 {
-	tcsetattr(STDIN_FILENO, TCSANOW, oldterm);
+	if (tcsetattr(STDIN_FILENO, TCSANOW, oldterm) != 0)
+		do_exit("input_terminal_restore.tcsetattr");
 }

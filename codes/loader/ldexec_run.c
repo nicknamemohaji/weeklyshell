@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 01:11:55 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/19 02:13:21 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/21 14:14:16 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@ static t_bool	redir_redir_stdout(t_ld_redir_node *node);
 
 int	ldexec_run(t_ld_struct_exec exec)
 {
+	// TODO refactor
 	pid_t				pid;
 	char				*heredoc_tmpfile;
 	struct sigaction	oldacts[2];
 
-	heredoc_tmpfile = ldexec_heredoc_assign();
+	heredoc_tmpfile = ldexec_heredoc_assign_f();
 	input_sigign_setup(oldacts);
 	pid = fork();
 	if (pid < 0)
@@ -45,7 +46,6 @@ int	ldexec_run(t_ld_struct_exec exec)
 	unlink(heredoc_tmpfile);
 	free(heredoc_tmpfile);
 	input_sighandler_restore(oldacts);
-	free_ft_split(exec.envp);
 	return (pid);
 }
 

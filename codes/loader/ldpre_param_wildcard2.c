@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 23:00:50 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/21 00:24:49 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/21 12:42:54 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void		ldpre_param_wc_dirlist_f(t_ld_dir_node *start);
 void		ldpre_param_wc_free_dirlist(t_ld_dir_node *node);
-char		**ldpre_param_wildcard_result(t_ld_dir_node *node);
+char		**ldpre_param_wildcard_result_f(t_ld_dir_node *node);
 static int	dirlist_length(t_ld_dir_node *node);
 
 void	ldpre_param_wc_free_dirlist(t_ld_dir_node *node)
@@ -31,6 +31,9 @@ void	ldpre_param_wc_free_dirlist(t_ld_dir_node *node)
 	}
 }
 
+/*
+Caller should free the returned pointer after use.
+*/
 void	ldpre_param_wc_dirlist_f(t_ld_dir_node *prev)
 {
 	DIR				*dir;
@@ -60,20 +63,23 @@ void	ldpre_param_wc_dirlist_f(t_ld_dir_node *prev)
 		do_exit("ldpre_param_wc_dirlist_f.closedir");
 }
 
-char	**ldpre_param_wildcard_result(t_ld_dir_node *node)
+/*
+Caller should free the returned pointer after use.
+*/
+char	**ldpre_param_wildcard_result_f(t_ld_dir_node *node)
 {
 	int				count;
 	char			**ret;
 
 	ret = malloc((dirlist_length(node) + 1) * sizeof(char *));
 	if (ret == NULL)
-		do_exit("ldpre_param_wildcard_result.malloc");
+		do_exit("ldpre_param_wildcard_result_f.malloc");
 	count = 0;
 	while (node != NULL)
 	{
 		ret[count] = ft_strdup(node->name);
 		if (ret[count] == NULL)
-			do_exit("ldpre_param_wildcard_result.malloc");
+			do_exit("ldpre_param_wildcard_result_f.malloc");
 		count += 1;
 		node = node->next;
 	}

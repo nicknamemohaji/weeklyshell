@@ -6,20 +6,21 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:50:17 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/20 23:58:08 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/21 14:11:19 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "types.h"
 #include "utils.h"
 
-static t_ld_map_node	**find_key_from_map(char *key, t_ld_map_env *map);
-char					*ldpre_env_fetch(char *key, t_ld_map_env *map);
-void					ldpre_env_add(char *key, char *value,
-							t_ld_map_env *map);
-t_bool					ldpre_env_remove(char *key, t_ld_map_env *map);
+t_ld_map_node	**ldpre_env_findkey(char *key, t_ld_map_env *map);
+char			*ldpre_env_fetch(char *key, t_ld_map_env *map);
+void			ldpre_env_add(char *key, char *value,
+					t_ld_map_env *map);
+t_bool			ldpre_env_remove(char *key, t_ld_map_env *map);
+static t_bool	validate_key_format(char *key);
 
-static t_ld_map_node	**find_key_from_map(char *key, t_ld_map_env *map)
+t_ld_map_node	**ldpre_env_findkey(char *key, t_ld_map_env *map)
 {
 	t_ld_map_node	*node;
 	t_ld_map_node	*prev;
@@ -45,7 +46,12 @@ char	*ldpre_env_fetch(char *key, t_ld_map_env *map)
 {
 	t_ld_map_node	**node;
 
-	node = find_key_from_map(key, map);
+	if (!validate_key_format(key))
+	{
+		printf("syntax error: [%s]\n", key);
+		return (NULL);
+	}
+	node = ldpre_env_findkey(key, map);
 	if (node == NULL)
 		return (NULL);
 	else
@@ -56,6 +62,11 @@ void	ldpre_env_add(char *key, char *value, t_ld_map_env *map)
 {
 	t_ld_map_node	*node;
 
+	if (!validate_key_format(key))
+	{
+		printf("syntax error: [%s]\n", key);
+		return ;
+	}
 	ldpre_env_remove(key, map);
 	node = malloc(sizeof(t_ld_map_node) * 1);
 	if (node == NULL)
@@ -71,7 +82,7 @@ t_bool	ldpre_env_remove(char *key, t_ld_map_env *map)
 {
 	t_ld_map_node	**node;
 
-	node = find_key_from_map(key, map);
+	node = ldpre_env_findkey(key, map);
 	if (node == NULL)
 		return (FALSE);
 	if (node[1] == NULL)
@@ -83,4 +94,16 @@ t_bool	ldpre_env_remove(char *key, t_ld_map_env *map)
 	free(node[0]);
 	map->count--;
 	return (TRUE);
+}
+
+static t_bool	validate_key_format(char *key)
+{
+	if (!(ft_isalpha(*key) || *key == '_'))
+		return (FALSE);
+	while (ft_isalnum(*key) || *key == '_')
+		key++;
+	if (*key == '\0')
+		return (TRUE);
+	else
+		return (FALSE);
 }
