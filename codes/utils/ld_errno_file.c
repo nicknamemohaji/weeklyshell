@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ld_errno_file.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 01:33:48 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/14 01:45:23 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/21 17:35:44 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 
 void	ld_errno_file(char *trace, char *path);
 
+/*
+void	ld_errno_file(char *trace, char *path)
+:param trace: function info
+:param path: file that had error
+
+prints error message to STDOUT if recovable (ex. ENOENT, EACCESS),
+exits if error is unrecovable (ex. EIO, EFAULT)
+*/
 void	ld_errno_file(char *trace, char *path)
 {
 	if (errno == ENOENT)

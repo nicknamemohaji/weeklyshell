@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ldexec_env_exitcode.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 13:44:12 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/21 14:10:53 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/21 17:39:55 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*ldexec_env_exitcode_fetch_f(t_ld_map_env *env)
 	char			*ret;
 	t_ld_map_node	**nodes;
 
-	nodes = ldpre_env_findkey("?", env);
+	nodes = ldpre_env_searchkey("?", env);
 	if (nodes == NULL)
 		ret = ft_itoa(0);
 	else
@@ -55,7 +55,7 @@ void	ldexec_env_exitcode_update(int code, t_ld_map_env *env)
 	t_ld_map_node	**nodes;
 	t_ld_map_node	*node;
 
-	nodes = ldpre_env_findkey("?", env);
+	nodes = ldpre_env_searchkey("?", env);
 	if (nodes != NULL)
 	{
 		nodes[1]->next = nodes[0]->next;
@@ -73,5 +73,5 @@ void	ldexec_env_exitcode_update(int code, t_ld_map_env *env)
 	if (node->value == NULL)
 		do_exit("ldexec_env_exitcode_update.malloc");
 	node->next = NULL;
-	ld_map_node_attach(env, node);		
+	ld_map_node_attach(env, node);
 }

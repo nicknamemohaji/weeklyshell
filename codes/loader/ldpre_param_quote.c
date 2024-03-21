@@ -3,23 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ldpre_param_quote.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 18:18:30 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/21 12:42:29 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/21 16:47:14 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "loader.h"
 #include "utils.h"
 
-char		*ldpre_param_quote_f(char *arg, t_ld_map_env *env);
-static char	*quote_removal_f(char *s, char **ptr, t_ld_map_env *env);
+char		*ldpre_param_quote_f(char *arg,
+				t_ld_map_env *env, t_bool *wildcard);
+static char	*quote_removal_f(char *s,
+				char **ptr, t_bool *wildcard, t_ld_map_env *env);
 
 /*
-Caller should free the returned pointer after use.
+char	*ldpre_param_quote_f(char *arg, t_ld_map_env *env, t_bool *wildcard)
+:param arg: raw string to remove (and expand)
+:param env: environment variables
+:param wildcard: t_bool ptr of caller
+:return: quote removed string
+
+Performs quote removal. If needed, performs shell parmeter expansion.
+
+- Caller should perform wildcard expansion if wildcard flag is set
+- Caller should free the returned pointer after use.
 */
-char	*ldpre_param_quote_f(char *arg, t_ld_map_env *env)
+char	*ldpre_param_quote_f(char *arg, t_ld_map_env *env, t_bool *wildcard)
 {
 	t_ld_param_node	start;
 	t_ld_param_node	*node;
@@ -27,15 +38,16 @@ char	*ldpre_param_quote_f(char *arg, t_ld_map_env *env)
 	char			*ret;
 	char			*arg_ptr;
 
+	*wildcard = FALSE;
 	arg_ptr = arg;
 	start.next = NULL;
-	prev = &(start);
+	prev = &start;
 	while (*arg != '\0')
 	{
-		node = malloc(1 * sizeof(t_ld_param_node));
+		node = ft_calloc(1, sizeof(t_ld_param_node));
 		if (node == NULL)
 			do_exit("ldpre_param_expansion_f.malloc");
-		node->content = quote_removal_f(arg, &arg, env);
+		node->content = quote_removal_f(arg, &arg, wildcard, env);
 		node->next = NULL;
 		prev->next = node;
 		prev = node;
@@ -46,7 +58,21 @@ char	*ldpre_param_quote_f(char *arg, t_ld_map_env *env)
 	return (ret);
 }
 
-static char	*quote_removal_f(char *s, char **ptr, t_ld_map_env *env)
+/*
+static char	*quote_removal_f(char *s,
+				char **ptr, t_bool *wildcard, t_ld_map_env *env)
+:param s: arg
+:param ptr: arg ptr of caller
+:param wildcard: t_bool ptr of caller
+:param env: environment variables
+:return: parsed argument
+
+Performs quote removal, and takes expansion if needed. If there is unquoted
+`*`, marks the `wildcard` flag to take wildcard expansion after all strings
+are unquoted.
+*/
+static char	*quote_removal_f(char *s,
+				char **ptr, t_bool *wildcard, t_ld_map_env *env)
 {
 	char	*ret;
 	char	*end_ptr;
@@ -62,15 +88,13 @@ static char	*quote_removal_f(char *s, char **ptr, t_ld_map_env *env)
 		while (*end_ptr != '\0' && *end_ptr != '\'' && *end_ptr != '\"')
 			end_ptr++;
 		ret = ft_substr(s, 0, end_ptr - s);
+		if (ft_strchr(ret, '*') != NULL)
+			*wildcard = TRUE;
 	}
 	if (ret == NULL)
 		do_exit("ldpre_param_quote.quote_removal_f.malloc");
 	if (*s != '\'')
-	{
 		ret = ldpre_param_expansion_f(ret, env);
-		if (ret == NULL)
-			do_exit("ldpre_param_quote.quote_removal_f.malloc");
-	}
 	*ptr = end_ptr;
 	return (ret);
 }

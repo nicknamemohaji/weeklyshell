@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ld_chdir.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 20:13:08 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/20 22:10:11 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/21 17:32:46 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 t_bool			ld_chdir(char *path);
 static t_bool	check_access(char *path);
 
+/*
+t_bool	ld_chdir(char *path)
+:param path: path to move 
+:return: TRUE if it was able to move to the pat
+*/
 t_bool	ld_chdir(char *path)
 {
 	char	**splitted_path;
@@ -43,6 +48,10 @@ t_bool	ld_chdir(char *path)
 	return (TRUE);
 }
 
+/*
+static t_bool	check_access(char *path)
+:param path: path to check access
+*/
 static t_bool	check_access(char *path)
 {
 	errno = 0;

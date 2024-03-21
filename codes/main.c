@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:17:43 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/03/21 14:16:06 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/21 16:51:23 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,15 @@ int	main(int argc, char *argv[], char *envp[])
 	str = ldpre_param_expansion_f(strdup(TEST1), env);
 	printf("exapansion (" TEST1 ") ----> (%s)\n", str);
 	free(str);
-	str = ldpre_param_quote_f(strdup(TEST1), env);
+	t_bool wildcard;
+	str = ldpre_param_quote_f(strdup(TEST1), env, &wildcard);
 	printf("quote (" TEST1 ") ----> (%s)\n", str);
 	free(str);
 	# define TEST2 "\'$TESTARG...$TE??$...\"\'"
 	str = ldpre_param_expansion_f(strdup(TEST2), env);
 	printf("exapnsion (" TEST2 ") ----> (%s)\n", str);
 	free(str);
-	str = ldpre_param_quote_f(strdup(TEST2), env);
+	str = ldpre_param_quote_f(strdup(TEST2), env, &wildcard);
 	printf("quote (" TEST2 ") ----> (%s)\n", str);
 	free(str);
 	# define TEST3 "*"
@@ -62,6 +63,32 @@ int	main(int argc, char *argv[], char *envp[])
 	for (int i = 0; strs[i] != NULL; i++)
 		printf("%d: %s\n", i, strs[i]);
 	free_ft_split(strs);
+	# define TEST5 "\'\'*\"t\""
+	str = ldpre_param_quote_f(strdup(TEST5), env, &wildcard);
+	printf("exapnsion (" TEST5 ") ----> (%s)\n", str);
+	printf("wait... wildcard %d\n", wildcard);
+	if (wildcard)
+	{
+		strs = ldpre_param_wildcard_f(str);
+		for (int i = 0; strs[i] != NULL; i++)
+			printf("%d: %s\n", i, strs[i]);
+		free_ft_split(strs);
+	}
+	else
+		free(str);
+	# define TEST6 "\'*\'\"t\""
+	str = ldpre_param_quote_f(strdup(TEST6), env, &wildcard);
+	printf("exapnsion (" TEST6 ") ----> (%s)\n", str);
+	printf("wait... wildcard %d\n", wildcard);
+	if (wildcard)
+	{
+		strs = ldpre_param_wildcard_f(str);
+		for (int i = 0; strs[i] != NULL; i++)
+			printf("%d: %s\n", i, strs[i]);
+		free_ft_split(strs);
+	}
+	else
+		free(str);
 
 	// TEST exec
 	t_bool need_free;

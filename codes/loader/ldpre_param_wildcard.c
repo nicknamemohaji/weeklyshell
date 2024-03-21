@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ldpre_param_wildcard.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 20:55:30 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/21 12:42:37 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/21 17:17:38 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "utils.h"
 
 char		**ldpre_param_wildcard_f(char *arg);
-static char	*get_prefix_f(char *s, char **ptr);
+static char	*get_pattern_f(char *s, char **ptr);
 static void	match_prefix(char *prefix,
 				t_ld_dir_node *node, t_ld_dir_node *prev);
 static void	match_middle(char *pattern,
@@ -23,7 +23,13 @@ static void	match_suffix(char *suffix,
 				t_ld_dir_node *node, t_ld_dir_node *prev);
 
 /*
-Caller should free the returned pointer after use.
+char	**ldpre_param_wildcard_f(char *arg)
+:param arg: string after quote removal (+ shell param expansion)
+:return: array of strings containing each match
+
+- Caller should expand argument array, adding returned contents
+- Caller should free the returned pointer after use
+	(use free_ft_split function)
 */
 char	**ldpre_param_wildcard_f(char *arg)
 {
@@ -37,12 +43,12 @@ char	**ldpre_param_wildcard_f(char *arg)
 	arg_ptr = arg;
 	errno = 0;
 	ldpre_param_wc_dirlist_f(&start);
-	pattern = get_prefix_f(arg, &arg);
+	pattern = get_pattern_f(arg, &arg);
 	match_prefix(pattern, start.next, &start);
 	free(pattern);
 	while (ft_strchr(arg, '*') != NULL)
 	{
-		pattern = get_prefix_f(arg, &arg);
+		pattern = get_pattern_f(arg, &arg);
 		match_middle(pattern, start.next, &start);
 		free(pattern);
 	}
@@ -53,7 +59,16 @@ char	**ldpre_param_wildcard_f(char *arg)
 	return (ret);
 }
 
-static char	*get_prefix_f(char *s, char **ptr)
+/*
+static char	*get_pattern_f(char *s, char **ptr)
+:param s: arg
+:param ptr: arg ptr of caller
+:return: parsed pattern
+
+Caller's arg ptr will be moved to next `*`, allowing to run
+match_middle function until no `*` is found.
+*/
+static char	*get_pattern_f(char *s, char **ptr)
 {
 	char	*ret;
 
@@ -66,10 +81,19 @@ static char	*get_prefix_f(char *s, char **ptr)
 	*ptr += 1;
 	ret = ft_substr(ret, 0, s - ret);
 	if (ret == NULL)
-		do_exit("ldpre_param_wildcard.get_prefix_f.malloc");
+		do_exit("ldpre_param_wildcard.get_pattern_f.malloc");
 	return (ret);
 }
 
+/*
+static void	match_prefix(char *prefix,
+				t_ld_dir_node *node, t_ld_dir_node *prev)
+:param prefix: pattern to match
+:param node: pointer to first node
+:param prev: pointer to root node
+
+Strictly match prefix pattern. Free all nodes that does not match
+*/
 static void	match_prefix(char *prefix,
 				t_ld_dir_node *node, t_ld_dir_node *prev)
 {
@@ -96,6 +120,15 @@ static void	match_prefix(char *prefix,
 	}
 }
 
+/*
+static void	match_middle(char *pattern,
+				t_ld_dir_node *node, t_ld_dir_node *prev)
+:param pattern: pattern to match
+:param node: pointer to first node
+:param prev: pointer to root node
+
+Match middle patterns, more generously :). Free all nodes that does not match
+*/
 static void	match_middle(char *pattern,
 				t_ld_dir_node *node, t_ld_dir_node *prev)
 {
@@ -126,6 +159,15 @@ static void	match_middle(char *pattern,
 	}
 }
 
+/*
+static void	match_suffix(char *suffix,
+				t_ld_dir_node *node, t_ld_dir_node *prev)
+:param suffix: pattern to match
+:param node: pointer to first node
+:param prev: pointer to root node
+
+Strictly match suffix pattern. Free all nodes that does not match
+*/
 static void	match_suffix(char *suffix,
 				t_ld_dir_node *node, t_ld_dir_node *prev)
 {

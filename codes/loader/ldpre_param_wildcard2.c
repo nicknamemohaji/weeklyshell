@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ldpre_param_wildcard2.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 23:00:50 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/21 12:42:54 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/21 17:15:31 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@ void		ldpre_param_wc_free_dirlist(t_ld_dir_node *node);
 char		**ldpre_param_wildcard_result_f(t_ld_dir_node *node);
 static int	dirlist_length(t_ld_dir_node *node);
 
+/*
+void	ldpre_param_wc_free_dirlist(t_ld_dir_node *node)
+:param node: first node of list
+*/
 void	ldpre_param_wc_free_dirlist(t_ld_dir_node *node)
 {
 	t_ld_dir_node	*ptr;
@@ -32,7 +36,15 @@ void	ldpre_param_wc_free_dirlist(t_ld_dir_node *node)
 }
 
 /*
+void	ldpre_param_wc_dirlist_f(t_ld_dir_node *prev)
+:param prev: pointer of root node
+
+Reads Current Working Directory(CWD)'s content, and creates linked list
+containig each filename. bash shell matches not only regular file, but also
+directories/symlinks/..., so i did not check for filetypes(ent->d_type==DT_REG)
+
 Caller should free the returned pointer after use.
+(use ldpre_param_wc_free_dirlist function)
 */
 void	ldpre_param_wc_dirlist_f(t_ld_dir_node *prev)
 {
@@ -64,7 +76,12 @@ void	ldpre_param_wc_dirlist_f(t_ld_dir_node *prev)
 }
 
 /*
+char	**ldpre_param_wildcard_result_f(t_ld_dir_node *node)
+:param node: pointer to first node of list
+:return: char *[] containing file names patching given pattern
+
 Caller should free the returned pointer after use.
+(use free_ft_split function)
 */
 char	**ldpre_param_wildcard_result_f(t_ld_dir_node *node)
 {
@@ -87,6 +104,11 @@ char	**ldpre_param_wildcard_result_f(t_ld_dir_node *node)
 	return (ret);
 }
 
+/*
+static int	dirlist_length(t_ld_dir_node *node)
+:param node: pointer to first node of list
+:return: length of the list
+*/
 static int	dirlist_length(t_ld_dir_node *node)
 {
 	int	count;

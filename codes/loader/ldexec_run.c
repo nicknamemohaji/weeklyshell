@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ldexec_run.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 01:11:55 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/21 14:14:16 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/21 17:24:50 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	ldexec_run(t_ld_struct_exec exec)
 	struct sigaction	oldacts[2];
 
 	heredoc_tmpfile = ldexec_heredoc_assign_f();
-	input_sigign_setup(oldacts);
 	pid = fork();
 	if (pid < 0)
 		do_exit("ldexec_run.fork");
@@ -41,11 +40,12 @@ int	ldexec_run(t_ld_struct_exec exec)
 	}
 	close(exec.pipe.stdin);
 	close(exec.pipe.stdout);
+	ldexec_sigign_setup(oldacts);
 	if (wait(&pid) < 0)
 		do_exit("ldexec_run.wait");
+	input_sighandler_restore(oldacts);
 	unlink(heredoc_tmpfile);
 	free(heredoc_tmpfile);
-	input_sighandler_restore(oldacts);
 	return (pid);
 }
 

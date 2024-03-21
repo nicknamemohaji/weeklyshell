@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:17:56 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/03/18 17:53:07 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/21 17:19:14 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,16 @@
 # define TERM_COLOR_END "\033[0m"
 
 // input_readline.c
+
 char	*input_readline_f(void);
 
 // input_terminal.c
+
 void	input_terminal_setup(struct termios *oldterm);
 void	input_terminal_restore(struct termios *oldterm);
 
 // input_validator.c
+
 t_bool	input_validate(const char *input);
 
 #endif
