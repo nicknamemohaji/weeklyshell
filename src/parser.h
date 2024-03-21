@@ -7,8 +7,8 @@ enum precedence
 	P_NO_MATCH,
 	P_LOWEST,
 	P_PIPE,
-	P_RDICT,
 	P_LOGIC,
+	P_RDICT,
 	P_PREFIX
 };
 
