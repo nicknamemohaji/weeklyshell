@@ -6,7 +6,7 @@
 #    By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/28 21:23:19 by kyungjle          #+#    #+#              #
-#    Updated: 2024/03/12 19:51:08 by nicknamemoh      ###   ########.fr        #
+#    Updated: 2024/03/27 05:16:31 by nicknamemoh      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,12 +69,20 @@ PRINTF_FILES = 	ft_printf.c \
 
 PRINTF_OBJECTS = $(PRINTF_FILES:.c=.o)
 
+# inner-1 get_next_line files
+GNL_FILE_DIR = /get_next_line
+GNL_FILES = 	get_next_line.c \
+				get_next_line_utils.c
+
+GNL_OBJECTS = $(GNL_FILES:.c=.o)
+
 # directories
 SRC_DIR = srcs
 HEADER_DIR = headers
 OBJECT_DIR = objects
 OBJECTS = 	$(LIBFT_OBJECTS) \
-			$(PRINTF_OBJECTS)
+			$(PRINTF_OBJECTS) \
+			$(GNL_OBJECTS)
 
 # flags
 CC = cc
@@ -89,11 +97,15 @@ $(NAME): $(addprefix $(OBJECT_DIR)/, $(OBJECTS))
 
 $(addprefix $(OBJECT_DIR)/, $(LIBFT_OBJECTS)):
 	@mkdir -p $(OBJECT_DIR)
-	@$(CC) $(CFLAGS) -c $(subst $(OBJECT_DIR)/,$(SRC_DIR)$(LIBFT_FILE_DIR)/,$*).c -o $@
+	$(CC) $(CFLAGS) -c $(subst $(OBJECT_DIR)/,$(SRC_DIR)$(LIBFT_FILE_DIR)/,$*).c -o $@
 
 $(addprefix $(OBJECT_DIR)/, $(PRINTF_OBJECTS)):
 	@mkdir -p $(OBJECT_DIR)
-	@$(CC) $(CFLAGS) -c $(subst $(OBJECT_DIR)/,$(SRC_DIR)$(PRINTF_FILE_DIR)/,$*).c -o $@
+	$(CC) $(CFLAGS) -c $(subst $(OBJECT_DIR)/,$(SRC_DIR)$(PRINTF_FILE_DIR)/,$*).c -o $@
+
+$(addprefix $(OBJECT_DIR)/, $(GNL_OBJECTS)):
+	@mkdir -p $(OBJECT_DIR)
+	$(CC) $(CFLAGS) -c $(subst $(OBJECT_DIR)/,$(SRC_DIR)$(GNL_FILE_DIR)/,$*).c -o $@
 
 clean:
 	rm -rf $(addprefix $(OBJECT_DIR)/, $(OBJECTS))

@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ld_map_functions2.c                                :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/19 00:50:17 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/21 17:42:40 by kyungjle         ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   ld_map_functions2.c								:+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: nicknamemohaji <nicknamemohaji@student.	+#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2024/03/19 00:50:17 by nicknamemoh	   #+#	#+#			 */
+/*   Updated: 2024/03/27 05:31:42 by nicknamemoh	  ###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
 #include "types.h"
@@ -71,6 +71,8 @@ char	*ldpre_env_fetch(char *key, t_ld_map_env *map)
 void	ldpre_env_add(char *key, char *value, t_ld_map_env *map)
 {
 	t_ld_map_node	*node;
+	char			*key_copy;
+	char			*value_copy;
 
 	if (!validate_key_format(key))
 	{
@@ -81,8 +83,14 @@ void	ldpre_env_add(char *key, char *value, t_ld_map_env *map)
 	node = malloc(sizeof(t_ld_map_node) * 1);
 	if (node == NULL)
 		do_exit("ldpre_env_add.malloc");
-	node->key = key;
-	node->value = value;
+	key_copy = ft_strdup(key);
+	value_copy = ft_strdup(value);
+	if (key_copy == NULL || value_copy == NULL)
+		do_exit("ldpre_env_add.ft_strdup");
+	free(key);
+	free(value);
+	node->key = key_copy;
+	node->value = value_copy;
 	node->next = NULL;
 	ld_map_node_attach(map, node);
 	return ;

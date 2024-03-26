@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 00:59:19 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/02/16 18:44:01 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/27 05:15:19 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,7 @@ void	ft_putnbr_fd(int n, int fd);
 // ft_printf
 int		ft_printf(const char *s, ...);
 int		ft_sprintf(char	*ret, const char *s, ...);
+
+// get_next_line
+char	*get_next_line(int fd);
 #endif

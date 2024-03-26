@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 02:12:31 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/21 12:39:04 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/27 05:27:38 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,30 +57,26 @@ char	*ldexec_heredoc_assign_f(void)
 
 t_bool	ldexec_heredoc(int fd, char *delim)
 {
-	// TODO heredoc shell variable expansion
-	// TODO use get_next_line function here
-	char				buf[100];
+	char				*buf;
 	int					readcount;
 	const int			delim_len = ft_strlen(delim);
 	struct sigaction	oldacts[2];
 	t_bool				ret;
 
 	input_sighandler_setup(oldacts);
-	while (1)
+	ret = TRUE;
+	while (ret == TRUE)
 	{
-		readcount = read(STDIN_FD, buf, 100);
+		buf = get_next_line(STDIN_FD);
+		readcount = ft_strlen(buf);
 		if (g_sigint == TRUE || readcount <= 0)
-		{
 			ret = FALSE;
-			break ;
-		}
-		if (readcount - 1 == delim_len
+		else if (readcount - 1 == delim_len
 			&& ft_strncmp(buf, delim, delim_len) == 0)
-		{
-			ret = TRUE;
 			break ;
-		}
-		write(fd, buf, readcount);
+		if (fd != -1)
+			write(fd, buf, readcount);
+		free(buf);
 	}
 	input_sighandler_restore(oldacts);
 	return (ret);

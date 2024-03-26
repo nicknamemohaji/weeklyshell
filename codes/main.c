@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:17:43 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/03/21 16:51:23 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/03/27 05:25:35 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	main(int argc, char *argv[], char *envp[])
 			.stdout = NULL
 		}
 	};
-	printf("pid %d exitcode: %d\n", getpid(), ldexec_run(exec));
+	printf("pid %d exitcode: %d\n", getpid(), ldexec_run_bin(exec));
 	printf("path %s need_free %d\n", exec.path, need_free);
 	if (need_free == TRUE)
 		free(exec.path);

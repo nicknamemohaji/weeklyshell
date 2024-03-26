@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loader.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:47:14 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/21 17:18:17 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/03/27 05:30:40 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,9 @@ char	*ldexec_exec_find_f(char *cmd, t_bool *need_free, const char *path);
 
 // ldexec_run.c
 
-int		ldexec_run(t_ld_struct_exec exec);
+int		ldexec_run_bin(t_ld_struct_exec exec);
+t_bool	ldexec_redir(t_ld_array_redir redir,
+			t_ld_array_pipe pipe, char *heredoc_tmpfile);
 
 // ldexec_heredoc.c
 
