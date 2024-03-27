@@ -29,6 +29,6 @@ jobs:
           sudo apt update
           sudo apt install build-essential -y
           echo checking files: $(git ls-files)
-          for f in $(find . -name \*.c); do gcc -Wall -Wextra -Werror -fsyntax-only $f; done
+          for f in $(find . -name \*.c); do gcc -I includes/ -Wall -Wextra -Werror -fsyntax-only $f; done
 
   
