@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 02:12:31 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/27 05:27:38 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/27 06:38:44 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,11 @@ t_bool	ldexec_heredoc(int fd, char *delim)
 	while (ret == TRUE)
 	{
 		buf = get_next_line(STDIN_FD);
-		readcount = ft_strlen(buf);
-		if (g_sigint == TRUE || readcount <= 0)
+		if (g_sigint == FALSE && buf != NULL)
+			readcount = ft_strlen(buf);
+		if (g_sigint == TRUE || readcount <= 0 || buf == NULL)
 			ret = FALSE;
-		else if (readcount - 1 == delim_len
+		else if (g_sigint == FALSE && readcount - 1 == delim_len
 			&& ft_strncmp(buf, delim, delim_len) == 0)
 			break ;
 		if (fd != -1)

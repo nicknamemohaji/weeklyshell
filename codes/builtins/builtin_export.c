@@ -1,17 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_export.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/27 06:04:43 by nicknamemoh       #+#    #+#             */
+/*   Updated: 2024/03/27 06:05:18 by nicknamemoh      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "builtin.h"
 #include "utils.h"
 
-int		 builtin_export(char *args[], t_ld_map_env *env);
-static int  builtin_export_print(t_ld_map_env *env);
+int	builtin_export(char *args[], t_ld_map_env *env);
 
-int builtin_export(char *args[], t_ld_map_env *env)
+int	builtin_export(char *args[], t_ld_map_env *env)
 {
-	int i;
-	char *key;
-	char *value;
+	int		i;
+	char	*key;
+	char	*value;
 
 	if (args[1] == NULL)
-		return (builtin_export_print(env));
+		return (builtin_env_print(env));
 	i = 1;
 	while (args[i] != NULL)
 	{

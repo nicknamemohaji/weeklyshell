@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 01:11:55 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/27 05:27:22 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/27 06:37:19 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ static t_bool	redir_redir_stdin(t_ld_redir_node *node, char *heredoc_tmpfile)
 		}
 		if (close(STDIN_FD) != 0)
 			do_exit("ldexec_run.redir_redir_stdin.close");
-		if (open(node->filename, O_RDONLY) < 0)
+		if (heredoc_tmpfile != NULL && open(node->filename, O_RDONLY) < 0)
 		{
 			ld_errno_file("ldexec_run.redir_redir_stdin.open", node->filename);
 			return (FALSE);

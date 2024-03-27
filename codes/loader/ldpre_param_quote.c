@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ldpre_param_quote.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 18:18:30 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/21 16:47:14 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/03/27 07:13:19 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

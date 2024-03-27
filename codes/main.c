@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:17:43 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/03/27 05:25:35 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/27 07:01:47 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,11 @@ int	main(int argc, char *argv[], char *envp[])
 	if (need_free == TRUE)
 		free(exec.path);
 	free_ft_split(__envp);
+
+	// TEST builtin
+	exec.redir = (t_ld_array_redir){NULL, NULL};
+	exec.argv = (char *[]){"echo", "hello", "world", NULL};
+	printf("pid %d exitcode: %d\n", getpid(), builtin_wrapper(exec, env));
 	
 	while (1)
 	{
@@ -120,8 +125,42 @@ int	main(int argc, char *argv[], char *envp[])
 			break ;
 		if (input_validate(input) == TRUE)
 		{
-			// loader_wrapper(input, env);
-			printf("input: %s\n", input);
+			if (ft_strlen(input) == 0)
+				continue ;
+			// loader_wrapper(input, env);			
+			// TEST
+			printf("input %p\n", input);
+			char **args = ft_split(input, ' ');
+			for (int i = 0; args[i] != NULL; i++)
+			{
+				args[i] = ldpre_param_quote_f(args[i], env, &wildcard);
+				if (wildcard)
+					printf("YO DO WILDCARD");
+			}
+			exec.argv = args;
+			if (builtin_isbuiltin(exec.argv[0]))
+				printf("pid %d exitcode: %d\n", getpid(), builtin_wrapper(exec, env));
+			else
+			{
+				exec.envp = ldpre_env_toenvp_f(env);
+				exec.path = ldexec_exec_find_f(exec.argv[0], &need_free, ldpre_env_fetch("PATH", env));
+				if (exec.path == NULL)
+				{
+					printf("command not found\n");
+					ldexec_env_exitcode_update(127, env);
+				}
+				else
+				{					
+					printf("path %s\n", exec.path);
+					for (int i = 0; exec.argv[i] != NULL; i++)
+						printf("argv[%d]: %s\n", i, exec.argv[i]);
+					ldexec_env_exitcode_update(ldexec_run_bin(exec), env);
+				}
+				free_ft_split(exec.envp);
+				if (need_free == TRUE)
+					free(exec.path);
+			}
+			free_ft_split(args);
 		}
 		else
 			printf(TERM_COLOR_RED "Syntax Error" TERM_COLOR_END "\n");

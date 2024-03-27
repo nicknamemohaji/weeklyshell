@@ -20,10 +20,19 @@ UTIL_FILES = 	utils/do_exit.c \
 				utils/ld_errno_file.c \
 				utils/ld_map_functions.c \
 				utils/ld_map_functions2.c
+BUILTIN_FILES = builtins/builtin_cd.c \
+				builtins/builtin_echo.c \
+				builtins/builtin_exit.c \
+				builtins/builtin_export.c \
+				builtins/builtin_unset.c \
+				builtins/builtin_env.c \
+				builtins/builtin_pwd.c \
+				builtins/builtin_wrapper.c
 FILES = main.c \
 		$(INPUT_FILES) \
 		$(PARSER_FILES) \
 		$(LOADER_FILES) \
+		$(BUILTIN_FILES) \
 		$(UTIL_FILES)
 OBJECTS = $(FILES:.c=.o)
 LIBFT_DIR = libft/

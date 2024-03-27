@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ldpre_param_wildcard2.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 23:00:50 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/21 17:15:31 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/03/27 07:16:54 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:13:58 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/21 14:20:04 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/27 07:13:13 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ static char	*nodes_new_expansion2_f(char *s, char **ptr, t_ld_map_env *env)
 
 	if (*s == '?')
 	{
-		*ptr += 2;
+		*ptr += 1;
 		ret = ldexec_env_exitcode_fetch_f(env);
 	}
 	else
