@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:19:01 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/03/21 12:39:50 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/28 02:09:10 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@ static char	*make_prompt_f(void)
 	cwd = getcwd(NULL, 0);
 	if (cwd == NULL)
 		do_exit("make_prompt_f.getcwd");
-	ret = malloc(strlen(prompt_base) + strlen(cwd) + 6 + 1);
+	ret = malloc(ft_strlen(prompt_base) + ft_strlen(cwd) + 7 + 1);
 	if (ret == NULL)
 		do_exit("make_prompt_f.malloc");
-	strncpy(ret, prompt_base, strlen(prompt_base) + 1);
-	strncat(ret, cwd, strlen(ret) + strlen(cwd) + 1);
-	strncat(ret, TERM_COLOR_END "$ ", strlen(ret) + 6 + 1);
+	ft_strlcpy(ret, prompt_base, ft_strlen(prompt_base) + 1);
+	ft_strlcat(ret, cwd, ft_strlen(ret) + ft_strlen(cwd) + 1);
+	ft_strlcat(ret, TERM_COLOR_END "$ ", ft_strlen(ret) + 7 + 1);
 	free(prompt_base);
 	free(cwd);
 	return (ret);
