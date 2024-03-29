@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:08:56 by dogwak            #+#    #+#             */
-/*   Updated: 2024/03/28 13:20:22 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/03/29 19:13:28 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static int	construct_end_token(void *pos, void *ptoken)
 {
 	((t_token *)pos)->type = END;
 	((t_token *)pos)->field.pbuffer = NULL;
+	ptoken++;
+	return (1);
 }
 
 /*

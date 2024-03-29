@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:07:19 by dogwak            #+#    #+#             */
-/*   Updated: 2024/03/28 14:07:26 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/03/29 19:11:02 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ t_ast_node	*parse_expression(t_parser *self, int precede)
 	t_ast_node	*left_exp;
 	int			next_node_type;
 
-	if (self->cur_idx == self->ptoken_stream->size)
+	if ((size_t)self->cur_idx == self->ptoken_stream->size)
 		return (ast_syntax_error(NULL));
 	if (self->pcur_token->type == END)
 		return (NULL);
 	left_exp = parse_prefix(self);
 	while (self->pcur_token->type != END && left_exp != NULL
-		&& self->cur_idx < self->ptoken_stream->size - 2
+		&& (size_t)self->cur_idx < self->ptoken_stream->size - 2
 		&& precede < get_precedence(self->pnext_token->type))
 	{
 		next_node_type = get_infix_node_type(self->pnext_token->type);

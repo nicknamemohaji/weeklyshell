@@ -6,14 +6,14 @@
 /*   By: dogwak <dogwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:19:50 by dogwak            #+#    #+#             */
-/*   Updated: 2024/03/28 14:19:58 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/03/29 18:18:46 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./libft/libft.h"
 #include "lexer.h"
 
-static int	get_token_type2(t_lexer *plexer, const char *pc)
+static int	get_token_type2(const char *pc)
 {
 	if (*pc == '&' && *(pc + 1) == '&')
 		return (OPRT_AND);
@@ -62,5 +62,5 @@ int	get_token_type(t_lexer *plexer)
 			return (RDICT_APPEND);
 		return (RDICT_WRITE);
 	}
-	return (get_token_type2(plexer, pc));
+	return (get_token_type2(pc));
 }

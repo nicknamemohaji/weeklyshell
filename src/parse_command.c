@@ -6,30 +6,34 @@
 /*   By: dogwak <dogwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:08:18 by dogwak            #+#    #+#             */
-/*   Updated: 2024/03/28 17:40:59 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/03/29 19:16:12 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./libft/libft.h"
 #include "parser.h"
 
-int	construct_token_ptr(t_token *pos, t_token *param)
+int	construct_token_ptr(void *pos, void *param)
 {
-	pos = param;
+	t_token	**target_pos;
+
+	target_pos = pos;
+	*target_pos = (t_token *)param;
 	return (1);
 }
 
-void	destruct_token_ptr(t_token *self)
+void	destruct_token_ptr(void *self)
 {
 	self++;
 }
 
 static t_ast_node	*new_ast_command_node(t_ft_vector *ptok_ptr_vec)
 {
-	t_ast_node		*command;
-	const t_token	**h_tok_ptr_vec = ptok_ptr_vec->pbuffer;
-	int				idx;
+	t_ast_node	*command;
+	t_token		**h_tok_ptr_vec;
+	size_t		idx;
 
+	h_tok_ptr_vec = ptok_ptr_vec->pbuffer;
 	command = new_ast_node();
 	if (command == NULL)
 		return (ast_malloc_error(NULL));

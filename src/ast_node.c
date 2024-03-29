@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 17:55:27 by dogwak            #+#    #+#             */
-/*   Updated: 2024/03/28 14:21:35 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/03/29 17:47:34 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	delete_ast_node(t_ast_node *self)
 		delete_ast_node(self->left);
 	if (self->right != NULL)
 		delete_ast_node(self->right);
-	free(self->pcmd);
+	if (self->pcmd != NULL)
+		delete_cmd_list(self->pcmd);
 	free(self);
 }

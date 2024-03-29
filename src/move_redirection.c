@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 18:16:02 by dogwak            #+#    #+#             */
-/*   Updated: 2024/03/28 19:17:21 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/03/29 18:19:55 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	move_left_redirect(t_ft_vector *ptoken_stream)
 {
 	t_token	*htok_vec;
 	int		to;
-	int		idx;
+	size_t	idx;
 
 	htok_vec = ptoken_stream->pbuffer;
 	idx = -1;
@@ -61,10 +61,8 @@ static void	move_left_redirect(t_ft_vector *ptoken_stream)
 			pull_two_token_front(htok_vec, idx, to);
 			to += 2;
 		}
-		else if (htok_vec[idx].type == PIPE
-			|| htok_vec[idx].type == LPAR
-			|| htok_vec[idx].type == RPAR
-			|| htok_vec[idx].type == OPRT_AND
+		else if (htok_vec[idx].type == PIPE || htok_vec[idx].type == LPAR
+			|| htok_vec[idx].type == RPAR || htok_vec[idx].type == OPRT_AND
 			|| htok_vec[idx].type == OPRT_OR)
 			to = idx + 1;
 	}
@@ -87,10 +85,8 @@ static void	move_right_redirect(t_ft_vector *ptoken_stream)
 			pull_two_token_back(htok_vec, idx, to);
 			to -= 2;
 		}
-		else if (htok_vec[idx].type == PIPE
-			|| htok_vec[idx].type == LPAR
-			|| htok_vec[idx].type == RPAR
-			|| htok_vec[idx].type == OPRT_AND
+		else if (htok_vec[idx].type == PIPE || htok_vec[idx].type == LPAR
+			|| htok_vec[idx].type == RPAR || htok_vec[idx].type == OPRT_AND
 			|| htok_vec[idx].type == OPRT_OR)
 			to = idx - 2;
 	}
