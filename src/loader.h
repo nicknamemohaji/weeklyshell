@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 19:20:33 by dogwak            #+#    #+#             */
-/*   Updated: 2024/03/28 19:20:37 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/03/29 15:37:01 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef struct s_loader
 	int		cur_read_fd;
 	int		cur_write_fd;
 	int		next_read_fd;
+	// TBD : pid 저장 필요함
 }			t_loader;
 
 t_loader	*new_loader(void);
