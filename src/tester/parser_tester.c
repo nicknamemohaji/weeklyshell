@@ -19,11 +19,16 @@ void	print_token(const t_ft_vector *token_stream)
 	t_token	*htok_vec;
 
 	htok_vec = (t_token *)(token_stream->pbuffer);
-	for (int i = 0; i < token_stream->size; ++i)
+	for (size_t i = 0; i < token_stream->size; ++i)
 	{
-		printf("%s %s", token_type[htok_vec[i].type],
+		printf("%s %s\n", token_type[htok_vec[i].type],
 			htok_vec[i].field.c_str(&htok_vec[i].field));
 	}
+}
+
+void	check_leak(void)
+{
+	system("leaks parser_tester");
 }
 
 int	main(void)
@@ -33,6 +38,7 @@ int	main(void)
 	t_ft_vector	token_stream;
 
 	input_str = construct_ftstr();
+	atexit(check_leak);
 	while (1)
 	{
 		if (input_str.getline(&input_str, 0) == 0)
@@ -52,6 +58,7 @@ int	main(void)
 			return (0);
 		printf("done.\n ====== print Abstract Symbol Tree ======\n");
 		print_ast(tree, 0);
+		destruct_ftvec(&token_stream);
 		delete_ast_node(tree);
 		//
 	}

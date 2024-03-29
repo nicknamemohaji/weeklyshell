@@ -95,7 +95,7 @@ void	print_ast(t_ast_node *tree, int depth)
 		printf("print command : ");
 		for (int i = 0; tree->pcmd[i] != NULL; ++i)
 		{
-			printf("%s ", tree->pcmd);
+			printf("%s ", tree->pcmd[i]);
 		}
 		printf("\n");
 	}
