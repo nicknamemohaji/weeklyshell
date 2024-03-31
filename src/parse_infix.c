@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:35:01 by dogwak            #+#    #+#             */
-/*   Updated: 2024/03/28 13:35:09 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/03/31 16:50:02 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ t_ast_node	*parse_infix(t_parser *self, t_ast_node *left)
 	if (exp == NULL)
 		return (ast_malloc_error(left));
 	exp->node_type = get_infix_node_type(self->pcur_token->type);
-	exp->pt = self->pcur_token;
 	exp->left = left;
 	precede = get_precedence(self->pcur_token->type);
 	move_next_token(self);

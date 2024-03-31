@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:08:18 by dogwak            #+#    #+#             */
-/*   Updated: 2024/03/29 19:16:12 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/03/31 16:50:50 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static t_ast_node	*new_ast_command_node(t_ft_vector *ptok_ptr_vec)
 	if (command == NULL)
 		return (ast_malloc_error(NULL));
 	command->node_type = NODE_COMMAND;
-	command->pt = h_tok_ptr_vec[0];
 	command->pcmd = new_cmd_list(ptok_ptr_vec->size);
 	if (command->pcmd == NULL)
 		return (ast_malloc_error(command));

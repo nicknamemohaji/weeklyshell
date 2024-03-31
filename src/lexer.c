@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 18:11:14 by dogwak            #+#    #+#             */
-/*   Updated: 2024/03/31 16:06:01 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/03/31 16:18:02 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,21 @@ void	dest_tok_wrapper(void *self)
 	destruct_token((t_token *)self);
 }
 
-t_ft_vector	tokenize(const char *cstr)
+t_ft_vector	*tokenize(const char *cstr)
 {
-	t_ft_vector	token_stream;
+	t_ft_vector	*ptoken_stream;
 	t_lexer		*plexer;
 
-	token_stream = construct_ftvec(cnstrct_tok_wrapper, dest_tok_wrapper,
+	ptoken_stream = new_ftvec(cnstrct_tok_wrapper, dest_tok_wrapper,
 			sizeof(t_token));
+	if (ptoken_stream == NULL)
+		return (NULL);
 	plexer = (t_lexer *)malloc(sizeof(t_lexer));
+	if (plexer == NULL)
+	{
+		free(ptoken_stream);
+		return (NULL);
+	}
 	plexer->input = cstr;
 	plexer->input_size = ft_strlen(cstr);
 	plexer->cur_ptr = 0;
@@ -78,9 +85,9 @@ t_ft_vector	tokenize(const char *cstr)
 	skip_whitespace(plexer);
 	while (plexer->cur_ptr < plexer->input_size)
 	{
-		token_stream.push_back(&token_stream, plexer);
+		ptoken_stream->push_back(ptoken_stream, plexer);
 		skip_whitespace(plexer);
 	}
 	free(plexer);
-	return (token_stream);
+	return (ptoken_stream);
 }

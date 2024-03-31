@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:33:42 by dogwak            #+#    #+#             */
-/*   Updated: 2024/03/28 13:34:03 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/03/31 16:49:28 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ t_ast_node	*parse_parenthesis(t_parser *self)
 	if (subshell == NULL)
 		return (ast_malloc_error(subshell));
 	subshell->node_type = EXP_SUBSHELL;
-	subshell->pt = self->pcur_token;
 	move_next_token(self);
 	subshell->left = parse_expression(self, P_LOWEST);
 	move_next_token(self);

@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:35:55 by dogwak            #+#    #+#             */
-/*   Updated: 2024/03/29 19:12:19 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/03/31 16:51:56 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ t_ast_node	*parse_file(t_parser *self)
 	if (file->node_type != NODE_WORD)
 		return (ast_syntax_error(file));
 	file->node_type = NODE_FILE;
-	file->pt = self->pcur_token;
 	file->pcmd = new_cmd_list(1);
-	file->pcmd[0] = ft_strdup(file->pt->field.c_str(&file->pt->field));
+	file->pcmd[0]
+		= ft_strdup(self->pcur_token->field.c_str(&self->pcur_token->field));
 	return (file);
 }
