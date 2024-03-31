@@ -40,55 +40,11 @@ static const char	*print_node_type(int ntype)
 		return ("EXP_PRE_RAPPEND");
 }
 
-static const char	*print_tok_type(int ttype)
-{
-	if (ttype == ILLEGAL)
-		return ("ILLEGAL");
-	else if (ttype == LPAR)
-		return ("LPAR");
-	else if (ttype == RPAR)
-		return ("RPAR");
-	else if (ttype == PIPE)
-		return ("PIPE");
-	else if (ttype == RDICT_READ)
-		return ("RDICT_READ");
-	else if (ttype == RDICT_WRITE)
-		return ("RDICT_WRITE");
-	else if (ttype == OPRT_AND)
-		return ("OPRT_AND");
-	else if (ttype == OPRT_OR)
-		return ("OPRT_OR");
-	else if (ttype == RDICT_HEREDOC)
-		return ("RDICT_HEREDOC");
-	else if (ttype == RDICT_APPEND)
-		return ("RDICT_APPEND");
-	else if (ttype == KEY_ECHO)
-		return ("KEY_ECHO");
-	else if (ttype == KEY_CD)
-		return ("KEY_CD");
-	else if (ttype == KEY_PWD)
-		return ("KEY_PWD");
-	else if (ttype == KEY_EXPORT)
-		return ("KEY_EXPORT");
-	else if (ttype == KEY_UNSET)
-		return ("KEY_UNSET");
-	else if (ttype == KEY_ENV)
-		return ("KEY_ENV");
-	else if (ttype == KEY_EXIT)
-		return ("KEY_EXIT");
-	else
-		return ("IDENT");
-}
-
 void	print_ast(t_ast_node *tree, int depth)
 {
 	printf("\n");
 	print_tabs(depth);
 	printf("node type : %s\n", print_node_type(tree->node_type));
-	print_tabs(depth);
-	printf("token type : %s\n", print_tok_type(tree->pt->type));
-	print_tabs(depth);
-	printf("token field : %s\n", tree->pt->field.c_str(&tree->pt->field));
 	if (tree->node_type == NODE_COMMAND)
 	{
 		print_tabs(depth);

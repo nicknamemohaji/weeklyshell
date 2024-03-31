@@ -35,7 +35,7 @@ int	main(void)
 {
 	t_ast_node	*tree;
 	t_ft_string	input_str;
-	t_ft_vector	token_stream;
+	t_ft_vector	*ptoken_stream;
 
 	input_str = construct_ftstr();
 	atexit(check_leak);
@@ -44,26 +44,26 @@ int	main(void)
 		if (input_str.getline(&input_str, 0) == 0)
 			break ;
 		// lexing
-		token_stream = tokenize(input_str.c_str(&input_str));
+		ptoken_stream = tokenize(input_str.c_str(&input_str));
 		printf("=== token stream before sorted ===\n");
-		print_token(&token_stream);
+		print_token(ptoken_stream);
 		// move redirection
-		move_redirection_token(&token_stream);
+		move_redirection_token(ptoken_stream);
 		printf("=== token stream  after sorted ===\n");
-		print_token(&token_stream);
+		print_token(ptoken_stream);
+		delete_ftvec(ptoken_stream);
 		// parsing
-		printf("====== parse Abstract Symbol Tree ======\n");
-		tree = parse(&token_stream);
+		printf("====== parse Abstract Syntax Tree ======\n");
+		tree = parse(input_str.c_str(&input_str));
 		if (tree == NULL)
 		{
-			destruct_ftvec(&token_stream);
+			destruct_ftvec(ptoken_stream);
 			delete_ast_node(tree);
 			destruct_ftstr(&input_str);
 			return (0);
 		}
-		printf("done.\n ====== print Abstract Symbol Tree ======\n");
+		printf("done.\n ====== print Abstract Syntax Tree ======\n");
 		print_ast(tree, 0);
-		destruct_ftvec(&token_stream);
 		delete_ast_node(tree);
 		//
 	}
