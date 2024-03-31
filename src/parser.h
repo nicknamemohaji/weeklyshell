@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 17:55:51 by dogwak            #+#    #+#             */
-/*   Updated: 2024/03/28 13:52:27 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/03/31 16:52:07 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int						get_infix_node_type(int token_type);
 
 typedef struct s_ast_node
 {
-	t_token				*pt;
 	char				**pcmd;
 	int					node_type;
 	struct s_ast_node	*left;
@@ -76,7 +75,8 @@ t_parser				*new_parser(t_ft_vector *ptstream);
 void					delete_parser(t_parser *self);
 void					move_next_token(t_parser *self);
 
-t_ast_node				*parse(t_ft_vector *ptoken_stream);
+t_ast_node				*parse(const char *cstr);
+
 t_ast_node				*parse_expression(t_parser *self, int precede);
 t_ast_node				*parse_parenthesis(t_parser *self);
 t_ast_node				*parse_prefix(t_parser *self);

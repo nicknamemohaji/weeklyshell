@@ -65,7 +65,7 @@ int				get_ident(t_lexer *plexer, t_token *ptoken);
 int				get_quoted_ident(t_lexer *plexer, t_token *ptoken);
 int				get_keyword(t_lexer *plexer, t_token *ptoken);
 
-t_ft_vector		tokenize(const char *cstr);
+t_ft_vector		*tokenize(const char *cstr);
 
 void			move_redirection_token(t_ft_vector *ptoken_stream);
 
