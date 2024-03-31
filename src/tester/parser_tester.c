@@ -55,11 +55,17 @@ int	main(void)
 		printf("====== parse Abstract Symbol Tree ======\n");
 		tree = parse(&token_stream);
 		if (tree == NULL)
+		{
+			destruct_ftvec(&token_stream);
+			delete_ast_node(tree);
+			destruct_ftstr(&input_str);
 			return (0);
+		}
 		printf("done.\n ====== print Abstract Symbol Tree ======\n");
 		print_ast(tree, 0);
 		destruct_ftvec(&token_stream);
 		delete_ast_node(tree);
 		//
 	}
+	destruct_ftstr(&input_str);
 }
