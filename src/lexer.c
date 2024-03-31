@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 18:11:14 by dogwak            #+#    #+#             */
-/*   Updated: 2024/03/29 18:16:49 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/03/31 16:06:01 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void	dest_tok_wrapper(void *self)
 	destruct_token((t_token *)self);
 }
 
-// token_stream을 token*의 벡터로 만들까...
 t_ft_vector	tokenize(const char *cstr)
 {
 	t_ft_vector	token_stream;
