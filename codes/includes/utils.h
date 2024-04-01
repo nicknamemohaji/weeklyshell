@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 19:54:44 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/27 05:03:00 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/03/28 03:37:10 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void			free_ft_split(char **ptr);
 
 // ld_errno_file.c
 
-void			ld_errno_file(char *trace, char *path);
+t_bool			ld_errno_file(char *trace, char *path);
 
 // ld_chdir.c
 

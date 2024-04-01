@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:18:03 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/03/21 13:02:11 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/01 13:23:25 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@
 # include <fcntl.h>
 // import sig_atomic_t type
 # include <signal.h>
+
+// ANSI terminal contrl characters
+# define TERM_COLOR_END "\001\033[m\002"
+# define TERM_COLOR_RED "\001\033[31m\002"
+# define TERM_COLOR_GREEN "\001\033[32m\002"
+# define TERM_COLOR_YELLOW "\001\033[33m\002"
+# define TERM_COLOR_BLUE "\001\033[34m\002"
 
 # define STDIN_FD 0
 # define STDOUT_FD 1
@@ -52,55 +59,27 @@ typedef struct s_ld_dir_node
 	struct s_ld_dir_node	*next;
 }	t_ld_dir_node;
 
-/*
-used by loader.executor
-
-pipes are created and closed in loader/preprocessor module.
-
-- default value is -1, to express 'no pipes'
-- preprocessor should evaluate error codes,
-and close created pipe if needed.
-*/
-typedef struct s_ld_array_pipe
-{
-	int	stdin;
-	int	stdout;
-}	t_ld_array_pipe;
-
 // used by loader.executor
-typedef struct s_ld_redir_node
+typedef struct s_ld_exec
 {
-	char					*filename;
-	t_filemode				mode;
-	struct s_ld_redir_node	*next;
-}	t_ld_redir_node;
-
-/*
-used by loader.executor
-
-redirections can occur multiple times, so store them in linked list.
-
-- if any of the file creation or open fails, execution stops
-- redirections will be handled in FIFO manner,
-so the last redirection will only be written.
-- to handle heredoc errors,
-redirection should happen after heredoc is created.
-*/
-typedef struct s_ld_array_redir
-{
-	t_ld_redir_node	*stdin;
-	t_ld_redir_node	*stdout;
-}	t_ld_array_redir;
-
-// used by loader.executor
-typedef struct s_ld_struct_exec
-{
-	t_ld_array_redir	redir;
-	t_ld_array_pipe		pipe;
 	char				*path;
 	char				**argv;
 	char				**envp;
-}	t_ld_struct_exec;
+}	t_ld_exec;
+
+/*
+used by loader.executor
+
+commands connected to pipes are spawned concurrently,
+so store them in linked list.
+*/
+typedef struct s_ld_exec_nodes
+{
+	t_ld_exec				exec;
+	pid_t					pid;
+	int						exitcode;
+	struct s_ld_exec_nodes	*next;
+}	t_ld_exec_nodes;
 
 /*
 used by loader.preprocessor.environment

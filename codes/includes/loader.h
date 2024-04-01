@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:47:14 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/27 05:30:40 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/01 15:01:15 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@
 # include "types.h"
 
 # define HEREDOC_MAX 4242
+
+// ldpre_param_wrapper.c
+
+char	**ldpre_param_wrapper_f(char **argv, t_ld_map_env *env);
 
 // ldpre_param_expansion.c
 
@@ -61,13 +65,18 @@ char	*ldexec_exec_find_f(char *cmd, t_bool *need_free, const char *path);
 
 // ldexec_run.c
 
-int		ldexec_run_bin(t_ld_struct_exec exec);
-t_bool	ldexec_redir(t_ld_array_redir redir,
-			t_ld_array_pipe pipe, char *heredoc_tmpfile);
+pid_t	ldexec_run_bin(t_ld_exec exec);
+void	ldexec_select_type(t_ld_exec exec, t_ld_exec_nodes *node,
+				t_ld_map_env *env);
 
-// ldexec_heredoc.c
+// ldpre_ast_redir_heredoc.c
 
 char	*ldexec_heredoc_assign_f(void);
 t_bool	ldexec_heredoc(int fd, char *delim);
+
+// ldpre_ast_exec_execall.c
+
+void	exec_prepare(t_ld_exec_nodes *node, t_ld_map_env *env);
+void	exec_cleanup(t_ld_exec_nodes *node, t_ld_map_env *env);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 06:05:01 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/27 06:05:02 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/01 13:05:08 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,5 @@ int		builtin_unset(char *args[], t_ld_map_env *env);
 
 int		builtin_env_print(t_ld_map_env *env);
 int		builtin_env(char *args[], t_ld_map_env *env);
-
-// builtin_wrapper.c
-
-int		builtin_wrapper(t_ld_struct_exec exec, t_ld_map_env *env);
-t_bool	builtin_isbuiltin(char *name);
 
 #endif

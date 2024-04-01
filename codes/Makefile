@@ -9,10 +9,13 @@ LOADER_FILES = 	loader/ldpre_param_expansion.c \
 				loader/ldpre_param_quote.c \
 				loader/ldpre_param_wildcard.c \
 				loader/ldpre_param_wildcard2.c \
+				loader/ldpre_param_wrapper.c \
 				loader/ldexec_findexec.c \
 				loader/ldexec_run.c \
 				loader/ldexec_env_exitcode.c \
-				loader/ldexec_heredoc.c
+				loader/ldpre_ast_redir_heredoc.c \
+				loader/ldpre_ast_exec_execall.c \
+				loader/loader_wrapper.c
 UTIL_FILES = 	utils/do_exit.c \
 				utils/free_ft_split.c \
 				utils/input_sighandler.c \

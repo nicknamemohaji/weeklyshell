@@ -3,26 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ld_errno_file.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 01:33:48 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/21 17:35:44 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/03/28 03:38:03 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
+#include "types.h"
 
-void	ld_errno_file(char *trace, char *path);
+t_bool	ld_errno_file(char *trace, char *path);
 
 /*
-void	ld_errno_file(char *trace, char *path)
+t_bool	ld_errno_file(char *trace, char *path)
 :param trace: function info
 :param path: file that had error
+:return: always returns FALSE. I HATE NORM!!!!!!!
 
 prints error message to STDOUT if recovable (ex. ENOENT, EACCESS),
 exits if error is unrecovable (ex. EIO, EFAULT)
 */
-void	ld_errno_file(char *trace, char *path)
+t_bool	ld_errno_file(char *trace, char *path)
 {
 	if (errno == ENOENT)
 		printf("%s: %s: no such file\n", trace, path);
@@ -36,4 +38,5 @@ void	ld_errno_file(char *trace, char *path)
 		printf("%s: %s: name too long\n", trace, path);
 	else
 		do_exit(trace);
+	return (FALSE);
 }

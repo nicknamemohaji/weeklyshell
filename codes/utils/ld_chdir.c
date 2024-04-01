@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ld_chdir.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 20:13:08 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/21 17:32:46 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/01 15:28:12 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_bool	ld_chdir(char *path)
 		count++;
 	splitted_path = splitted_path_ptr;
 	idx = -1;
-	while (++idx < count - 1)
+	while (++idx < count)
 	{
 		if (check_access(splitted_path[idx]) == FALSE)
 		{

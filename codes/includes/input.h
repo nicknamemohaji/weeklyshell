@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:17:56 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/03/28 02:02:11 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/01 13:08:10 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,6 @@
 # include <termios.h>
 
 # include "types.h"
-
-// ANSI terminal contrl characters
-# define TERM_COLOR_END "\001\033[m\002"
-# define TERM_COLOR_RED "\001\033[31m\002"
-# define TERM_COLOR_GREEN "\001\033[32m\002"
-# define TERM_COLOR_YELLOW "\001\033[33m\002"
-# define TERM_COLOR_BLUE "\001\033[34m\002"
-// # define TERM_COLOR_END ""
-// # define TERM_COLOR_RED ""
-// # define TERM_COLOR_GREEN ""
-// # define TERM_COLOR_YELLOW ""
-// # define TERM_COLOR_BLUE ""
 
 // input_readline.c
 
