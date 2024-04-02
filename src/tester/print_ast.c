@@ -45,7 +45,7 @@ void	print_ast(t_ast_node *tree, int depth)
 	printf("\n");
 	print_tabs(depth);
 	printf("node type : %s\n", print_node_type(tree->node_type));
-	if (tree->node_type == NODE_COMMAND)
+	if (tree->node_type == NODE_COMMAND || tree->node_type == NODE_FILE)
 	{
 		print_tabs(depth);
 		printf("print command : ");
