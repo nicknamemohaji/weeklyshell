@@ -1,0 +1,6 @@
+{
+  "files.associations": {
+    "parser.h": "c"
+  },
+  "editor.defaultFormatter": "keyhr.42-c-format"
+}
