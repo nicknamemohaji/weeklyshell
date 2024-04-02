@@ -57,7 +57,6 @@ int	main(void)
 		tree = parse(input_str.c_str(&input_str));
 		if (tree == NULL)
 		{
-			destruct_ftvec(ptoken_stream);
 			delete_ast_node(tree);
 			destruct_ftstr(&input_str);
 			return (0);
