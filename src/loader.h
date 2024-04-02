@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loader.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogwak <dogwak@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 19:20:33 by dogwak            #+#    #+#             */
-/*   Updated: 2024/03/29 15:37:01 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/04/02 19:28:56 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LOADER_H
 
 # include "./ft_string/ft_string.h"
+# include "./ft_vector/ft_vector.h"
 # include "parser.h"
 
 typedef struct s_loader
@@ -21,7 +22,7 @@ typedef struct s_loader
 	int		cur_read_fd;
 	int		cur_write_fd;
 	int		next_read_fd;
-	// TBD : pid 저장 필요함
+	t_ft_vector *p_pid_vec;
 }			t_loader;
 
 t_loader	*new_loader(void);
@@ -46,5 +47,6 @@ int			evaluate_prefix_rappend(t_loader *ld, const t_ast_node *node);
 
 // execute command
 int			execute_command(t_loader *ld, const t_ast_node *node);
+int			execute_builtin(t_loader *ld, const t_ast_node *node);
 
 #endif
