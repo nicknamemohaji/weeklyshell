@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogwak <dogwak@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:35:55 by dogwak            #+#    #+#             */
-/*   Updated: 2024/03/31 16:51:56 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/04/02 20:43:59 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,15 @@ t_ast_node	*parse_file(t_parser *self)
 {
 	t_ast_node	*file;
 
-	move_next_token(self);
+	if (self->pcur_token->type != FILE_NAME)
+		move_next_token(self);
 	if ((size_t)self->cur_idx == self->ptoken_stream->size)
 		return (ast_syntax_error(NULL));
 	file = new_ast_node();
 	if (file == NULL)
 		return (ast_malloc_error(file));
 	file->node_type = get_prefix_node_type(self->pcur_token->type);
-	if (file->node_type != NODE_WORD)
+	if (file->node_type != NODE_FILE)
 		return (ast_syntax_error(file));
 	file->node_type = NODE_FILE;
 	file->pcmd = new_cmd_list(1);

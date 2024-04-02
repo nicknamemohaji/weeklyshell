@@ -12,7 +12,7 @@ const char	*token_type[21] = {"ILLEGAL ", " LPAR ", " RPAR ", " PIPE ",
 		" RDICT_READ ", " RDICT_WRITE ", " OPRT_AND ", " OPRT_OR ",
 		" RDICT_HEREDOC ", " RDICT_APPEND ", " KEY_ECHO ", " KEY_CD ",
 		" KEY_PWD ", " KEY_EXPORT ", " KEY_UNSET ", " KEY_ENV ", " KEY_EXIT ",
-		" IDENT "};
+		" IDENT ", "FILE_NAME "};
 
 void	print_token(const t_ft_vector *token_stream)
 {

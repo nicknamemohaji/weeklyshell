@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_prefix.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogwak <dogwak@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:31:08 by dogwak            #+#    #+#             */
-/*   Updated: 2024/03/31 16:49:18 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/04/02 20:42:27 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ t_ast_node	*parse_prefix(t_parser *self)
 		return (parse_parenthesis(self));
 	else if (node_type == NODE_ERROR)
 		return (ast_syntax_error(NULL));
+	else if (node_type == NODE_FILE)
+		return (parse_file(self));
 	else if (node_type == NODE_WORD)
 		return (parse_command(self));
 	exp = new_ast_node();

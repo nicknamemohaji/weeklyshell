@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_redirection.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogwak <dogwak@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 18:16:02 by dogwak            #+#    #+#             */
-/*   Updated: 2024/03/29 18:19:55 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/04/02 20:41:45 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static void	move_left_redirect(t_ft_vector *ptoken_stream)
 		if (htok_vec[idx].type == RDICT_READ
 			|| htok_vec[idx].type == RDICT_HEREDOC)
 		{
+			htok_vec[idx + 1].type = FILE_NAME;
 			pull_two_token_front(htok_vec, idx, to);
 			to += 2;
 		}
@@ -82,6 +83,7 @@ static void	move_right_redirect(t_ft_vector *ptoken_stream)
 		if (htok_vec[idx].type == RDICT_WRITE
 			|| htok_vec[idx].type == RDICT_APPEND)
 		{
+			htok_vec[idx + 1].type = FILE_NAME;
 			pull_two_token_back(htok_vec, idx, to);
 			to -= 2;
 		}
