@@ -16,7 +16,6 @@
 # include "./ft_string/ft_string.h"
 # include "./ft_vector/ft_vector.h"
 
-// enumerator for token type
 enum			e_token_type
 {
 	ILLEGAL,
@@ -40,13 +39,15 @@ enum			e_token_type
 	END
 };
 
-// struct for token
+// struct of token object
+// need string as a field.
 typedef struct s_token
 {
 	int			type;
 	t_ft_string	field;
 }				t_token;
 
+// constructor and destructor of the token object
 t_token			construct_token(int token_type);
 void			destruct_token(t_token *this);
 
@@ -58,6 +59,7 @@ typedef struct s_lexer
 	int			next_ptr;
 }				t_lexer;
 
+// if the 'c' is a meta character, return false
 int				is_letter(const char c);
 
 int				get_token_type(t_lexer *plexer);
@@ -65,8 +67,13 @@ int				get_ident(t_lexer *plexer, t_token *ptoken);
 int				get_quoted_ident(t_lexer *plexer, t_token *ptoken);
 int				get_keyword(t_lexer *plexer, t_token *ptoken);
 
+// tokenize the input string.
+// return vector of token.
+// return NULL if error occured.
 t_ft_vector		*tokenize(const char *cstr);
 
+// move redirection operator and file name to proper position.
+// without this, operator cannot find proper operand.
 void			move_redirection_token(t_ft_vector *ptoken_stream);
 
 #endif
