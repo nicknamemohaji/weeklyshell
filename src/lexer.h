@@ -36,6 +36,7 @@ enum			e_token_type
 	KEY_ENV,
 	KEY_EXIT,
 	IDENT,
+	FILE_NAME,
 	END
 };
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_node_type.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogwak <dogwak@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:21:17 by dogwak            #+#    #+#             */
-/*   Updated: 2024/03/28 14:21:20 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/04/03 14:40:36 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	get_prefix_node_type(int token_type)
 		return (EXP_PRE_RHEREDOC);
 	else if (KEY_ECHO <= token_type && token_type <= IDENT)
 		return (NODE_WORD);
+	else if (token_type == FILE_NAME)
+		return (NODE_FILE);
 	else
 		return (NODE_ERROR);
 }
