@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:08:56 by dogwak            #+#    #+#             */
-/*   Updated: 2024/03/31 16:25:40 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/04/03 12:53:57 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,11 @@ t_ast_node	*parse(const char *cstr)
 		return (ast_malloc_error(NULL));
 	move_redirection_token(ptoken_stream);
 	ptoken_stream->construct_data = construct_end_token;
-	if (ptoken_stream->push_back(ptoken_stream, NULL) == 0)
-	{
-		delete_ftvec(ptoken_stream);
-		return (ast_malloc_error(NULL));
-	}
 	p = new_parser(ptoken_stream);
-	if (p == NULL)
+	if (ptoken_stream->push_back(ptoken_stream, NULL) == 0 || p == NULL)
 	{
 		delete_ftvec(ptoken_stream);
+		delete_parser(p);
 		return (ast_malloc_error(NULL));
 	}
 	tree = parse_expression(p, P_LOWEST);

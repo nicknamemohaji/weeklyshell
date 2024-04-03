@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_redirection.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 18:16:02 by dogwak            #+#    #+#             */
-/*   Updated: 2024/04/02 21:10:51 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/04/03 13:26:42 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	pull_two_token_front(t_token *htok_vec, int from, int to)
 static void	move_left_redirect(t_ft_vector *ptoken_stream)
 {
 	t_token	*htok_vec;
-	int		to;
+	size_t	to;
 	size_t	idx;
 
 	htok_vec = ptoken_stream->pbuffer;
@@ -55,8 +55,8 @@ static void	move_left_redirect(t_ft_vector *ptoken_stream)
 	to = 0;
 	while (++idx < ptoken_stream->size - 1)
 	{
-		if (htok_vec[idx].type == RDICT_READ
-			|| htok_vec[idx].type == RDICT_HEREDOC)
+		if (to <= ptoken_stream->size - 2 && (htok_vec[idx].type == RDICT_READ
+				|| htok_vec[idx].type == RDICT_HEREDOC))
 		{
 			if (htok_vec[idx + 1].type == IDENT)
 				htok_vec[idx + 1].type = FILE_NAME;
@@ -81,8 +81,8 @@ static void	move_right_redirect(t_ft_vector *ptoken_stream)
 	to = ptoken_stream->size - 2;
 	while (--idx >= 0)
 	{
-		if (htok_vec[idx].type == RDICT_WRITE
-			|| htok_vec[idx].type == RDICT_APPEND)
+		if (to >= 0 && (htok_vec[idx].type == RDICT_WRITE
+				|| htok_vec[idx].type == RDICT_APPEND))
 		{
 			if (htok_vec[idx + 1].type == IDENT)
 				htok_vec[idx + 1].type = FILE_NAME;
