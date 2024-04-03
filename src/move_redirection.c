@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 18:16:02 by dogwak            #+#    #+#             */
-/*   Updated: 2024/04/03 13:26:42 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/04/03 14:07:56 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,23 @@ static void	move_right_redirect(t_ft_vector *ptoken_stream)
 
 void	move_redirection_token(t_ft_vector *ptoken_stream)
 {
+	size_t			idx;
+	const t_token	*htok_vec = ptoken_stream->pbuffer;
+
+	idx = -1;
+	while (++idx < ptoken_stream->size - 1)
+	{
+		if ((htok_vec[idx].type == RDICT_APPEND
+				|| htok_vec[idx].type == RDICT_WRITE
+				|| htok_vec[idx].type == RDICT_HEREDOC
+				|| htok_vec[idx].type == RDICT_READ)
+			&& (htok_vec[idx + 1].type == PIPE
+				|| htok_vec[idx + 1].type == LPAR
+				|| htok_vec[idx + 1].type == RPAR
+				|| htok_vec[idx + 1].type == OPRT_AND
+				|| htok_vec[idx + 1].type == OPRT_OR))
+			return ;
+	}
 	move_left_redirect(ptoken_stream);
 	move_right_redirect(ptoken_stream);
 }
