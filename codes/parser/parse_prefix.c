@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:31:08 by dogwak            #+#    #+#             */
-/*   Updated: 2024/04/03 14:42:11 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/04/04 12:04:40 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static t_ast_node	*parse_prefix_exp(t_parser *self, int node_type)
 	exp->left = parse_file(self);
 	move_next_token(self);
 	exp->right = parse_expression(self, P_PREFIX);
-	if (exp->left == NULL || exp->right == NULL)
+	if (exp->left == NULL || (self->pcur_token->type != END
+			&& exp->right == NULL))
 	{
 		delete_ast_node(exp);
 		exp = NULL;
