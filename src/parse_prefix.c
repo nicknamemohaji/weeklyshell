@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_prefix.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:31:08 by dogwak            #+#    #+#             */
-/*   Updated: 2024/04/02 21:00:55 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/04/04 11:38:28 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static t_ast_node	*parse_prefix_exp(t_parser *self, int node_type)
 	exp->left = parse_file(self);
 	move_next_token(self);
 	exp->right = parse_expression(self, P_PREFIX);
-	if (exp->left == NULL || exp->right == NULL)
+	if (exp->left == NULL || (self->pcur_token->type != END
+			&& exp->right == NULL))
 	{
 		delete_ast_node(exp);
 		exp = NULL;
@@ -34,7 +35,7 @@ static t_ast_node	*parse_prefix_exp(t_parser *self, int node_type)
 
 t_ast_node	*parse_prefix(t_parser *self)
 {
-	int			node_type;
+	int	node_type;
 
 	node_type = get_prefix_node_type(self->pcur_token->type);
 	if (self->pcur_token->type == LPAR)
