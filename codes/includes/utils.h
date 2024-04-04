@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 19:54:44 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/28 03:37:10 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/04 19:44:27 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include "libft.h"
 # include "types.h"
 
-// free_ft_split.c 
+// free_ft_split.c
 
 void			free_ft_split(char **ptr);
 
@@ -59,5 +59,9 @@ char			*ldpre_env_fetch(char *key, t_ld_map_env *map);
 void			ldpre_env_add(char *key, char *value, t_ld_map_env *map);
 t_bool			ldpre_env_remove(char *key, t_ld_map_env *map);
 t_ld_map_node	**ldpre_env_searchkey(char *key, t_ld_map_env *map);
+
+// ft_qsort.c
+void	ft_qsort(void **arr, int left, int right,
+			t_bool (*cmp)(const void*, const void*))
 
 #endif
