@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:20:45 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/04 17:05:36 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/04 19:14:32 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,51 +15,9 @@
 #include "types.h"
 #include "utils.h"
 
-static t_bool open_outfile(char *filename, enum e_node_type mode)
-{
-	int	fd;
-
-	if (access(filename, F_OK) && access(filename, F_OK | W_OK) != 0)
-		return (ld_errno_file("ldpre_ast.open_outfile.access", filename));
-	close(STDOUT_FD);
-	if (mode == EXP_PRE_RWRITE)
-		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	else
-		fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (fd < 0)
-		return (ld_errno_file("ldpre_ast.open_outfile.open", filename));
-	return (TRUE);
-}
-
-static t_bool open_infile(char *filename, char *heredoc_name, enum e_node_type mode)
-{
-	int		fd;
-	t_bool	res;
-
-	if (mode == EXP_PRE_RHEREDOC && access(heredoc_name, F_OK | W_OK | R_OK) != 0)
-		return (ld_errno_file("ldpre_ast.open_outfile.access", heredoc_name));
-	if (mode == EXP_PRE_RREAD && access(filename, F_OK) && access(filename, F_OK | R_OK) != 0)
-		return (ld_errno_file("ldpre_ast.open_infile.access", filename));
-	res = TRUE;
-	close(STDIN_FD);
-	if (mode == EXP_PRE_RREAD)
-		fd = open(filename, O_RDONLY);
-	else
-	{
-		fd = open(heredoc_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (fd < 0)
-			do_exit("ldpre_ast.open_infile.open");
-		res = ldexec_heredoc(fd, filename);
-		close(fd);
-		fd = open(heredoc_name, O_RDONLY);
-	}
-	if (fd < 0)
-		return (ld_errno_file("ldpre_ast.open_infile.open", filename));
-	return (res);
-}
 
 int	ldpre_ast(t_ast_node *ast, t_ld_map_env *env,
-		t_ld_exec_nodes *exec, char *heredoc_name)
+		t_ld_exec_nodes *exec, t_ld_heredoc heredoc)
 {
 	switch(ast->node_type)
 	{
@@ -100,7 +58,7 @@ int	ldpre_ast(t_ast_node *ast, t_ld_map_env *env,
 				if (pid < 0)
 					do_exit("ldpre_ast.fork");
 				else if (pid == 0)
-					exit(ldpre_ast(ast->left, env, exec, heredoc_name));
+					exit(ldpre_ast(ast->left, env, exec, heredoc));
 				else
 				{
 					if (waitpid(pid, &exitcode, 0) < 0)
@@ -117,7 +75,7 @@ int	ldpre_ast(t_ast_node *ast, t_ld_map_env *env,
 				int				fd[2];
 
 				start.next = NULL;
-				// TODO make pipe subshell
+				// TODO make pipe subshell (`exit 1 | unset A | export A=1 | echo $A`)
 
 				// prepare pipe
 				if (pipe(fd) < 0)
@@ -133,9 +91,9 @@ int	ldpre_ast(t_ast_node *ast, t_ld_map_env *env,
 				close(fd[1]);
 				// run
 				if (exec == NULL)
-					ldpre_ast(ast->left, env, &start, heredoc_name);
+					ldpre_ast(ast->left, env, &start, heredoc);
 				else
-					ldpre_ast(ast->left, env, exec, heredoc_name);
+					ldpre_ast(ast->left, env, exec, heredoc);
 				// restore stdout
 				close(STDOUT_FD);
 				if (dup(stdout_fd) < 0)
@@ -152,9 +110,9 @@ int	ldpre_ast(t_ast_node *ast, t_ld_map_env *env,
 				close(fd[0]);
 				// run
 				if (exec == NULL)
-					ldpre_ast(ast->right, env, &start, heredoc_name);
+					ldpre_ast(ast->right, env, &start, heredoc);
 				else
-					ldpre_ast(ast->right, env, exec, heredoc_name);
+					ldpre_ast(ast->right, env, exec, heredoc);
 				// restore stdin
 				close(STDIN_FD);
 				if (dup(stdin_fd) < 0)
@@ -185,9 +143,9 @@ int	ldpre_ast(t_ast_node *ast, t_ld_map_env *env,
 					do_exit("ldpre_ast.dup");
 
 				// run
-				exitcode = ldpre_ast(ast->left, env, exec, heredoc_name);
+				exitcode = ldpre_ast(ast->left, env, exec, heredoc);
 				if (exitcode == 0)
-					exitcode = ldpre_ast(ast->right, env, exec, heredoc_name);
+					exitcode = ldpre_ast(ast->right, env, exec, heredoc);
 				
 				// restore fds
 				close(STDIN_FD);
@@ -215,9 +173,9 @@ int	ldpre_ast(t_ast_node *ast, t_ld_map_env *env,
 					do_exit("ldpre_ast.dup");
 
 				// run
-				exitcode = ldpre_ast(ast->left, env, exec, heredoc_name);
+				exitcode = ldpre_ast(ast->left, env, exec, heredoc);
 				if (exitcode != 0)
-					exitcode = ldpre_ast(ast->right, env, exec, heredoc_name);
+					exitcode = ldpre_ast(ast->right, env, exec, heredoc);
 				
 				// restore fds
 				close(STDIN_FD);
@@ -238,21 +196,28 @@ int	ldpre_ast(t_ast_node *ast, t_ld_map_env *env,
 				if ((ast->left)->node_type == NODE_FILE)
 				{
 					// open left
-					open_outfile((ast->left)->pcmd[0], ast->node_type);
+					if (ldpre_ast_redir_outfile((ast->left)->pcmd[0], ast->node_type) == FALSE)
+						return (-2);
 					// open right
 					if ((ast->right)->node_type == NODE_FILE)
-						open_outfile((ast->right)->pcmd[0], ast->node_type);
-					else
-						ldpre_ast(ast->right, env, exec, heredoc_name);
+					{
+						if (ldpre_ast_redir_outfile((ast->right)->pcmd[0], ast->node_type) == FALSE)
+							return (-2);
+					}
+					else if (ldpre_ast(ast->right, env, exec, heredoc) < 0)
+						return (-2);
 				}
 				else
 				{
 					// open right
 					if ((ast->right)->node_type == NODE_FILE)
-						open_outfile((ast->right)->pcmd[0], ast->node_type);
-					else
-						ldpre_ast(ast->right, env, exec, heredoc_name);
-					return (ldpre_ast(ast->left, env, exec, heredoc_name));
+					{
+						if (ldpre_ast_redir_outfile((ast->right)->pcmd[0], ast->node_type) == FALSE)
+							return (-2);
+					}
+					else if (ldpre_ast(ast->right, env, exec, heredoc) < 0)
+						return (-2);
+					return (ldpre_ast(ast->left, env, exec, heredoc));
 				}
 				return -1;
 			}
@@ -265,21 +230,21 @@ int	ldpre_ast(t_ast_node *ast, t_ld_map_env *env,
 				if ((ast->right)->node_type == NODE_FILE)
 				{
 					// open right
-					open_infile((ast->right)->pcmd[0], heredoc_name, ast->node_type);
+					ldpre_ast_redir_infile((ast->right)->pcmd[0], heredoc, ast->node_type, env);
 					// open left 
 					if ((ast->left)->node_type == NODE_FILE)
-						open_infile((ast->left)->pcmd[0], heredoc_name, ast->node_type);
+						ldpre_ast_redir_infile((ast->left)->pcmd[0], heredoc, ast->node_type, env);
 					else
-						ldpre_ast(ast->left, env, exec, heredoc_name);
+						ldpre_ast(ast->left, env, exec, heredoc);
 				}
 				else
 				{
 					// open left
 					if ((ast->left)->node_type == NODE_FILE)
-						open_infile((ast->left)->pcmd[0], heredoc_name, ast->node_type);
+						ldpre_ast_redir_infile((ast->left)->pcmd[0], heredoc, ast->node_type, env);
 					else
-						ldpre_ast(ast->left, env, exec, heredoc_name);
-					return (ldpre_ast(ast->right, env, exec, heredoc_name));
+						ldpre_ast(ast->left, env, exec, heredoc);
+					return (ldpre_ast(ast->right, env, exec, heredoc));
 				}
 				return -1;		
 			}

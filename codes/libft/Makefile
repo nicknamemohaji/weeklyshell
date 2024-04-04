@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+         #
+#    By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/28 21:23:19 by kyungjle          #+#    #+#              #
-#    Updated: 2024/04/04 10:59:24 by nicknamemoh      ###   ########.fr        #
+#    Updated: 2024/04/04 18:33:38 by kyungjle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ STRING_FILES =	ft_strlen.c \
 				ft_strchr.c \
 				ft_strrchr.c \
 				ft_strncmp.c \
+				ft_strcmp.c \
 				ft_memchr.c \
 				ft_memcmp.c \
 				ft_strnstr.c \
