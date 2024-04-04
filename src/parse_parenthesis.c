@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_parenthesis.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogwak <dogwak@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:33:42 by dogwak            #+#    #+#             */
-/*   Updated: 2024/03/31 16:49:28 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/04/04 16:54:09 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,12 @@ t_ast_node	*parse_parenthesis(t_parser *self)
 	move_next_token(self);
 	subshell->left = parse_expression(self, P_LOWEST);
 	move_next_token(self);
-	if (subshell->left == NULL || self->pcur_token->type != RPAR)
+	if (subshell->left == NULL)
+	{
+		delete_ast_node(subshell);
+		return (NULL);
+	}
+	else if (self->pcur_token->type != RPAR)
 		return (ast_syntax_error(subshell));
 	return (subshell);
 }
