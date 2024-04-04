@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 00:59:19 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/02/16 18:44:01 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/04 10:53:48 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,14 @@ int		ft_isprint(int c);
 int		ft_isdigit(int c);
 int		ft_isascii(int c);
 int		ft_isalnum(int c);
+int		ft_isspace(int c);
 
 // libc_string.h
 int		ft_toupper(int c);
 int		ft_tolower(int c);
 char	*ft_strrchr(const char *s, int c);
 char	*ft_strnstr(const char *s1, const char *s2, size_t n);
-int		ft_strncmp(char *s1, char *s2, size_t n);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t	ft_strlen(const char *s);
 size_t	ft_strlcpy(char *dest, char *src, size_t size);
 size_t	ft_strlcat(char *dest, char *src, size_t size);
@@ -64,4 +65,7 @@ void	ft_putnbr_fd(int n, int fd);
 // ft_printf
 int		ft_printf(const char *s, ...);
 int		ft_sprintf(char	*ret, const char *s, ...);
+
+// get_next_line
+char	*get_next_line(int fd);
 #endif

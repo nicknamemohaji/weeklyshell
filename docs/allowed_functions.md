@@ -89,32 +89,9 @@
         - `F_OK`: 파일의 존재 여부 확인
         - `W_OK`, `R_OK`, `X_OK`: 존재 + 권한 확인
 
-```c
-struct stat {
-    dev_t     st_dev;         /* ID of device containing file */
-    ino_t     st_ino;         /* Inode number */
-    mode_t    st_mode;        /* File type and mode */
-    nlink_t   st_nlink;       /* Number of hard links */
-    uid_t     st_uid;         /* User ID of owner */
-    gid_t     st_gid;         /* Group ID of owner */
-    dev_t     st_rdev;        /* Device ID (if special file) */
-    off_t     st_size;        /* Total size, in bytes */
-    blksize_t st_blksize;     /* Block size for filesystem I/O */
-    blkcnt_t  st_blocks;      /* Number of 512B blocks allocated */
-
-    /* Since Linux 2.6, the kernel supports nanosecond
-        precision for the following timestamp fields.
-        For the details before Linux 2.6, see NOTES. */
-
-    struct timespec st_atim;  /* Time of last access */
-    struct timespec st_mtim;  /* Time of last modification */
-    struct timespec st_ctim;  /* Time of last status change */
-};
-```
-
-- `int stat (const char *pathname, struct stat *statbuf)`
-- `int fstat (int fd, struct stat *statbuf)`
-- `int lstat (const char *pathname, struct stat *statbuf)`
+- ~~`int stat (const char *pathname, struct stat *statbuf)`~~
+- ~~`int fstat (int fd, struct stat *statbuf)`~~
+- ~~`int lstat (const char *pathname, struct stat *statbuf)`~~
 
 ## CWD 관련
 
@@ -127,7 +104,7 @@ struct stat {
 
 > `<unistd.h>`
 
-- `int dup(int oldfd)`
+- ~~`int dup(int oldfd)`~~
 - `int dup2(int oldfd, int newfd)`
 - `int pipe(int pipefd[2])`
 
@@ -156,9 +133,9 @@ struct stat {
 
 - `pid_t fork(void)`
 - `pid_t wait(int *wstatus)`
-- `pid_t waitpid(pid_t pid, int *wstatus, int options)`
-- `pid_t wait3(int *wstatus, int options, struct rusage *rusage)`
-- `pid_t wait4(pid_t pid, int *wstatus, int options, struct rusage *rusage)`
+- ~~`pid_t waitpid(pid_t pid, int *wstatus, int options)`~~
+- ~~`pid_t wait3(int *wstatus, int options, struct rusage *rusage)`~~
+- ~~`pid_t wait4(pid_t pid, int *wstatus, int options, struct rusage *rusage)`~~
 - `int execve(const char *pathname, char *const argv[], char *const envp[])`
 
 ---
@@ -177,13 +154,15 @@ struct stat {
 
 # TTY
 
-isatty, ttyname, ttyslot
+- ~~isatty~~
+- ~~ttyname~~
+- ~~ttyslot~~
 
 ## ioctl
 
 > `<sys/ioctl.h>`
 
-- `int ioctl(int fd, unsigned long request, ...)`
+- ~~`int ioctl(int fd, unsigned long request, ...)`~~
 
 ## termios
 
@@ -202,7 +181,8 @@ isatty, ttyname, ttyslot
 
 # 기타
 
-exit, getenv
+- exit
+- ~~getenv~~
 
 ## 동적할당
 

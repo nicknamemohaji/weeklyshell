@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 14:49:46 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/01/03 18:54:29 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/03/27 05:18:02 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 # include <stdarg.h>
 # include "libft.h"
 
-typedef struct s_buf {
+typedef struct s_buf
+{
 	int				buf_len;
 	char			*buf;
 	struct s_buf	*next;

@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 23:09:23 by kyungjle          #+#    #+#             */
-/*   Updated: 2023/10/05 02:04:06 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/04 10:52:28 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strncmp(char *s1, char *s2, size_t n);
+int	ft_strncmp(const char *s1, const char *s2, size_t n);
 
-int	ft_strncmp(char *s1, char *s2, size_t n)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t	i;
 
@@ -29,5 +29,5 @@ int	ft_strncmp(char *s1, char *s2, size_t n)
 	}
 	if (i == n)
 		i--;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	return ((unsigned const char)s1[i] - (unsigned const char)s2[i]);
 }
