@@ -44,9 +44,9 @@ enum			e_token_type
 // need string as a field.
 typedef struct s_token
 {
-	int			type;
-	t_ft_string	field;
-}				t_token;
+	enum e_token_type	type;
+	t_ft_string			field;
+}						t_token;
 
 // constructor and destructor of the token object
 t_token			construct_token(int token_type);

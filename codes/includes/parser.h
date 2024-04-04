@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 17:55:51 by dogwak            #+#    #+#             */
-/*   Updated: 2024/04/04 10:46:08 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/04 11:18:37 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int						get_infix_node_type(int token_type);
 typedef struct s_ast_node
 {
 	char				**pcmd;
-	int					node_type;
+	enum e_node_type	node_type;
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
 }						t_ast_node;
