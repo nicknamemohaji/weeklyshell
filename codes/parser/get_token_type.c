@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_token_type.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogwak <dogwak@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:19:50 by dogwak            #+#    #+#             */
-/*   Updated: 2024/03/29 18:18:46 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/04/04 10:47:39 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./libft/libft.h"
+#include "libft.h"
 #include "lexer.h"
 
 static int	get_token_type2(const char *pc)

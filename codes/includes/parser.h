@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 17:55:51 by dogwak            #+#    #+#             */
-/*   Updated: 2024/04/02 14:31:23 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/04/04 10:46:08 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-# include "./ft_vector/ft_vector.h"
+# include "ft_vector.h"
 # include "lexer.h"
 
 // ========================= operator precedence =====================//
@@ -114,7 +114,7 @@ void					move_next_token(t_parser *self);
 
 	to destruct ast, call delete_ast_node().
 */
-t_ast_node				*parse(const char *cstr);
+t_ast_node				*parse_f(const char *cstr);
 
 // method of parser, parse each token and return ast_node
 t_ast_node				*parse_expression(t_parser *self, int precede);

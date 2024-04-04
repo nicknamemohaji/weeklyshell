@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_token.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogwak <dogwak@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:15:32 by dogwak            #+#    #+#             */
-/*   Updated: 2024/03/28 14:17:51 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/04/04 10:47:39 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./libft/libft.h"
+#include "libft.h"
 #include "lexer.h"
 
 int	is_letter(const char c)

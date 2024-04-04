@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 13:16:24 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/01 15:15:05 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/04 11:06:40 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "minishell.h"
 #include "types.h"
 #include "utils.h"
+#include "parser.h"
 
 void		loader_wrapper(char *input, t_ld_map_env *env);
 static void	fd_preserve(int *stdin_fd, int *stdout_fd);
@@ -24,11 +25,12 @@ void	loader_wrapper(char *input, t_ld_map_env *env)
 	int					stdin_fd;
 	int					stdout_fd;
 	struct sigaction	oldacts[2];
+	t_ast_node			*ast;
 
 	fd_preserve(&stdin_fd, &stdout_fd);
 	ldexec_sigign_setup(oldacts);
-	// TODO call parser
-	
+	ast = parse_f(input);
+
 	// TEST >>
 	char **argv_split = ft_split(input, ' ');
 	t_ld_exec_nodes *nodes = malloc(1 * sizeof(t_ld_exec_nodes));
@@ -43,6 +45,7 @@ void	loader_wrapper(char *input, t_ld_map_env *env)
 	// TODO travel ast
 	fd_restore(stdin_fd, stdout_fd);
 	input_sighandler_restore(oldacts);
+	delete_ast_node(ast);
 }
 
 static void	fd_preserve(int *stdin_fd, int *stdout_fd)

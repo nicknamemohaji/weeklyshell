@@ -6,7 +6,7 @@
 #    By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/28 21:23:19 by kyungjle          #+#    #+#              #
-#    Updated: 2024/03/27 05:16:31 by nicknamemoh      ###   ########.fr        #
+#    Updated: 2024/04/04 10:59:24 by nicknamemoh      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ CTYPE_FILES =	ft_isalnum.c \
 				ft_isalpha.c \
 				ft_isascii.c \
 				ft_isdigit.c \
-				ft_isprint.c
+				ft_isprint.c \
+				ft_isspace.c
 STRING_FILES =	ft_strlen.c \
 				ft_memset.c \
 				ft_bzero.c \
@@ -93,19 +94,21 @@ ARFLAGS = rsc
 all: $(NAME)
 
 $(NAME): $(addprefix $(OBJECT_DIR)/, $(OBJECTS))
-	$(AR) $(ARFLAGS) $(NAME) $(addprefix $(OBJECT_DIR)/, $(OBJECTS))
+	@echo making archive
+	@$(AR) $(ARFLAGS) $(NAME) $(addprefix $(OBJECT_DIR)/, $(OBJECTS))
+	@echo libft compiled
 
 $(addprefix $(OBJECT_DIR)/, $(LIBFT_OBJECTS)):
 	@mkdir -p $(OBJECT_DIR)
-	$(CC) $(CFLAGS) -c $(subst $(OBJECT_DIR)/,$(SRC_DIR)$(LIBFT_FILE_DIR)/,$*).c -o $@
+	@$(CC) $(CFLAGS) -c $(subst $(OBJECT_DIR)/,$(SRC_DIR)$(LIBFT_FILE_DIR)/,$*).c -o $@
 
 $(addprefix $(OBJECT_DIR)/, $(PRINTF_OBJECTS)):
 	@mkdir -p $(OBJECT_DIR)
-	$(CC) $(CFLAGS) -c $(subst $(OBJECT_DIR)/,$(SRC_DIR)$(PRINTF_FILE_DIR)/,$*).c -o $@
+	@$(CC) $(CFLAGS) -c $(subst $(OBJECT_DIR)/,$(SRC_DIR)$(PRINTF_FILE_DIR)/,$*).c -o $@
 
 $(addprefix $(OBJECT_DIR)/, $(GNL_OBJECTS)):
 	@mkdir -p $(OBJECT_DIR)
-	$(CC) $(CFLAGS) -c $(subst $(OBJECT_DIR)/,$(SRC_DIR)$(GNL_FILE_DIR)/,$*).c -o $@
+	@$(CC) $(CFLAGS) -c $(subst $(OBJECT_DIR)/,$(SRC_DIR)$(GNL_FILE_DIR)/,$*).c -o $@
 
 clean:
 	rm -rf $(addprefix $(OBJECT_DIR)/, $(OBJECTS))

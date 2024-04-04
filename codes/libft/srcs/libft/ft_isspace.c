@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/09 12:12:59 by dogwak            #+#    #+#             */
-/*   Updated: 2023/10/09 12:16:51 by dogwak           ###   ########.fr       */
+/*   Created: 2023/10/09 11:54:31 by dogwak            #+#    #+#             */
+/*   Updated: 2024/04/04 11:01:19 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memset(void *b, int c, size_t len)
+int	ft_isspace(int c)
 {
-	size_t			idx;
-
-	idx = -1;
-	while (++idx < len)
-		((unsigned char *)b)[idx] = (unsigned char)c;
-	return (b);
+	if (c == '\t' || c == '\n' || c == '\v'
+		|| c == '\f' || c == '\r' || c == ' ')
+		return (1);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 14:34:01 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/01 15:10:58 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/04 11:05:45 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	split_argv(char **argv, t_ld_param_node *start, t_ld_map_env *env)
 		node->next = NULL;
 		node->content = ft_strdup(*argv);
 		if (node->content == NULL)
-			do_exit("ldpre_param_wrapper.split_argv.malloc");	
+			do_exit("ldpre_param_wrapper.split_argv.malloc");
 		node->content = ldpre_param_quote_f(node->content, env, &wildcard);
 		if (wildcard)
 		{
@@ -69,7 +69,7 @@ static void	split_argv(char **argv, t_ld_param_node *start, t_ld_map_env *env)
 		else
 		{
 			start->next = node;
-			start = node;		
+			start = node;
 		}
 		argv += 1;
 	}

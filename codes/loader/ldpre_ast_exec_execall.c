@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 14:36:22 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/01 15:01:47 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/04 11:01:37 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	exec_prepare(t_ld_exec_nodes *node, t_ld_map_env *env)
 	}
 }
 
-void exec_cleanup(t_ld_exec_nodes *node, t_ld_map_env *env)
+void	exec_cleanup(t_ld_exec_nodes *node, t_ld_map_env *env)
 {
 	int				exitcode;
 	t_ld_exec_nodes	*node_ptr;

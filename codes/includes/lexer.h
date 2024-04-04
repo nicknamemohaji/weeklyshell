@@ -13,8 +13,8 @@
 #ifndef LEXER_H
 # define LEXER_H
 
-# include "./ft_string/ft_string.h"
-# include "./ft_vector/ft_vector.h"
+# include "ft_string.h"
+# include "ft_vector.h"
 
 enum			e_token_type
 {

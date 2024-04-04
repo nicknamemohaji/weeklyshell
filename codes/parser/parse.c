@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:08:56 by dogwak            #+#    #+#             */
-/*   Updated: 2024/04/03 14:43:10 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/04/04 10:41:06 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	construct_end_token(void *pos, void *ptoken)
 
 	return NULL if syntax or system error.
 */
-t_ast_node	*parse(const char *cstr)
+t_ast_node	*parse_f(const char *cstr)
 {
 	t_ft_vector	*ptoken_stream;
 	t_parser	*p;

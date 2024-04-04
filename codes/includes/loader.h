@@ -6,7 +6,7 @@
 /*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:47:14 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/01 15:01:15 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/04 11:01:09 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*ldexec_exec_find_f(char *cmd, t_bool *need_free, const char *path);
 
 pid_t	ldexec_run_bin(t_ld_exec exec);
 void	ldexec_select_type(t_ld_exec exec, t_ld_exec_nodes *node,
-				t_ld_map_env *env);
+			t_ld_map_env *env);
 
 // ldpre_ast_redir_heredoc.c
 
