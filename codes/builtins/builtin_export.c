@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 06:04:43 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/27 06:05:18 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/04 17:47:28 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	builtin_export(char *args[], t_ld_map_env *env)
 	char	*key;
 	char	*value;
 
+	// TODO 정렬된 상태로 출력
 	if (args[1] == NULL)
 		return (builtin_env_print(env));
 	i = 1;

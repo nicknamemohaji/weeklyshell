@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loader.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:47:14 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/04 11:01:09 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/04 16:40:25 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 # include "libft.h"
 # include "types.h"
+# include "parser.h"
 
 # define HEREDOC_MAX 4242
 
@@ -69,6 +70,11 @@ pid_t	ldexec_run_bin(t_ld_exec exec);
 void	ldexec_select_type(t_ld_exec exec, t_ld_exec_nodes *node,
 			t_ld_map_env *env);
 
+// ldpre_ast.c
+
+int	ldpre_ast(t_ast_node *ast, t_ld_map_env *env,
+		t_ld_exec_nodes *exec, char *heredoc_name);
+
 // ldpre_ast_redir_heredoc.c
 
 char	*ldexec_heredoc_assign_f(void);
@@ -77,6 +83,6 @@ t_bool	ldexec_heredoc(int fd, char *delim);
 // ldpre_ast_exec_execall.c
 
 void	exec_prepare(t_ld_exec_nodes *node, t_ld_map_env *env);
-void	exec_cleanup(t_ld_exec_nodes *node, t_ld_map_env *env);
+int		exec_cleanup(t_ld_exec_nodes *node, t_ld_map_env *env);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ldexec_run.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 01:11:55 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/01 15:18:19 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/04 15:38:18 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@ pid_t	ldexec_run_bin(t_ld_exec exec)
 		do_exit("ldexec_run_bin.fork");
 	else if (pid == 0)
 	{
+		if (signal(SIGINT, SIG_DFL) < 0)
+			do_exit("ldexec_run_bin.signal");
+		if (signal(SIGKILL, SIG_DFL) < 0)
+			do_exit("ldexec_run_bin.signal");
 		if (execve(exec.path, exec.argv, exec.envp) < 0)
 			do_exit("ldexec_run_bin.execve");
 	}
@@ -43,22 +47,10 @@ void	ldexec_select_type(t_ld_exec exec, t_ld_exec_nodes *node,
 {
 	pid_t	pid;
 
-	printf("argv %s\n", exec.argv[0]);
-	printf("path %s\n", exec.path);
 	if (builtin_isbuiltin(exec.argv[0]))
 	{
-		// TODO builtin in subshell environment
-		if (FALSE)
-		{
-			pid = fork();
-			if (pid == 0)
-				exit(builtin_wrapper(exec, env));
-		}
-		else
-		{
-			pid = -1;
-			node->exitcode = builtin_wrapper(exec, env);
-		}
+		pid = -1;
+		node->exitcode = builtin_wrapper(exec, env);
 	}
 	else
 			pid = ldexec_run_bin(exec);

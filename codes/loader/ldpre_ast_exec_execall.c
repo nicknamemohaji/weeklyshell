@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ldpre_ast_exec_execall.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 14:36:22 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/04 11:01:37 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/04 14:19:43 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,9 @@
 #include "types.h"
 #include "utils.h"
 
-void	exec_prepare(t_ld_exec_nodes *node, t_ld_map_env *env);
-void	exec_cleanup(t_ld_exec_nodes *node, t_ld_map_env *env);
+int		exec_cleanup(t_ld_exec_nodes *node, t_ld_map_env *env);
 
-void	exec_prepare(t_ld_exec_nodes *node, t_ld_map_env *env)
-{
-	t_bool			free_flag;
-
-	while (node != NULL)
-	{
-		(node->exec).argv = ldpre_param_wrapper_f((node->exec).argv, env);
-		(node->exec).envp = ldpre_env_toenvp_f(env);
-		(node->exec).path = ldexec_exec_find_f(
-				(node->exec).argv[0], &free_flag, ldpre_env_fetch("PATH", env));
-		ldexec_select_type(node->exec, node, env);
-		if (free_flag)
-			free((node->exec).path);
-		node = node->next;
-	}
-}
-
-void	exec_cleanup(t_ld_exec_nodes *node, t_ld_map_env *env)
+int		exec_cleanup(t_ld_exec_nodes *node, t_ld_map_env *env)
 {
 	int				exitcode;
 	t_ld_exec_nodes	*node_ptr;
@@ -54,4 +36,5 @@ void	exec_cleanup(t_ld_exec_nodes *node, t_ld_map_env *env)
 		free(node_ptr);
 	}
 	ldexec_env_exitcode_update(exitcode, env);
+	return (exitcode);
 }

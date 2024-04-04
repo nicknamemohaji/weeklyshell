@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ldpre_param_wrapper.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 14:34:01 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/04 11:05:45 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/04 14:19:58 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ char	**ldpre_param_wrapper_f(char **argv, t_ld_map_env *env)
 	char			**ret;
 
 	split_argv(argv, &start, env);
-	free_ft_split(argv);
 	node = start.next;
 	count = 0;
 	while (node != NULL)

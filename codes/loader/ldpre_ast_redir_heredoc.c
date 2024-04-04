@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ldpre_ast_redir_heredoc.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 14:37:13 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/01 14:37:16 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/04 17:50:43 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,10 @@ t_bool	ldexec_heredoc(int fd, char *delim)
 	ret = TRUE;
 	while (ret == TRUE)
 	{
+		// TODO tty 복원
+		dprintf(2, "heredoc> ");
 		buf = get_next_line(STDIN_FD);
+		dprintf(2, "buf %s\n", buf);
 		if (g_sigint == FALSE && buf != NULL)
 			readcount = ft_strlen(buf);
 		if (g_sigint == TRUE || readcount <= 0 || buf == NULL)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_ft_split.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 19:53:33 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/13 21:10:22 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/04 15:44:11 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,5 @@ void	free_ft_split(char **ptr)
 	ptr_ptr = ptr;
 	while (*ptr != NULL)
 		free(*(ptr++));
-	free(*ptr);
 	free(ptr_ptr);
 }

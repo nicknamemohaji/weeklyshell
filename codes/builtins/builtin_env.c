@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 06:04:39 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/27 06:07:11 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/04 17:47:08 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

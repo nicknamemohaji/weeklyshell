@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ldexec_findexec.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:47:55 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/21 12:38:52 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/04 15:54:50 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,11 @@ static char	*check_relative_f(char *cmd)
 	cwd_prev = getcwd(NULL, 0);
 	if (cwd_prev == NULL)
 		do_exit("ldexec_findexec.check_relaive_f.getcwd");
-	if (ld_chdir(cmd) != TRUE)
+	ret = ft_substr(cmd, 0, ft_strrchr(cmd, '/') - cmd);
+	if (ld_chdir(ret) != TRUE)
 		ret = NULL;
-	else
+	free(ret);
+	if (ret != NULL)
 	{
 		idx = ft_strrchr(cmd, '/') - cmd + 1;
 		real_cmd = ft_substr(cmd, idx, (ft_strlen(cmd) - idx));
