@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loader_wrapper.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 13:16:24 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/04 11:06:40 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/04 18:04:20 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,26 +26,25 @@ void	loader_wrapper(char *input, t_ld_map_env *env)
 	int					stdout_fd;
 	struct sigaction	oldacts[2];
 	t_ast_node			*ast;
+	t_ld_heredoc		heredoc;
 
 	fd_preserve(&stdin_fd, &stdout_fd);
 	ldexec_sigign_setup(oldacts);
+	heredoc.heredoc_name = ldexec_heredoc_assign_f();
+	heredoc.stdin_fd = stdin_fd;
+	if (heredoc.heredoc_name == NULL)
+	{
+		printf("cannot open heredoc :tried %d times :(\n", HEREDOC_MAX);
+		return ;
+	}
 	ast = parse_f(input);
-
-	// TEST >>
-	char **argv_split = ft_split(input, ' ');
-	t_ld_exec_nodes *nodes = malloc(1 * sizeof(t_ld_exec_nodes));
-	nodes->exec = (t_ld_exec){
-		.argv = argv_split
-	};
-	nodes->next = NULL;
-	exec_prepare(nodes, env);
-	exec_cleanup(nodes, env);
-	// <<
-	
-	// TODO travel ast
+	if (ast != NULL)
+		ldpre_ast(ast, env, NULL, heredoc);
 	fd_restore(stdin_fd, stdout_fd);
 	input_sighandler_restore(oldacts);
 	delete_ast_node(ast);
+	unlink(heredoc.heredoc_name);
+	free(heredoc.heredoc_name);
 }
 
 static void	fd_preserve(int *stdin_fd, int *stdout_fd)

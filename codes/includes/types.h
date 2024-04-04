@@ -3,18 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:18:03 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/01 13:23:25 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/04 17:59:00 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TYPES_H
 # define TYPES_H
 
-// import flags for O_TRUNC, O_APPEND
-# include <fcntl.h>
 // import sig_atomic_t type
 # include <signal.h>
 
@@ -36,13 +34,12 @@ typedef enum e_bool
 
 extern volatile sig_atomic_t	g_sigint;
 
-typedef enum e_filemode
+// used by loader.preprocessor.ast
+typedef struct s_ld_heredoc
 {
-	OUT_TRUNC = O_TRUNC,
-	OUT_APPEND = O_APPEND,
-	IN_OPEN = -1,
-	IN_HEREDOC = -2
-}	t_filemode;
+	char	*heredoc_name;
+	int		stdin_fd;
+}	t_ld_heredoc;
 
 // used by loader.preprocessor.param.expansion
 typedef struct s_ld_param_node

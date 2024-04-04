@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ldpre_param_quote.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 18:18:30 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/27 07:13:19 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/04 18:17:33 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ char	*ldpre_param_quote_f(char *arg, t_ld_map_env *env, t_bool *wildcard)
 	char			*ret;
 	char			*arg_ptr;
 
-	*wildcard = FALSE;
+	if (wildcard != NULL)
+		*wildcard = FALSE;
 	arg_ptr = arg;
 	start.next = NULL;
 	prev = &start;
@@ -88,7 +89,7 @@ static char	*quote_removal_f(char *s,
 		while (*end_ptr != '\0' && *end_ptr != '\'' && *end_ptr != '\"')
 			end_ptr++;
 		ret = ft_substr(s, 0, end_ptr - s);
-		if (ft_strchr(ret, '*') != NULL)
+		if (ft_strchr(ret, '*') != NULL && wildcard != NULL)
 			*wildcard = TRUE;
 	}
 	if (ret == NULL)

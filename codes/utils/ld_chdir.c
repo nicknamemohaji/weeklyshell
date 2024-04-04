@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ld_chdir.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 20:13:08 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/01 15:28:12 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/04 15:54:57 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

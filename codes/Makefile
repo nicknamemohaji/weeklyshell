@@ -30,6 +30,8 @@ LOADER_FILES = 	loader/ldpre_param_expansion.c \
 				loader/ldexec_findexec.c \
 				loader/ldexec_run.c \
 				loader/ldexec_env_exitcode.c \
+				loader/ldpre_ast.c \
+				loader/ldpre_ast_redir.c \
 				loader/ldpre_ast_redir_heredoc.c \
 				loader/ldpre_ast_exec_execall.c \
 				loader/loader_wrapper.c
@@ -98,11 +100,15 @@ libftstring.a:
 
 clean:
 	@$(MAKE) -C $(LIBFT_DIR) clean
+	@$(MAKE) -C $(FT_STRING_DIR) clean
+	@$(MAKE) -C $(FT_VECTOR_DIR) clean
 	@rm -rf $(OBJECTS)
 	@echo Cleaned!
 
 fclean: clean
 	@$(MAKE) -C $(LIBFT_DIR) fclean
+	@$(MAKE) -C $(FT_STRING_DIR) fclean
+	@$(MAKE) -C $(FT_VECTOR_DIR) fclean
 	@rm -f libft.a libftvector.a libftstring.a
 	@rm -rf $(NAME)
 	@echo Fcleaned!

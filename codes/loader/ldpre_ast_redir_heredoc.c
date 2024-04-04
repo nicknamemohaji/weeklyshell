@@ -3,18 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ldpre_ast_redir_heredoc.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 14:37:13 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/01 14:37:16 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/04 19:13:18 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "loader.h"
 #include "utils.h"
+#include "types.h"
 
 char	*ldexec_heredoc_assign_f(void);
-t_bool	ldexec_heredoc(int fd, char *delim);
+t_bool	ldexec_heredoc(int fd, char *delim,
+			t_bool expansion, t_ld_map_env *env);
 
 /*
 char	*ldexec_heredoc_assign_f(void)
@@ -55,11 +57,10 @@ char	*ldexec_heredoc_assign_f(void)
 	return (NULL);
 }
 
-t_bool	ldexec_heredoc(int fd, char *delim)
+t_bool	ldexec_heredoc(int fd, char *delim,
+			t_bool expansion, t_ld_map_env *env)
 {
 	char				*buf;
-	int					readcount;
-	const int			delim_len = ft_strlen(delim);
 	struct sigaction	oldacts[2];
 	t_bool				ret;
 
@@ -67,16 +68,23 @@ t_bool	ldexec_heredoc(int fd, char *delim)
 	ret = TRUE;
 	while (ret == TRUE)
 	{
+		// TODO ctrl c 입력시 입력 버퍼에 남아있던 부분들이 출력되는 문제 해결
+		// TODO EOF 입력시 이상하게 출력됨
+		write(2, "heredoc > ", 10);
 		buf = get_next_line(STDIN_FD);
-		if (g_sigint == FALSE && buf != NULL)
-			readcount = ft_strlen(buf);
-		if (g_sigint == TRUE || readcount <= 0 || buf == NULL)
+		rl_on_new_line();
+		if (g_sigint == TRUE || buf == NULL || *buf == '\0')
 			ret = FALSE;
-		else if (g_sigint == FALSE && readcount - 1 == delim_len
-			&& ft_strncmp(buf, delim, delim_len) == 0)
+		if (ret == TRUE && ft_strlen(buf) - 1 == ft_strlen(delim)
+			&& ft_strncmp(buf, delim, ft_strlen(delim)) == 0)
+		{
+			free(buf);
 			break ;
-		if (fd != -1)
-			write(fd, buf, readcount);
+		}
+		if (ret == TRUE && expansion)
+			buf = ldpre_param_expansion_f(buf, env);
+		if (ret == TRUE)
+			write(fd, buf, ft_strlen(buf));
 		free(buf);
 	}
 	input_sighandler_restore(oldacts);
