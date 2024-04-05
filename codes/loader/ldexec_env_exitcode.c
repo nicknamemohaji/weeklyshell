@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 13:44:12 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/21 17:39:55 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/05 14:23:31 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ char	*ldexec_env_exitcode_fetch_f(t_ld_map_env *env)
 :param env: environment variable map
 :return: itoa'ed last exitcode
 
-Fetches `$?` from map. `$?` is registered when previous execution finished,
-so it might not exist. bash's default is 0, so we follow bash's behavior.
+Fetches `$?` from map. `$?` is always at first node of env map. 
 
 `$?` is not a valid key, so created special methods. user cannot access,
 modify, delete to this environment variable, since fetch/add/remove interface
@@ -31,13 +30,10 @@ validates the key before doing action.
 char	*ldexec_env_exitcode_fetch_f(t_ld_map_env *env)
 {
 	char			*ret;
-	t_ld_map_node	**nodes;
+	t_ld_map_node	*node;
 
-	nodes = ldpre_env_searchkey("?", env);
-	if (nodes == NULL)
-		ret = ft_itoa(0);
-	else
-		ret = ft_strdup(nodes[0]->value);
+	node = env->contents;
+	ret = ft_strdup(node->value);
 	if (ret == NULL)
 		do_exit("ldexec_env_exitcode_fetch_f.malloc");
 	return (ret);
@@ -52,17 +48,14 @@ Update/Adds last status code(`$?`) to map
 */
 void	ldexec_env_exitcode_update(int code, t_ld_map_env *env)
 {
-	t_ld_map_node	**nodes;
 	t_ld_map_node	*node;
+	t_ld_map_node	*next;
 
-	nodes = ldpre_env_searchkey("?", env);
-	if (nodes != NULL)
-	{
-		nodes[1]->next = nodes[0]->next;
-		free(nodes[0]->key);
-		free(nodes[0]->value);
-		free(nodes[0]);
-	}
+	node = env->contents;
+	next = node->next;
+	free(node->key);
+	free(node->value);
+	free(node);
 	node = malloc(1 * sizeof(t_ld_map_node));
 	if (node == NULL)
 		do_exit("ldexec_env_exitcode_update.malloc");
@@ -73,5 +66,6 @@ void	ldexec_env_exitcode_update(int code, t_ld_map_env *env)
 	if (node->value == NULL)
 		do_exit("ldexec_env_exitcode_update.malloc");
 	node->next = NULL;
-	ld_map_node_attach(env, node);
+	node->next = next;
+	env->contents = node;
 }

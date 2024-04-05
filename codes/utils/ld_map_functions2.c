@@ -93,6 +93,7 @@ void	ldpre_env_add(char *key, char *value, t_ld_map_env *map)
 	node->value = value_copy;
 	node->next = NULL;
 	ld_map_node_attach(map, node);
+	map->count++;
 	return ;
 }
 

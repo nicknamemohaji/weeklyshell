@@ -41,7 +41,8 @@ UTIL_FILES = 	utils/do_exit.c \
 				utils/ld_chdir.c \
 				utils/ld_errno_file.c \
 				utils/ld_map_functions.c \
-				utils/ld_map_functions2.c
+				utils/ld_map_functions2.c \
+				utils/ft_qsort.c
 BUILTIN_FILES = builtins/builtin_cd.c \
 				builtins/builtin_echo.c \
 				builtins/builtin_exit.c \

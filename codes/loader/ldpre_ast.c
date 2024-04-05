@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:20:45 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/05 12:54:20 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/05 15:18:01 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	ldpre_ast(t_ast_node *ast, t_ld_map_env *env,
 	{
 		case NODE_COMMAND:
 			{
+				// TODO 커맨드 실행 구조 검토
+				// 파이프일때 손자까지 만들 필요가 있나...
 				t_ld_exec_nodes	*node;
 				t_bool			free_flag;
 				pid_t			pid;

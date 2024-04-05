@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 06:04:33 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/05 12:45:42 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/05 14:51:09 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	builtin_cd(char *args[], t_ld_map_env *env)
 			}
 		}
 		else if ((ft_strchr(args[1], '/') != NULL && ld_chdir(args[1]) != TRUE)
-			|| (ft_strchr(args[1], '/') == NULL && !chdir(args[1])))
+			|| (ft_strchr(args[1], '/') == NULL && chdir(args[1])))
 			return (EXIT_FAILURE);
 		key_pwd = ft_strdup("PWD");
 		if (key_pwd == NULL)

@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:41:08 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/05 12:44:40 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/05 14:56:04 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ static t_bool	infile_heredoc(char *filename,
 	if (access(heredoc.heredoc_name, F_OK | W_OK | R_OK) != 0)
 		return (ld_errno_file("ldpre_ast_redir.access", heredoc.heredoc_name));
 	delim_len = ft_strlen(filename);
+	// TODO heredoc delim에는 param expansion 없이 quote removal만 진행되여야 함
 	filename = ldpre_param_quote_f(ft_strdup(filename), env, NULL);
 	expansion = (ft_strlen(filename) == delim_len);
 	fd = dup(heredoc.stdin_fd);

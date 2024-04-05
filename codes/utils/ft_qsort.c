@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_qsort.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:59:28 by dogwak            #+#    #+#             */
-/*   Updated: 2024/04/04 19:42:41 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/04/05 15:15:17 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 
 		t_bool compare(void *pa, void *pb)
 
-	 	if a is greater than b	-> *pa > *pb, descending order.
-		if a is less than b		-> *pa < *pb, ascending order.
+	 	if a is greater than b	-> return *pa > *pb, descending order.
+		if a is less than b		-> return *pa < *pb, ascending order.
 */
 void	ft_qsort(void **arr, int left, int right,
 			t_bool (*cmp)(const void*, const void*))

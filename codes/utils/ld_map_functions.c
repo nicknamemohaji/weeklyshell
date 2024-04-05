@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:09:12 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/21 17:38:55 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/05 15:15:08 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,20 +116,20 @@ char	**ldpre_env_toenvp_f(t_ld_map_env *map)
 	ret = malloc(sizeof(char *) * (map->count + 1));
 	if (ret == NULL)
 		do_exit("ldpre_env_toenvp_f.malloc");
-	index = -1;
-	node = map->contents;
-	while (++index < map->count)
+	index = 0;
+	node = (map->contents)->next;
+	while (++index <= map->count)
 	{
-		ret[index] = malloc(sizeof(char) * (1 + 1
+		ret[index - 1] = malloc(sizeof(char) * (1 + 1
 					+ ft_strlen(node->key) + ft_strlen(node->value)));
-		if (ret == NULL)
+		if (ret[index - 1] == NULL)
 			do_exit("ldpre_env_toenvp_f.malloc");
-		ft_strlcpy(ret[index], node->key, ft_strlen(node->key) + 1);
-		ft_strlcat(ret[index], "=", ft_strlen(ret[index]) + 2);
-		ft_strlcat(ret[index], node->value,
-			ft_strlen(ret[index]) + ft_strlen(node->value) + 1);
+		ft_strlcpy(ret[index - 1], node->key, ft_strlen(node->key) + 1);
+		ft_strlcat(ret[index - 1], "=", ft_strlen(ret[index - 1]) + 2);
+		ft_strlcat(ret[index - 1], node->value,
+			ft_strlen(ret[index - 1]) + ft_strlen(node->value) + 1);
 		node = node->next;
 	}
-	ret[index] = NULL;
+	ret[index - 1] = NULL;
 	return (ret);
 }
