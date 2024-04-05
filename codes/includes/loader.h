@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:47:14 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/04 18:47:20 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/05 11:56:44 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int		ldpre_ast(t_ast_node *ast, t_ld_map_env *env,
 
 t_bool	ldpre_ast_redir_outfile(char *filename, enum e_node_type mode);
 t_bool	ldpre_ast_redir_infile(char *filename, t_ld_heredoc heredoc,
-					enum e_node_type mode, t_ld_map_env *env);
+			enum e_node_type mode, t_ld_map_env *env);
 
 // ldpre_ast_redir_heredoc.c
 
@@ -89,7 +89,7 @@ t_bool	ldexec_heredoc(int fd, char *delim,
 
 // ldpre_ast_exec_execall.c
 
-void	exec_prepare(t_ld_exec_nodes *node, t_ld_map_env *env);
-int		exec_cleanup(t_ld_exec_nodes *node, t_ld_map_env *env);
+int		exec_cleanup(t_ld_exec_nodes *node,
+			t_ld_map_env *env, t_bool free_flag);
 
 #endif

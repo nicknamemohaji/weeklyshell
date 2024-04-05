@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:20:45 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/04 19:14:32 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/05 12:08:00 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	ldpre_ast(t_ast_node *ast, t_ld_map_env *env,
 			{
 				t_ld_exec_nodes	*node;
 				t_bool			free_flag;
+				pid_t			pid;
+				int				exitcode;
 				
 				node = malloc(1 * sizeof(t_ld_exec_nodes));
 				if (node == NULL)
@@ -34,18 +36,32 @@ int	ldpre_ast(t_ast_node *ast, t_ld_map_env *env,
 				(node->exec).envp = ldpre_env_toenvp_f(env);
 				(node->exec).path = ldexec_exec_find_f(
 						(node->exec).argv[0], &free_flag, ldpre_env_fetch("PATH", env));
-				ldexec_select_type(node->exec, node, env);
-				if (free_flag)
-					free((node->exec).path);	
-				if (exec == NULL)
-					return (exec_cleanup(node, env));
+				if (exec != NULL)
+				{
+					pid = fork();
+					if (pid < 0)
+						do_exit("ldpre_ast.fork");
+				}
+				else
+					pid = -1;
+				if (pid <= 0)
+				{
+					ldexec_select_type(node->exec, node, env);
+					exitcode = exec_cleanup(node, env, free_flag);
+				}
 				else
 				{
+					exec->pid = pid;
 					while (exec->next != NULL)
 						exec = exec->next;
 					exec->next = node;
 					return (-1);
+					if (free_flag)
+						free((node->exec).path);
 				}
+				if (pid == 0)
+					exit(exitcode);
+				return (exitcode);
 			}
 			break;
 		
@@ -122,7 +138,7 @@ int	ldpre_ast(t_ast_node *ast, t_ld_map_env *env,
 				// cleanup
 				if (exec == NULL)
 				{
-					exec_cleanup(start.next, env);
+					exec_cleanup(start.next, env, FALSE);
 					return (0);
 				}
 				return (-1);

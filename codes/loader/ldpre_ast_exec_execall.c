@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 14:36:22 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/04 14:19:43 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/05 11:57:56 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 #include "types.h"
 #include "utils.h"
 
-int		exec_cleanup(t_ld_exec_nodes *node, t_ld_map_env *env);
+int	exec_cleanup(t_ld_exec_nodes *node, t_ld_map_env *env, t_bool free_flag);
 
-int		exec_cleanup(t_ld_exec_nodes *node, t_ld_map_env *env)
+int	exec_cleanup(t_ld_exec_nodes *node, t_ld_map_env *env, t_bool free_flag)
 {
 	int				exitcode;
 	t_ld_exec_nodes	*node_ptr;
@@ -31,6 +31,8 @@ int		exec_cleanup(t_ld_exec_nodes *node, t_ld_map_env *env)
 			exitcode = -(node->pid);
 		free_ft_split((node->exec).argv);
 		free_ft_split((node->exec).envp);
+		if (free_flag)
+			free((node->exec).path);
 		node_ptr = node;
 		node = node->next;
 		free(node_ptr);
