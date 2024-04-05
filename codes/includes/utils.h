@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 19:54:44 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/05 11:38:03 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/04/05 11:40:42 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_bool			ldpre_env_remove(char *key, t_ld_map_env *map);
 t_ld_map_node	**ldpre_env_searchkey(char *key, t_ld_map_env *map);
 
 // ft_qsort.c
-void	ft_qsort(void **arr, int left, int right,
-			t_bool (*cmp)(const void*, const void*));
+void			ft_qsort(void **arr, int left, int right,
+					t_bool (*cmp)(const void*, const void*));
 
 #endif
