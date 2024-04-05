@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 06:04:41 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/05 12:07:11 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/05 12:21:17 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,19 @@ static t_bool	check_digit(const char *c)
 
 static t_bool	check_argumen_count(const char *args[])
 {
-	if (args[2] != NULL)
+	int	count;
+
+	count = 0;
+	while (*args != NULL)
+	{
+		count++;
+		args++;
+	}
+	if (count > 2)
 	{
 		printf("exit: too many arguments\n");
 		return (FALSE);
 	}
-	return (TRUE);
+	else
+		return (TRUE);
 }

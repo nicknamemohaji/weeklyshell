@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:20:45 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/05 12:08:00 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/05 12:20:01 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,7 @@ int	ldpre_ast(t_ast_node *ast, t_ld_map_env *env,
 				int				fd[2];
 
 				start.next = NULL;
-				// TODO make pipe subshell (`exit 1 | unset A | export A=1 | echo $A`)
-
+				
 				// prepare pipe
 				if (pipe(fd) < 0)
 					do_exit("ldpre_ast.pipe");
