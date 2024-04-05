@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:47:55 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/04 15:54:50 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:55:31 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,8 @@ static char	*check_env_path_f(char *cmd, const char *path)
 	char	*ret;
 
 	ret = NULL;
+	if (path == NULL)
+		return (NULL);
 	paths = ft_split(path, ':');
 	if (paths == NULL)
 		do_exit("ldexec_findexec.check_env_path_f.malloc");
