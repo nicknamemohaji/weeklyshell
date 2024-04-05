@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_infix.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogwak <dogwak@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:35:01 by dogwak            #+#    #+#             */
-/*   Updated: 2024/03/31 16:50:02 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/04/05 16:10:34 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_ast_node	*parse_infix(t_parser *self, t_ast_node *left)
 	precede = get_precedence(self->pcur_token->type);
 	move_next_token(self);
 	exp->right = parse_expression(self, precede);
-	if (exp->right == NULL)
+	if (exp->right == NULL && self->pcur_token->type != END)
 	{
 		delete_ast_node(exp);
 		exp = NULL;
