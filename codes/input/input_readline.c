@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_readline.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:19:01 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/03/28 02:09:10 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/05 15:47:04 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ char	*input_readline_f(void)
 	prompt = make_prompt_f();
 	input_sighandler_setup(oldacts);
 	input_terminal_setup(&oldterm);
+	g_sigint = INPUT_READLINE;
 	input = readline(prompt);
 	input_sighandler_restore(oldacts);
 	input_terminal_restore(&oldterm);

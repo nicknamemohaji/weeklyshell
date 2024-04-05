@@ -6,10 +6,11 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:19:05 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/03/21 17:30:13 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/05 15:53:42 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "input.h"
 #include "utils.h"
 
 void	ldexec_sigign_setup(struct sigaction oldacts[2]);
@@ -84,7 +85,6 @@ void	input_sighandler_restore(struct sigaction oldacts[2])
 {
 	sigaction(SIGINT, &oldacts[OLDACT_SIGINT], NULL);
 	sigaction(SIGQUIT, &oldacts[OLDACT_SIGQUIT], NULL);
-	g_sigint = FALSE;
 }
 
 /*
@@ -106,9 +106,12 @@ void	input_sighandler(int sig, siginfo_t *info, void *ucontext)
 	(void) ucontext;
 	(void) info;
 	(void) sig;
-	g_sigint = TRUE;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	if (g_sigint == INPUT_READLINE || g_sigint == TRUE)
+	{
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+	g_sigint = TRUE;	
 }

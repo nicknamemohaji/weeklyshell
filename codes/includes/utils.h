@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 19:54:44 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/05 13:00:27 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/05 15:43:58 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,6 @@ t_bool			ld_chdir(char *path);
 // do_exit.c
 
 void			do_exit(char *errorstr);
-
-// input_sighandler.c
-# define OLDACT_SIGINT 0
-# define OLDACT_SIGQUIT 1
-
-void			input_sighandler_setup(struct sigaction oldacts[2]);
-void			input_sighandler_restore(struct sigaction oldacts[2]);
-void			input_sighandler(int sig, siginfo_t *info, void *ucontext);
-void			ldexec_sigign_setup(struct sigaction oldacts[2]);
 
 // ld_map_functions.c
 

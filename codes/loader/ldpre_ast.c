@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:20:45 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/05 15:18:01 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/05 15:51:07 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,20 +248,27 @@ int	ldpre_ast(t_ast_node *ast, t_ld_map_env *env,
 				if ((ast->right)->node_type == NODE_FILE)
 				{
 					// open right
-					ldpre_ast_redir_infile((ast->right)->pcmd[0], heredoc, ast->node_type, env);
+					if (ldpre_ast_redir_infile((ast->right)->pcmd[0], heredoc, ast->node_type, env) == FALSE)
+						return (-2);
 					// open left 
 					if ((ast->left)->node_type == NODE_FILE)
-						ldpre_ast_redir_infile((ast->left)->pcmd[0], heredoc, ast->node_type, env);
-					else
-						ldpre_ast(ast->left, env, exec, heredoc);
+					{
+						if (ldpre_ast_redir_infile((ast->left)->pcmd[0], heredoc, ast->node_type, env) == FALSE)
+							return (-2);
+					}
+					else if (ldpre_ast(ast->left, env, exec, heredoc) == FALSE)
+						return (-2);
 				}
 				else
 				{
 					// open left
 					if ((ast->left)->node_type == NODE_FILE)
-						ldpre_ast_redir_infile((ast->left)->pcmd[0], heredoc, ast->node_type, env);
-					else
-						ldpre_ast(ast->left, env, exec, heredoc);
+					{
+						if (ldpre_ast_redir_infile((ast->left)->pcmd[0], heredoc, ast->node_type, env) == FALSE)
+							return (-2);
+					}
+					else if (ldpre_ast(ast->left, env, exec, heredoc) == FALSE)
+						return (-2);
 					return (ldpre_ast(ast->right, env, exec, heredoc));
 				}
 				return 0;		

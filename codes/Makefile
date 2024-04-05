@@ -2,6 +2,7 @@ NAME = minishell
 
 INPUT_FILES = 	input/input_readline.c \
 				input/input_terminal.c \
+				input/input_sighandler.c \
 				input/input_validator.c
 PARSER_FILES =	parser/ast_node.c \
 				parser/get_node_type.c \
@@ -37,7 +38,6 @@ LOADER_FILES = 	loader/ldpre_param_expansion.c \
 				loader/loader_wrapper.c
 UTIL_FILES = 	utils/do_exit.c \
 				utils/free_ft_split.c \
-				utils/input_sighandler.c \
 				utils/ld_chdir.c \
 				utils/ld_errno_file.c \
 				utils/ld_map_functions.c \

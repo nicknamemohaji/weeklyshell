@@ -6,17 +6,20 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 14:37:13 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/04 19:13:18 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/05 16:01:18 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "loader.h"
 #include "utils.h"
+#include "input.h"
 #include "types.h"
 
-char	*ldexec_heredoc_assign_f(void);
-t_bool	ldexec_heredoc(int fd, char *delim,
-			t_bool expansion, t_ld_map_env *env);
+char			*ldexec_heredoc_assign_f(void);
+t_bool			ldexec_heredoc(int fd, char *delim,
+					t_bool expansion, t_ld_map_env *env);
+static t_bool	heredoc_getline(int fd, char *delim,
+					t_bool expansion, t_ld_map_env *env);
 
 /*
 char	*ldexec_heredoc_assign_f(void)
@@ -60,23 +63,43 @@ char	*ldexec_heredoc_assign_f(void)
 t_bool	ldexec_heredoc(int fd, char *delim,
 			t_bool expansion, t_ld_map_env *env)
 {
-	char				*buf;
 	struct sigaction	oldacts[2];
+	struct termios		oldterm;
 	t_bool				ret;
 
 	input_sighandler_setup(oldacts);
+	input_terminal_setup(&oldterm);
+	g_sigint = FALSE;
+	ret = heredoc_getline(fd, delim, expansion, env);
+	input_sighandler_restore(oldacts);
+	input_terminal_restore(&oldterm);
+	if (g_sigint != TRUE)
+		ret = TRUE;
+	if (!ret)
+	{
+		write(1, "\n", 1);
+		rl_on_new_line();
+	}
+	return (ret);
+}
+
+static t_bool	heredoc_getline(int fd, char *delim,
+					t_bool expansion, t_ld_map_env *env)
+{
+	t_bool			ret;
+	char			*buf;
+	const size_t	delim_len = ft_strlen(delim);
+
 	ret = TRUE;
 	while (ret == TRUE)
 	{
-		// TODO ctrl c 입력시 입력 버퍼에 남아있던 부분들이 출력되는 문제 해결
-		// TODO EOF 입력시 이상하게 출력됨
-		write(2, "heredoc > ", 10);
+		write(1, "heredoc > ", 10);
 		buf = get_next_line(STDIN_FD);
 		rl_on_new_line();
 		if (g_sigint == TRUE || buf == NULL || *buf == '\0')
 			ret = FALSE;
-		if (ret == TRUE && ft_strlen(buf) - 1 == ft_strlen(delim)
-			&& ft_strncmp(buf, delim, ft_strlen(delim)) == 0)
+		if (ret == TRUE && ft_strlen(buf) - 1 == delim_len
+			&& ft_strncmp(buf, delim, delim_len) == 0)
 		{
 			free(buf);
 			break ;
@@ -87,6 +110,5 @@ t_bool	ldexec_heredoc(int fd, char *delim,
 			write(fd, buf, ft_strlen(buf));
 		free(buf);
 	}
-	input_sighandler_restore(oldacts);
 	return (ret);
 }
