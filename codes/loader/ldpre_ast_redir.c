@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ldpre_ast_redir.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:41:08 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/04 18:50:49 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/05 12:12:10 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_bool	ldpre_ast_redir_outfile(char *filename, enum e_node_type mode)
 {
 	int	fd;
 
-	if (access(filename, F_OK) && access(filename, F_OK | W_OK) != 0)
+	if (!access(filename, F_OK) && access(filename, F_OK | W_OK) != 0)
 		return (ld_errno_file("ldpre_ast_redir_outfile.access", filename));
 	close(STDOUT_FD);
 	if (mode == EXP_PRE_RWRITE)
