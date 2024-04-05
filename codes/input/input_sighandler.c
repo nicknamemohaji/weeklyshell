@@ -6,17 +6,18 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:19:05 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/05 15:53:42 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:49:18 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
 #include "utils.h"
 
-void	ldexec_sigign_setup(struct sigaction oldacts[2]);
-void	input_sighandler_setup(struct sigaction oldacts[2]);
-void	input_sighandler_restore(struct sigaction oldacts[2]);
-void	input_sighandler(int sig, siginfo_t *info, void *ucontext);
+void		ldexec_sigign_setup(struct sigaction oldacts[2]);
+void		input_sighandler_setup(struct sigaction oldacts[2]);
+void		input_sighandler_restore(struct sigaction oldacts[2]);
+void		input_sighandler(int sig, siginfo_t *info, void *ucontext);
+static int	rl_event_void(void);
 
 /*
 void	input_sighandler_setup(struct sigaction oldacts[2])
@@ -33,8 +34,11 @@ void	input_sighandler_setup(struct sigaction oldacts[2])
 	sigset_t			mask;
 
 	g_sigint = FALSE;
-	if (sigemptyset(&mask) != 0 || sigaddset(&mask, SIGINT) != 0)
+	if (sigemptyset(&mask) != 0
+		|| sigaddset(&mask, SIGINT) != 0 || sigaddset(&mask, SIGQUIT) != 0)
 		do_exit("input_sighandler_setup.sigemptyset");
+	rl_catch_signals = 0;
+	rl_event_hook = rl_event_void;
 	action.sa_flags = 0 | SA_SIGINFO;
 	action.sa_flags &= ~SA_RESTART;
 	action.sa_mask = mask;
@@ -50,7 +54,7 @@ void	input_sighandler_setup(struct sigaction oldacts[2])
 void	ldexec_sigign_setup(struct sigaction oldacts[2])
 :param oldacts: sigaction array to store default handlers
 
-Similar to input_sighandler_setup, but choose to ignore. 
+Similar to input_sighandler_setup, but choose to ignore.
 Shell environment after forking child should use this function.
 Deactivates SIGINT(Ctrl + C) and SIGQUIT(Ctrl + \)
 
@@ -93,7 +97,7 @@ void	input_sighandler(int sig, siginfo_t *info, void *ucontext)
 :param info: defined in sigaction(2)
 :param ucontext: defined in sigaction(2)
 
-signal handler for SIGINT in interactive mode. 
+signal handler for SIGINT in interactive mode.
 Modifies g_sigint variable to notice that sigint has occured,
 and changes readline state to print next prompt.
 
@@ -106,6 +110,7 @@ void	input_sighandler(int sig, siginfo_t *info, void *ucontext)
 	(void) ucontext;
 	(void) info;
 	(void) sig;
+	rl_done = 1;
 	if (g_sigint == INPUT_READLINE || g_sigint == TRUE)
 	{
 		write(1, "\n", 1);
@@ -113,5 +118,11 @@ void	input_sighandler(int sig, siginfo_t *info, void *ucontext)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-	g_sigint = TRUE;	
+	g_sigint = TRUE;
+	rl_on_new_line();
+}
+
+static int	rl_event_void(void)
+{
+	return (0);
 }

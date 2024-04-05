@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 06:04:43 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/05 15:19:43 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/05 16:13:32 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 int				builtin_export(char *args[], t_ld_map_env *env);
 static int		builtin_export_print(t_ld_map_env *env);
 static t_bool	cmp(const void *c1, const void *c2);
-
 
 int	builtin_export(char *args[], t_ld_map_env *env)
 {
@@ -50,12 +49,17 @@ int	builtin_export(char *args[], t_ld_map_env *env)
 static int	builtin_export_print(t_ld_map_env *env)
 {
 	char	**envp;
+	char	**envp_ptr;
 
 	envp = ldpre_env_toenvp_f(env);
+	envp_ptr = envp;
 	ft_qsort((void **)envp, 0, env->count - 1, cmp);
-	for (int i = 0; envp[i] != NULL; i++)
-		printf("%s\n", envp[i]);
-	free_ft_split(envp);
+	while (*envp != NULL)
+	{
+		printf("%s\n", *envp);
+		envp++;
+	}
+	free_ft_split(envp_ptr);
 	return (EXIT_SUCCESS);
 }
 

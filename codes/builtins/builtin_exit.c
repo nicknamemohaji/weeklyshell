@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 06:04:41 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/05 12:31:53 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/05 16:12:22 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static t_bool	check_digit(const char *c)
 	return (TRUE);
 }
 
-t_bool			builtin_check_argument_count(const char *args[], int limit)
+t_bool	builtin_check_argument_count(const char *args[], int limit)
 {
 	int	count;
 

@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 18:18:30 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/04 18:17:33 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/05 16:30:16 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static char	*quote_removal_f(char *s,
 char	*ldpre_param_quote_f(char *arg, t_ld_map_env *env, t_bool *wildcard)
 :param arg: raw string to remove (and expand)
 :param env: environment variables
-:param wildcard: t_bool ptr of caller
+:param wildcard: t_bool ptr of caller. if wildcard is NULL, than parameter
+expansion is not executed.
 :return: quote removed string
 
 Performs quote removal. If needed, performs shell parmeter expansion.
@@ -64,7 +65,8 @@ static char	*quote_removal_f(char *s,
 				char **ptr, t_bool *wildcard, t_ld_map_env *env)
 :param s: arg
 :param ptr: arg ptr of caller
-:param wildcard: t_bool ptr of caller
+:param wildcard: t_bool ptr of caller. if wildcard is NULL, than parameter
+expansion is not executed.
 :param env: environment variables
 :return: parsed argument
 
@@ -94,7 +96,7 @@ static char	*quote_removal_f(char *s,
 	}
 	if (ret == NULL)
 		do_exit("ldpre_param_quote.quote_removal_f.malloc");
-	if (*s != '\'')
+	if (*s != '\'' && wildcard != NULL)
 		ret = ldpre_param_expansion_f(ret, env);
 	*ptr = end_ptr;
 	return (ret);

@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 01:11:55 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/04 15:38:18 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/05 16:25:50 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 pid_t	ldexec_run_bin(t_ld_exec exec);
 void	ldexec_select_type(t_ld_exec exec, t_ld_exec_nodes *node,
-				t_ld_map_env *env);
+			t_ld_map_env *env);
 
 pid_t	ldexec_run_bin(t_ld_exec exec)
 {
@@ -28,6 +28,7 @@ pid_t	ldexec_run_bin(t_ld_exec exec)
 		return (-127);
 	}
 	pid = fork();
+	// TODO pipe subshell인지 감지, fork를 하지 않음
 	if (pid < 0)
 		do_exit("ldexec_run_bin.fork");
 	else if (pid == 0)

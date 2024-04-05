@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 14:37:13 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/05 16:01:18 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:49:04 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,22 +93,21 @@ static t_bool	heredoc_getline(int fd, char *delim,
 	ret = TRUE;
 	while (ret == TRUE)
 	{
-		write(1, "heredoc > ", 10);
-		buf = get_next_line(STDIN_FD);
-		rl_on_new_line();
+		buf = readline("heredoc > ");
 		if (g_sigint == TRUE || buf == NULL || *buf == '\0')
 			ret = FALSE;
-		if (ret == TRUE && ft_strlen(buf) - 1 == delim_len
+		if (ret == TRUE && ft_strlen(buf) == delim_len
 			&& ft_strncmp(buf, delim, delim_len) == 0)
-		{
-			free(buf);
 			break ;
-		}
 		if (ret == TRUE && expansion)
 			buf = ldpre_param_expansion_f(buf, env);
 		if (ret == TRUE)
+		{
 			write(fd, buf, ft_strlen(buf));
-		free(buf);
+			write(fd, "\n", 1);
+			free(buf);
+		}
 	}
+	free(buf);
 	return (ret);
 }

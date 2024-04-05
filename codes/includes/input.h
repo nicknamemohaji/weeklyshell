@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:17:56 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/05 15:44:06 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/05 16:19:20 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ t_bool	input_validate(const char *input);
 # define OLDACT_SIGINT 0
 # define OLDACT_SIGQUIT 1
 
-void			input_sighandler_setup(struct sigaction oldacts[2]);
-void			input_sighandler_restore(struct sigaction oldacts[2]);
-void			input_sighandler(int sig, siginfo_t *info, void *ucontext);
-void			ldexec_sigign_setup(struct sigaction oldacts[2]);
+void	input_sighandler_setup(struct sigaction oldacts[2]);
+void	input_sighandler_restore(struct sigaction oldacts[2]);
+void	input_sighandler(int sig, siginfo_t *info, void *ucontext);
+void	ldexec_sigign_setup(struct sigaction oldacts[2]);
 
 #endif
