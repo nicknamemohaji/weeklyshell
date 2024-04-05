@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 06:04:41 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/05 12:21:17 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/05 12:31:53 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 
 int				builtin_exit(char *args[], t_ld_map_env *env);
 static t_bool	check_digit(const char *c);
-static t_bool	check_argumen_count(const char *args[]);
+t_bool			builtin_check_argument_count(const char *args[], int limit);
 
 int	builtin_exit(char *args[], t_ld_map_env *env)
 {
 	printf("exit\n");
-	if (!check_argumen_count((const char **) args))
+	if (!builtin_check_argument_count((const char **) args, 2))
 		return (1);
 	if (args[1] != NULL)
 	{
@@ -50,7 +50,7 @@ static t_bool	check_digit(const char *c)
 	return (TRUE);
 }
 
-static t_bool	check_argumen_count(const char *args[])
+t_bool			builtin_check_argument_count(const char *args[], int limit)
 {
 	int	count;
 
@@ -60,9 +60,9 @@ static t_bool	check_argumen_count(const char *args[])
 		count++;
 		args++;
 	}
-	if (count > 2)
+	if (count > limit)
 	{
-		printf("exit: too many arguments\n");
+		printf("too many arguments\n");
 		return (FALSE);
 	}
 	else

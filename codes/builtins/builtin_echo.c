@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/27 06:04:35 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/27 06:43:25 by nicknamemoh      ###   ########.fr       */
+/*   Created: 2024/04/05 12:45:54 by kyungjle          #+#    #+#             */
+/*   Updated: 2024/04/05 12:46:00 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -6,14 +6,15 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 06:04:43 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/04 17:47:28 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/05 14:05:37 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 #include "utils.h"
 
-int	builtin_export(char *args[], t_ld_map_env *env);
+int			builtin_export(char *args[], t_ld_map_env *env);
+static int	builtin_export_print(t_ld_map_env *env);
 
 int	builtin_export(char *args[], t_ld_map_env *env)
 {
@@ -21,9 +22,8 @@ int	builtin_export(char *args[], t_ld_map_env *env)
 	char	*key;
 	char	*value;
 
-	// TODO 정렬된 상태로 출력
 	if (args[1] == NULL)
-		return (builtin_env_print(env));
+		return (builtin_export_print(env));
 	i = 1;
 	while (args[i] != NULL)
 	{
@@ -42,5 +42,16 @@ int	builtin_export(char *args[], t_ld_map_env *env)
 		ldpre_env_add(key, value, env);
 		i++;
 	}
+	return (EXIT_SUCCESS);
+}
+
+static int	builtin_export_print(t_ld_map_env *env)
+{
+	char	**envp;
+
+	envp = ldpre_env_toenvp_f(env);
+	for (int i = 0; envp[i] != NULL; i++)
+		printf("%s\n", envp[i]);
+	free_ft_split(envp);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:20:45 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/05 12:20:01 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/05 12:54:20 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,13 +234,14 @@ int	ldpre_ast(t_ast_node *ast, t_ld_map_env *env,
 						return (-2);
 					return (ldpre_ast(ast->left, env, exec, heredoc));
 				}
-				return -1;
+				return 0;
 			}
 			break;
 		
 		case EXP_PRE_RREAD:		// FALLTHROUGH
 		case EXP_PRE_RHEREDOC:
 			{
+				// TODO read 실패한 경우 처리
 				// TODO command가 없는 경우
 				if ((ast->right)->node_type == NODE_FILE)
 				{
@@ -261,7 +262,7 @@ int	ldpre_ast(t_ast_node *ast, t_ld_map_env *env,
 						ldpre_ast(ast->left, env, exec, heredoc);
 					return (ldpre_ast(ast->right, env, exec, heredoc));
 				}
-				return -1;		
+				return 0;		
 			}
 			break;
 		

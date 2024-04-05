@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/27 06:04:33 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/04 15:46:54 by kyungjle         ###   ########.fr       */
+/*   Created: 2024/03/27 06:04:33 by kyungjle          #+#    #+#             */
+/*   Updated: 2024/04/05 12:45:42 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	builtin_cd(char *args[], t_ld_map_env *env)
 {
 	char	*key_pwd;
 
+	if (!builtin_check_argument_count((const char **)args, 2))
+		return (EXIT_FAILURE);
 	if (args[1] != NULL)
 	{
 		if (args[1][0] == '/')
@@ -29,7 +31,8 @@ int	builtin_cd(char *args[], t_ld_map_env *env)
 				return (EXIT_FAILURE);
 			}
 		}
-		else if (ft_strchr(args[1], '/') != NULL && ld_chdir(args[1]) != TRUE)
+		else if ((ft_strchr(args[1], '/') != NULL && ld_chdir(args[1]) != TRUE)
+			|| (ft_strchr(args[1], '/') == NULL && !chdir(args[1])))
 			return (EXIT_FAILURE);
 		key_pwd = ft_strdup("PWD");
 		if (key_pwd == NULL)

@@ -18,7 +18,7 @@ char			*ldpre_env_fetch(char *key, t_ld_map_env *map);
 void			ldpre_env_add(char *key, char *value,
 					t_ld_map_env *map);
 t_bool			ldpre_env_remove(char *key, t_ld_map_env *map);
-static t_bool	validate_key_format(char *key);
+t_bool			ldpre_env_validate_key(char *key);
 
 /*
 t_ld_map_node	**ldpre_env_searchkey(char *key, t_ld_map_env *map)
@@ -56,7 +56,7 @@ char	*ldpre_env_fetch(char *key, t_ld_map_env *map)
 {
 	t_ld_map_node	**node;
 
-	if (!validate_key_format(key))
+	if (!ldpre_env_validate_key(key))
 	{
 		printf("syntax error: [%s]\n", key);
 		return (NULL);
@@ -74,7 +74,7 @@ void	ldpre_env_add(char *key, char *value, t_ld_map_env *map)
 	char			*key_copy;
 	char			*value_copy;
 
-	if (!validate_key_format(key))
+	if (!ldpre_env_validate_key(key))
 	{
 		printf("syntax error: [%s]\n", key);
 		return ;
@@ -115,11 +115,11 @@ t_bool	ldpre_env_remove(char *key, t_ld_map_env *map)
 }
 
 /*
-static t_bool	validate_key_format(char *key)
+t_bool	ldpre_env_validate_key(char *key)
 :param key: key string to validate
 :return: TRUE if key matches requirements
 */
-static t_bool	validate_key_format(char *key)
+t_bool	ldpre_env_validate_key(char *key)
 {
 	if (!(ft_isalpha(*key) || *key == '_'))
 		return (FALSE);
