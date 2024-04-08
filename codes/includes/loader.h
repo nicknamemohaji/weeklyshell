@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:47:14 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/08 18:59:17 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/08 20:08:18 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,11 @@ t_bool	ldpre_ast_redir_infile(char *filename, t_ld_heredoc heredoc,
 char	*ldexec_heredoc_assign_f(void);
 t_bool	ldexec_heredoc(int fd, char *delim,
 			t_bool expansion, t_ld_map_env *env);
+
+// ldpre_ast_exec.c
+
+int		ldpre_ast_exec(t_ast_node *ast, t_ld_map_env *env,
+			t_ld_exec_nodes *exec, t_ld_heredoc heredoc);
 
 // ldpre_ast_exec_execall.c
 

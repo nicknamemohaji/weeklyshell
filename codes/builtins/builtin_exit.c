@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 06:04:41 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/08 18:34:10 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/08 20:38:56 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_bool			builtin_check_argument_count(const char *args[], int limit);
 
 int	builtin_exit(char *args[], t_ld_map_env *env)
 {
+	dprintf(2, "pid %d exit!\n", getpid());
 	printf("exit\n");
 	if (!builtin_check_argument_count((const char **) args, 2))
 		return (1);

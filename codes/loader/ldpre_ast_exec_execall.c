@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 14:36:22 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/08 18:47:46 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/08 20:47:36 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,16 @@ int	exec_cleanup(t_ld_exec_nodes *node, t_ld_map_env *env, t_bool free_flag)
 
 	while (node != NULL)
 	{
-		// TODO builtin들의 exit code가 제대로 수집되지 않음
 		if (node->pid > 0 && waitpid(node->pid, &exitcode, 0) < 0)
 			do_exit("loader_wrapper.exec_prepare.waitpid");
 		else if (node->pid == -1)
 			exitcode = node->exitcode;
 		else if (node->pid < 0)
 			exitcode = -(node->pid);
+		if (WIFSIGNALED(exitcode))
+			exitcode = 128 + WTERMSIG(exitcode);
+		else
+			exitcode = WEXITSTATUS(exitcode);
 		free_ft_split((node->exec).argv);
 		free_ft_split((node->exec).envp);
 		if (free_flag)

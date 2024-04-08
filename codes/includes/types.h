@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:18:03 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/05 15:40:13 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/08 20:16:16 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,14 @@ typedef enum e_bool
 	TRUE = 1,
 	FALSE = 0
 }	t_bool;
+
+// TODO ast travel status code
+typedef enum e_ast_status
+{
+	AST_SUCCESS = 0,
+	AST_FAIL_REDIR = -2,
+	AST_SUCCESS_PIPE = -10
+}	t_ast_status;
 
 extern volatile sig_atomic_t	g_sigint;
 # define INPUT_READLINE 2
