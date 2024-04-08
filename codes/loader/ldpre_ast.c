@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:20:45 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/08 19:20:37 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/08 20:06:26 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,53 +23,7 @@ int	ldpre_ast(t_ast_node *ast, t_ld_map_env *env,
 	{
 		case NODE_COMMAND:
 			{
-				// TODO stdin에서 입력받는 커맨드들이 이상하게 실행
-				t_ld_exec_nodes	*node;
-				t_bool			free_flag;
-				pid_t			pid;
-				int				exitcode;
-
-				// 1. 실행정보 기입				
-				node = malloc(1 * sizeof(t_ld_exec_nodes));
-				if (node == NULL)
-					do_exit("ldpre_ast.malloc");
-				node->next = NULL;
-				(node->exec).argv = ldpre_param_wrapper_f(ast->pcmd, env);
-				(node->exec).envp = ldpre_env_toenvp_f(env);
-				(node->exec).path = ldexec_exec_find_f(
-						(node->exec).argv[0], &free_flag, ldpre_env_fetch("PATH", env));
-
-				// 2. 실행
-				// 2-1. 파이프이면 fork				
-				if (exec != NULL)
-				{
-					pid = fork();
-					if (pid < 0)
-						do_exit("ldpre_ast.fork");
-				}
-				else
-					pid = -1;
-				// 2-2. !PIPE || (PIPE && CHILD)
-				if (pid <= 0)
-				{
-					ldexec_select_type(node->exec, node, env, pid);
-					exitcode = exec_cleanup(node, env, free_flag);
-				}
-				// PIPE && !CHILD
-				else
-				{
-					node->pid = pid;
-					while (exec->next != NULL)
-						exec = exec->next;
-					exec->next = node;
-					return (-1);
-				}
-
-				// 3. 종료
-				// (단일 커맨드면 exec_cleanup에서 정리됨 / 자식 프로세스는 종료됨 / 파이프면 한 번에 정리함)
-				if (pid == 0)
-					exit(exitcode);
-				return (exitcode);
+				return (ldpre_ast_exec(ast, env, exec, heredoc));
 			}
 			break;
 
