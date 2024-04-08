@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:35:55 by dogwak            #+#    #+#             */
-/*   Updated: 2024/04/02 20:57:32 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/04/08 20:23:40 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_ast_node	*parse_file(t_parser *self)
 {
 	t_ast_node	*file;
 
-	if ((size_t)self->cur_idx == self->ptoken_stream->size)
+	if (self->pcur_token->type == END)
 		return (ast_syntax_error(NULL));
 	file = new_ast_node();
 	if (file == NULL)
@@ -28,7 +28,6 @@ t_ast_node	*parse_file(t_parser *self)
 		return (ast_syntax_error(file));
 	file->node_type = NODE_FILE;
 	file->pcmd = new_cmd_list(1);
-	file->pcmd[0]
-		= ft_strdup(self->pcur_token->field.c_str(&self->pcur_token->field));
+	file->pcmd[0] = ft_strdup(self->pcur_token->field.c_str(&self->pcur_token->field));
 	return (file);
 }

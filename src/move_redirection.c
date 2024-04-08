@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 18:16:02 by dogwak            #+#    #+#             */
-/*   Updated: 2024/04/03 14:07:56 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/04/08 20:32:34 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void	move_right_redirect(t_ft_vector *ptoken_stream)
 	int		idx;
 
 	htok_vec = ptoken_stream->pbuffer;
-	idx = ptoken_stream->size - 0;
+	idx = ptoken_stream->size - 1;
 	to = ptoken_stream->size - 2;
 	while (--idx >= 0)
 	{
@@ -107,12 +107,10 @@ void	move_redirection_token(t_ft_vector *ptoken_stream)
 		if ((htok_vec[idx].type == RDICT_APPEND
 				|| htok_vec[idx].type == RDICT_WRITE
 				|| htok_vec[idx].type == RDICT_HEREDOC
-				|| htok_vec[idx].type == RDICT_READ)
-			&& (htok_vec[idx + 1].type == PIPE
-				|| htok_vec[idx + 1].type == LPAR
-				|| htok_vec[idx + 1].type == RPAR
-				|| htok_vec[idx + 1].type == OPRT_AND
-				|| htok_vec[idx + 1].type == OPRT_OR))
+				|| htok_vec[idx].type == RDICT_READ) && (htok_vec[idx + 1].type
+				== PIPE || htok_vec[idx + 1].type == LPAR
+				|| htok_vec[idx + 1].type == RPAR || htok_vec[idx + 1].type
+				== OPRT_AND || htok_vec[idx + 1].type == OPRT_OR))
 			return ;
 	}
 	move_left_redirect(ptoken_stream);
