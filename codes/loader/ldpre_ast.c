@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ldpre_ast.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:20:45 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/05 15:51:07 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/08 17:25:28 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,12 @@ int	ldpre_ast(t_ast_node *ast, t_ld_map_env *env,
 	{
 		case NODE_COMMAND:
 			{
-				// TODO 커맨드 실행 구조 검토
-				// 파이프일때 손자까지 만들 필요가 있나...
 				t_ld_exec_nodes	*node;
 				t_bool			free_flag;
 				pid_t			pid;
 				int				exitcode;
-				
+
+				// 1. 실행정보 기입				
 				node = malloc(1 * sizeof(t_ld_exec_nodes));
 				if (node == NULL)
 					do_exit("ldpre_ast.malloc");
@@ -38,6 +37,9 @@ int	ldpre_ast(t_ast_node *ast, t_ld_map_env *env,
 				(node->exec).envp = ldpre_env_toenvp_f(env);
 				(node->exec).path = ldexec_exec_find_f(
 						(node->exec).argv[0], &free_flag, ldpre_env_fetch("PATH", env));
+
+				// 2. 실행
+				// 2-1. 파이프이면 fork				
 				if (exec != NULL)
 				{
 					pid = fork();
@@ -46,11 +48,13 @@ int	ldpre_ast(t_ast_node *ast, t_ld_map_env *env,
 				}
 				else
 					pid = -1;
+				// 2-2. !PIPE || (PIPE && CHILD)
 				if (pid <= 0)
 				{
-					ldexec_select_type(node->exec, node, env);
+					ldexec_select_type(node->exec, node, env, pid);
 					exitcode = exec_cleanup(node, env, free_flag);
 				}
+				// PIPE && !CHILD
 				else
 				{
 					exec->pid = pid;
@@ -58,11 +62,10 @@ int	ldpre_ast(t_ast_node *ast, t_ld_map_env *env,
 						exec = exec->next;
 					exec->next = node;
 					return (-1);
-					if (free_flag)
-						free((node->exec).path);
 				}
 				if (pid == 0)
 					exit(exitcode);
+				// 3. 정리
 				return (exitcode);
 			}
 			break;

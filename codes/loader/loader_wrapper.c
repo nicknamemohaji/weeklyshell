@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loader_wrapper.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 13:16:24 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/04 18:04:20 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/08 16:52:02 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

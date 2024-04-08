@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loader.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:47:14 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/05 11:56:44 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/08 17:23:58 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ char	*ldexec_exec_find_f(char *cmd, t_bool *need_free, const char *path);
 
 // ldexec_run.c
 
-pid_t	ldexec_run_bin(t_ld_exec exec);
+pid_t	ldexec_run_bin(t_ld_exec exec, pid_t pid);
 void	ldexec_select_type(t_ld_exec exec, t_ld_exec_nodes *node,
-			t_ld_map_env *env);
+			t_ld_map_env *env, pid_t pid);
 
 // ldpre_ast.c
 
