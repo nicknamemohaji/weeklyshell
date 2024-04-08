@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ldexec_run.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 01:11:55 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/08 17:27:06 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/08 18:48:23 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ pid_t	ldexec_run_bin(t_ld_exec exec, pid_t pid)
 {
 	if (exec.path == NULL)
 	{
-		printf("command not found\n");
+		write(2, "command not found\n", 18);
 		return (-127);
 	}
 	if (pid < 0)
@@ -33,7 +33,7 @@ pid_t	ldexec_run_bin(t_ld_exec exec, pid_t pid)
 	{
 		errno = 0;
 		signal(SIGINT, SIG_DFL);
-		signal(SIGKILL, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		if (errno != 0)
 			do_exit("ldexec_run_bin.signal");
 		if (execve(exec.path, exec.argv, exec.envp) < 0)

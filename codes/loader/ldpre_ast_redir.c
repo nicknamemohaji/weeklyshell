@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/04 18:41:08 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/05 14:56:04 by kyungjle         ###   ########.fr       */
+/*   Created: 2024/04/08 18:56:03 by kyungjle          #+#    #+#             */
+/*   Updated: 2024/04/08 19:19:36 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,79 +14,63 @@
 #include "types.h"
 #include "utils.h"
 
-t_bool			ldpre_ast_redir_outfile(char *filename, enum e_node_type mode);
-t_bool			ldpre_ast_redir_infile(char *filename, t_ld_heredoc heredoc,
-					enum e_node_type mode, t_ld_map_env *env);
-static t_bool	infile_read(char *filename);
-static t_bool	infile_heredoc(char *filename,
-					t_ld_map_env *env, t_ld_heredoc heredoc);
+int	ldpre_ast_wopen(t_ast_node *ast, t_ld_map_env *env,
+		t_ld_exec_nodes *exec, t_ld_heredoc heredoc);
+int	ldpre_ast_ropen(t_ast_node *ast, t_ld_map_env *env,
+		t_ld_exec_nodes *exec, t_ld_heredoc heredoc);
 
-t_bool	ldpre_ast_redir_outfile(char *filename, enum e_node_type mode)
+int	ldpre_ast_wopen(t_ast_node *ast, t_ld_map_env *env,
+		t_ld_exec_nodes *exec, t_ld_heredoc heredoc)
 {
-	int	fd;
+	t_bool	left_isfile;
 
-	if (!access(filename, F_OK) && access(filename, F_OK | W_OK) != 0)
-		return (ld_errno_file("ldpre_ast_redir_outfile.access", filename));
-	close(STDOUT_FD);
-	if (mode == EXP_IN_RWRITE)
-		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	left_isfile = FALSE;
+	if ((ast->left)->node_type == NODE_FILE)
+	{
+		left_isfile = TRUE;
+		if (ldpre_ast_redir_outfile((ast->left)->pcmd[0],
+				ast->node_type) == FALSE)
+			return (-2);
+	}
+	if ((ast->right)->node_type == NODE_FILE)
+	{
+		if (ldpre_ast_redir_outfile((ast->right)->pcmd[0],
+				ast->node_type) == FALSE)
+			return (-2);
+	}
 	else
-		fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (fd < 0)
-		return (ld_errno_file("ldpre_ast_redir_outfile.open", filename));
-	return (TRUE);
+	{
+		if (ldpre_ast(ast->right, env, exec, heredoc) < 0)
+			return (-2);
+	}
+	if (!left_isfile)
+		return (ldpre_ast(ast->left, env, exec, heredoc));
+	return (0);
 }
 
-t_bool	ldpre_ast_redir_infile(char *filename, t_ld_heredoc heredoc,
-			enum e_node_type mode, t_ld_map_env *env)
+int	ldpre_ast_ropen(t_ast_node *ast, t_ld_map_env *env,
+		t_ld_exec_nodes *exec, t_ld_heredoc heredoc)
 {
-	close(STDIN_FD);
-	if (mode == EXP_PRE_RHEREDOC)
-		return (infile_heredoc(filename, env, heredoc));
-	else
-		return (infile_read(filename));
-}
+	t_bool	right_isfile;
 
-static t_bool	infile_read(char *filename)
-{
-	int		fd;
-	t_bool	res;
-
-	res = TRUE;
-	if (access(filename, F_OK) && access(filename, F_OK | R_OK) != 0)
-		return (ld_errno_file("ldpre_ast_redir.access", filename));
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-		return (ld_errno_file("ldpre_ast_redir.open", filename));
-	return (res);
-}
-
-static t_bool	infile_heredoc(char *filename,
-					t_ld_map_env *env, t_ld_heredoc heredoc)
-{
-	int		fd;
-	size_t	delim_len;
-	t_bool	res;
-	t_bool	expansion;
-
-	res = TRUE;
-	if (access(heredoc.heredoc_name, F_OK | W_OK | R_OK) != 0)
-		return (ld_errno_file("ldpre_ast_redir.access", heredoc.heredoc_name));
-	delim_len = ft_strlen(filename);
-	// TODO heredoc delim에는 param expansion 없이 quote removal만 진행되여야 함
-	filename = ldpre_param_quote_f(ft_strdup(filename), env, NULL);
-	expansion = (ft_strlen(filename) == delim_len);
-	fd = dup(heredoc.stdin_fd);
-	if (fd < 0)
-		do_exit("ldpre_ast_redir.dup");
-	fd = open(heredoc.heredoc_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd < 0)
-		do_exit("ldpre_ast_redir.open");
-	res = ldexec_heredoc(fd, filename, expansion, env);
-	close(fd);
-	close(STDIN_FD);
-	fd = open(heredoc.heredoc_name, O_RDONLY);
-	if (fd < 0)
-		return (ld_errno_file("ldpre_ast_redir.open", filename));
-	return (res);
+	// TODO command가 없는 경우
+	right_isfile = FALSE;
+	if ((ast->right)->node_type == NODE_FILE)
+	{
+		right_isfile = TRUE;
+		if (ldpre_ast_redir_infile((ast->right)->pcmd[0],
+				heredoc, ast->node_type, env) == FALSE)
+			return (-2);
+	}
+	if ((ast->left)->node_type == NODE_FILE)
+	{
+		if (ldpre_ast_redir_infile((ast->left)->pcmd[0],
+				heredoc, ast->node_type, env) == FALSE)
+			return (-2);
+	}
+	else if (ldpre_ast(ast->left, env, exec, heredoc) < 0)
+		return (-2);
+	if (!right_isfile)
+		return (ldpre_ast(ast->right, env, exec, heredoc));
+	return (0);
 }

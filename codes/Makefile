@@ -32,8 +32,12 @@ LOADER_FILES = 	loader/ldpre_param_expansion.c \
 				loader/ldexec_run.c \
 				loader/ldexec_env_exitcode.c \
 				loader/ldpre_ast.c \
+				loader/ldpre_ast_subshell.c \
+				loader/ldpre_ast_pipe.c \
 				loader/ldpre_ast_redir.c \
+				loader/ldpre_ast_redir2.c \
 				loader/ldpre_ast_redir_heredoc.c \
+				loader/ldpre_ast_logical.c \
 				loader/ldpre_ast_exec_execall.c \
 				loader/loader_wrapper.c
 UTIL_FILES = 	utils/do_exit.c \

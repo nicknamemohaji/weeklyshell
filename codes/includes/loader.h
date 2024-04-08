@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loader.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:47:14 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/08 17:23:58 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/08 18:59:17 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,31 @@ void	ldexec_select_type(t_ld_exec exec, t_ld_exec_nodes *node,
 int		ldpre_ast(t_ast_node *ast, t_ld_map_env *env,
 			t_ld_exec_nodes *exec, t_ld_heredoc heredoc);
 
+// ldpre_ast_subshell.c
+
+int		ldpre_ast_subshell(t_ast_node *ast, t_ld_map_env *env,
+			t_ld_exec_nodes *exec, t_ld_heredoc heredoc);
+
+// ldpre_ast_pipe.c
+
+int		ldpre_ast_pipe(t_ast_node *ast, t_ld_map_env *env,
+			t_ld_exec_nodes *exec, t_ld_heredoc heredoc);
+
+// ldpre_ast_logical.c
+
+int		ldpre_ast_and(t_ast_node *ast, t_ld_map_env *env,
+			t_ld_exec_nodes *exec, t_ld_heredoc heredoc);
+int		ldpre_ast_or(t_ast_node *ast, t_ld_map_env *env,
+			t_ld_exec_nodes *exec, t_ld_heredoc heredoc);
+
 // ldpre_ast_redir.c
+
+int		ldpre_ast_wopen(t_ast_node *ast, t_ld_map_env *env,
+			t_ld_exec_nodes *exec, t_ld_heredoc heredoc);
+int		ldpre_ast_ropen(t_ast_node *ast, t_ld_map_env *env,
+			t_ld_exec_nodes *exec, t_ld_heredoc heredoc);
+
+// ldpre_ast_redir2.c
 
 t_bool	ldpre_ast_redir_outfile(char *filename, enum e_node_type mode);
 t_bool	ldpre_ast_redir_infile(char *filename, t_ld_heredoc heredoc,
