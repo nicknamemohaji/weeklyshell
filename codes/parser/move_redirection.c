@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 18:16:02 by dogwak            #+#    #+#             */
-/*   Updated: 2024/04/03 14:38:50 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/04/08 20:19:49 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void	move_right_redirect(t_ft_vector *ptoken_stream)
 	int		idx;
 
 	htok_vec = ptoken_stream->pbuffer;
-	idx = ptoken_stream->size - 0;
+	idx = ptoken_stream->size - 1;
 	to = ptoken_stream->size - 2;
 	while (--idx >= 0)
 	{

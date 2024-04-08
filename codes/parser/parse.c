@@ -6,11 +6,12 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:08:56 by dogwak            #+#    #+#             */
-/*   Updated: 2024/04/04 12:02:56 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/04/08 22:21:42 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+#include <unistd.h>
 
 static int	construct_end_token(void *pos, void *ptoken)
 {
@@ -18,6 +19,31 @@ static int	construct_end_token(void *pos, void *ptoken)
 	((t_token *)pos)->field.pbuffer = NULL;
 	ptoken++;
 	return (1);
+}
+
+static int	syntax_check(t_ft_vector *ptoken_stream)
+{
+	const t_token	*htok_vec = ptoken_stream->pbuffer;
+	size_t			idx;
+
+	idx = -1;
+	while (++idx < ptoken_stream->size - 1)
+	{
+		if ((htok_vec[idx].type == RDICT_READ
+				|| htok_vec[idx].type == RDICT_WRITE
+				|| htok_vec[idx].type == RDICT_APPEND
+				|| htok_vec[idx].type == RDICT_HEREDOC)
+			&& htok_vec[idx + 1].type != FILE_NAME)
+			return (0);
+	}
+	return (1);
+}
+
+t_ast_node	*syntax_error(t_ft_vector *ptoken_stream)
+{
+	write(2, "Syntax Error.\n", 14);
+	delete_ftvec(ptoken_stream);
+	return (NULL);
 }
 
 /*
@@ -42,13 +68,13 @@ t_ast_node	*parse_f(const char *cstr)
 		delete_ftvec(ptoken_stream);
 		return (ast_malloc_error(NULL));
 	}
+	if (!syntax_check(ptoken_stream))
+		return (syntax_error(ptoken_stream));
 	p = new_parser(ptoken_stream);
 	if (p == NULL)
-	{
-		delete_ftvec(ptoken_stream);
 		return (ast_malloc_error(NULL));
-	}
-	tree = parse_expression(p, P_LOWEST);
+	else
+		tree = parse_expression(p, P_LOWEST);
 	delete_ftvec(ptoken_stream);
 	delete_parser(p);
 	return (tree);
