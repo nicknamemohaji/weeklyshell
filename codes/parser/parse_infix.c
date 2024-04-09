@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:35:01 by dogwak            #+#    #+#             */
-/*   Updated: 2024/04/08 21:37:34 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/04/09 12:21:04 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static int	check_next_token(enum e_node_type cur, enum e_token_type next)
 {
-	if ((cur == EXP_IN_RWRITE || cur == EXP_IN_RAPPEND) && next == FILE_NAME)
-		return (1);
-	return (0);
+	if ((cur == EXP_IN_RWRITE || cur == EXP_IN_RAPPEND) && next != FILE_NAME)
+		return (0);
+	return (1);
 }
 
 t_ast_node	*parse_infix(t_parser *self, t_ast_node *left)
