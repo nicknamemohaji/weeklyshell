@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:17:43 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/09 15:55:30 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/09 17:20:06 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 volatile sig_atomic_t	g_sigint = FALSE;
 
-static void	ld_env_set_exitcode(t_ld_map_env *env);
+static void	env_set_exitcode(t_ld_map_env *env);
+static void	env_set_shlvl(t_ld_map_env *env);
 
 int	main(int argc, char *argv[], char *envp[])
 {
@@ -24,7 +25,7 @@ int	main(int argc, char *argv[], char *envp[])
 	(void)argc;
 	(void)argv;
 	env = ldpre_env_fromenvp_f(envp);
-	ld_env_set_exitcode(env);
+	env_set_exitcode(env);
 	while (1)
 	{
 		input = input_readline_f(env);
@@ -45,18 +46,36 @@ int	main(int argc, char *argv[], char *envp[])
 	return (0);
 }
 
-static void	ld_env_set_exitcode(t_ld_map_env *env)
+static void	env_set_exitcode(t_ld_map_env *env)
 {
 	t_ld_map_node	*node;
 
 	node = malloc(1 * sizeof(t_ld_map_node));
 	if (node == NULL)
-		do_exit("main.ld_env_set_exitcode.malloc");
+		do_exit("main.env_set_exitcode.malloc");
 	node->key = ft_strdup("?");
 	node->value = ft_itoa(0);
 	if (node->key == NULL || node->value == NULL)
-		do_exit("main.ld_env_set_exitcode.malloc");
+		do_exit("main.env_set_exitcode.malloc");
 	node->next = env->contents;
 	env->contents = node;
-	// TODO shlvl
+	env_set_shlvl(env);
+}
+
+static void	env_set_shlvl(t_ld_map_env *env)
+{
+	int		shlvl;
+	char	*key;
+	char	*value;
+
+	value = ldpre_env_fetch("SHLVL", env);
+	if (value == NULL)
+		shlvl = 0;
+	else
+		shlvl = ft_atoi(value);
+	key = ft_strdup("SHLVL");
+	value = ft_itoa(shlvl + 1);
+	if (key == NULL || value == NULL)
+		do_exit("main.env_set_shlvl.malloc");
+	ldpre_env_add(key, value, env);
 }

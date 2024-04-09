@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 01:11:55 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/08 18:48:23 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/09 17:46:44 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ pid_t	ldexec_run_bin(t_ld_exec exec, pid_t pid)
 {
 	if (exec.path == NULL)
 	{
-		write(2, "command not found\n", 18);
-		return (-127);
+		if (ft_strchr(exec.argv[0], '/') == NULL)
+			write(2, "command not found\n", 18);
+		return (-1);
 	}
 	if (pid < 0)
 		pid = fork();
@@ -45,6 +46,7 @@ pid_t	ldexec_run_bin(t_ld_exec exec, pid_t pid)
 void	ldexec_select_type(t_ld_exec exec, t_ld_exec_nodes *node,
 				t_ld_map_env *env, pid_t pid)
 {
+	node->exitcode = -1;
 	if (builtin_isbuiltin(exec.argv[0]))
 	{
 		pid = -1;
