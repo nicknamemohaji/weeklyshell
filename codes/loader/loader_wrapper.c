@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 13:16:24 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/08 18:12:22 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/09 12:05:45 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,20 +61,16 @@ static void	fd_restore(int stdin_fd, int stdout_fd)
 {
 	if (stdout_fd != -1)
 	{
-		if (close(STDOUT_FD) != 0)
-			do_exit("loader_wrapper.fd_restore.close");
+		close(STDOUT_FD);
 		if (dup2(stdout_fd, STDOUT_FD) < 0)
 			do_exit("loader_wrapper.fd_restore.dup2");
-		if (close(stdout_fd) != 0)
-			do_exit("loader_wrapper.fd_restore.close");
+		close(stdout_fd);
 	}
 	if (stdin_fd != -1)
 	{
-		if (close(STDIN_FD) != 0)
-			do_exit("loader_wrapper.fd_restore.close");
+		close(STDIN_FD);
 		if (dup2(stdin_fd, STDIN_FD) < 0)
 			do_exit("loader_wrapper.fd_restore.dup2");
-		if (close(stdin_fd) != 0)
-			do_exit("loader_wrapper.fd_restore.close");
+		close(stdin_fd);
 	}
 }

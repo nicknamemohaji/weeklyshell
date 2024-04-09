@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:47:14 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/08 20:08:18 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/09 13:13:49 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ int		ldpre_ast_or(t_ast_node *ast, t_ld_map_env *env,
 int		ldpre_ast_wopen(t_ast_node *ast, t_ld_map_env *env,
 			t_ld_exec_nodes *exec, t_ld_heredoc heredoc);
 int		ldpre_ast_ropen(t_ast_node *ast, t_ld_map_env *env,
+			t_ld_exec_nodes *exec, t_ld_heredoc heredoc);
+int		ldpre_ast_wpopen(t_ast_node *ast, t_ld_map_env *env,
 			t_ld_exec_nodes *exec, t_ld_heredoc heredoc);
 
 // ldpre_ast_redir2.c

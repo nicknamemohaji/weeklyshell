@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 18:49:18 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/08 18:53:38 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/09 12:36:51 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ldpre_ast_and(t_ast_node *ast, t_ld_map_env *env,
 	int	stdout_fd;
 
 	save_fd(&stdin_fd, &stdout_fd);
-	exitcode = ldpre_ast(ast->left, env, exec, heredoc);
+	exitcode = ldpre_ast(ast->left, env, NULL, heredoc);
 	restore_fd(stdin_fd, stdout_fd);
 	if (exitcode == 0)
 		exitcode = ldpre_ast(ast->right, env, exec, heredoc);
@@ -44,7 +44,7 @@ int	ldpre_ast_or(t_ast_node *ast, t_ld_map_env *env,
 	int	stdout_fd;
 
 	save_fd(&stdin_fd, &stdout_fd);
-	exitcode = ldpre_ast(ast->left, env, exec, heredoc);
+	exitcode = ldpre_ast(ast->left, env, NULL, heredoc);
 	restore_fd(stdin_fd, stdout_fd);
 	if (exitcode != 0)
 		exitcode = ldpre_ast(ast->right, env, exec, heredoc);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ld_errno_file.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 01:33:48 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/28 03:38:03 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/09 11:55:42 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ exits if error is unrecovable (ex. EIO, EFAULT)
 t_bool	ld_errno_file(char *trace, char *path)
 {
 	if (errno == ENOENT)
-		printf("%s: %s: no such file\n", trace, path);
+		printf("%s: %s: no such file or directory\n", trace, path);
 	else if (errno == ENOTDIR)
 		printf("%s: %s: not a directory\n", trace, path);
 	else if (errno == EISDIR)
