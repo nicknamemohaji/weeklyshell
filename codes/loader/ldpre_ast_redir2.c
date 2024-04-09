@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:41:08 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/09 15:30:39 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/04/09 15:39:05 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ t_bool	ldpre_ast_redir_infile(char *filename, t_ld_heredoc heredoc,
 			// malloc error시 실행.
 		}
 		// 벡터의 가장 최근에 push한 원소 포인터 획득
-		(char *)heredoc.phd_name_vec->back(heredoc.phd_name_vec);
+		//(char *)heredoc.phd_name_vec->back(heredoc.phd_name_vec);
 		///////////////////////////////////////////////////
-		ret = infile_heredoc(filename, env, heredoc);
+		//ret = infile_heredoc(filename, env, heredoc);
 		close(STDOUT_FD);
 		if (dup(stdout_fd) < 0)
 			do_exit("ldpre_ast_redir.dup");

@@ -40,7 +40,8 @@ LOADER_FILES = 	loader/ldpre_param_expansion.c \
 				loader/ldpre_ast_logical.c \
 				loader/ldpre_ast_exec.c \
 				loader/ldpre_ast_exec_execall.c \
-				loader/loader_wrapper.c
+				loader/loader_wrapper.c \
+				loader/ldpre_heredoc_vector.c
 UTIL_FILES = 	utils/do_exit.c \
 				utils/do_getcwd.c \
 				utils/free_ft_split.c \
@@ -89,7 +90,7 @@ $(NAME): libft.a libftvector.a libftstring.a $(OBJECTS)
 %.o: %.c
 	@echo compiling $<
 	@$(CC) -c $< -o $*.o $(CFLAGS) $(INCLUDES)
-	
+
 libft.a:
 	@$(MAKE) -C $(LIBFT_DIR) all -j8
 	@cp $(LIBFT_DIR)libft.a .
