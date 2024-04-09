@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:41:08 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/09 21:01:10 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/10 00:36:49 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,8 @@ t_bool	ldpre_ast_redir_infile(char *filename, t_ld_heredoc *heredoc,
 		if (dup(heredoc->stdin_fd) < 0)
 			do_exit("ldpre_ast_redir.dup");
 		stdout_fd = dup(STDOUT_FD);
-		if (stdout_fd < 0)
-			do_exit("ldpre_ast_redir.dup");
 		close(STDOUT_FD);
-		if (dup(heredoc->stdout_fd) < 0)
+		if (stdout_fd < 0 || dup(heredoc->stdout_fd) < 0)
 			do_exit("ldpre_ast_redir.dup");
 		if (!heredoc->phd_name_vec->push_back(heredoc->phd_name_vec, NULL))
 			do_exit("ldpre_ast_redir.heredoc");
@@ -61,6 +59,7 @@ t_bool	ldpre_ast_redir_infile(char *filename, t_ld_heredoc *heredoc,
 		close(STDOUT_FD);
 		if (dup(stdout_fd) < 0)
 			do_exit("ldpre_ast_redir.dup");
+		close(stdout_fd);
 	}
 	else
 		ret = infile_read(filename);
