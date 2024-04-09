@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:18:03 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/08 20:16:16 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/09 13:54:30 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_ld_heredoc
 {
 	char	*heredoc_name;
 	int		stdin_fd;
+	int		stdout_fd;
 }	t_ld_heredoc;
 
 // used by loader.preprocessor.param.expansion

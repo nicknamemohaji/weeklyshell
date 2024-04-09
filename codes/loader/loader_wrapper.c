@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 13:16:24 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/09 12:05:45 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/09 13:59:56 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	loader_wrapper(char *input, t_ld_map_env *env)
 	ldexec_sigign_setup(oldacts);
 	heredoc.heredoc_name = ldexec_heredoc_assign_f();
 	heredoc.stdin_fd = stdin_fd;
+	heredoc.stdout_fd = stdout_fd;
 	if (heredoc.heredoc_name == NULL)
 	{
 		printf("cannot open heredoc :tried %d times :(\n", HEREDOC_MAX);
