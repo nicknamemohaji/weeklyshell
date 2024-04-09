@@ -76,7 +76,7 @@ HEADER_DIR = includes/
 INCLUDES = -I $(HEADER_DIR) -I $(LIBFT_DIR)headers/ -I $(FT_STRING_DIR) -I $(FT_VECTOR_DIR)
 LIBRARIES = -lft -lftvector -lftstring -lreadline -L.
 
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 CC = cc
 
 all: $(NAME)

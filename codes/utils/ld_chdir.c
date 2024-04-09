@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 20:13:08 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/09 17:43:31 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/09 20:30:59 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ t_bool	ld_chdir(const char *trace, char *path)
 			free_ft_split(splitted_path_ptr);
 			return (FALSE);
 		}
-		if (chdir(splitted_path[idx]) != 0)
-			do_exit("ld_chdir.chdir");
 	}
 	free_ft_split(splitted_path_ptr);
 	return (TRUE);
@@ -57,6 +55,7 @@ static t_bool	check_access(const char *trace, char *path)
 	errno = 0;
 	if (access(path, F_OK | X_OK) != 0)
 		return (ld_errno_file(trace, path));
-	else
-		return (TRUE);
+	if (chdir(path) != 0)
+		return (ld_errno_file(trace, path));
+	return (TRUE);
 }

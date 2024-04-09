@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:41:08 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/09 16:27:58 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/09 20:45:49 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_bool	ldpre_ast_redir_infile(char *filename, t_ld_heredoc *heredoc,
 	int	stdout_fd;
 	int	ret;
 
+	dprintf(2, "infile %p \n", filename);
 	close(STDIN_FD);
 	if (mode == EXP_PRE_RHEREDOC)
 	{

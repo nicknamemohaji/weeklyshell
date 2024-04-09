@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 19:54:44 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/09 15:18:07 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/09 20:12:51 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void			free_ld_map(t_ld_map_env *map);
 char			*ldpre_env_fetch(char *key, t_ld_map_env *map);
 void			ldpre_env_add(char *key, char *value, t_ld_map_env *map);
 t_bool			ldpre_env_remove(char *key, t_ld_map_env *map);
-t_ld_map_node	**ldpre_env_searchkey(char *key, t_ld_map_env *map);
+t_ld_map_node	**ldpre_env_searchkey_f(char *key, t_ld_map_env *map);
 t_bool			ldpre_env_validate_key(char *key);
 
 // ft_qsort.c
