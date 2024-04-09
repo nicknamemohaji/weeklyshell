@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:18:03 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/09 13:54:30 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:31:58 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 // import sig_atomic_t type
 # include <signal.h>
+# include "ft_vector.h"
 
 // ANSI terminal contrl characters
 # define TERM_COLOR_END "\001\033[m\002"
@@ -46,9 +47,9 @@ extern volatile sig_atomic_t	g_sigint;
 // used by loader.preprocessor.ast
 typedef struct s_ld_heredoc
 {
-	char	*heredoc_name;
-	int		stdin_fd;
-	int		stdout_fd;
+	t_ft_vector	*phd_name_vec;
+	int			stdin_fd;
+	int			stdout_fd;
 }	t_ld_heredoc;
 
 // used by loader.preprocessor.param.expansion

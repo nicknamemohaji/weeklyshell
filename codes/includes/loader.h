@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loader.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:47:14 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/09 13:13:49 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:05:21 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,11 @@ t_bool	ldpre_ast_redir_infile(char *filename, t_ld_heredoc heredoc,
 char	*ldexec_heredoc_assign_f(void);
 t_bool	ldexec_heredoc(int fd, char *delim,
 			t_bool expansion, t_ld_map_env *env);
+
+// ldpre_heredoc_vector.c
+
+int		construct_heredoc_name(void *pos, void *param);
+void	destruct_heredoc_name(void *pos);
 
 // ldpre_ast_exec.c
 
