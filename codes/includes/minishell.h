@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:18:00 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/01 13:08:25 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/09 15:05:56 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 // builtin/builtin_wrapper.c
 
-pid_t	builtin_wrapper(t_ld_exec exec, t_ld_map_env *env);
+int		builtin_wrapper(t_ld_exec exec, t_ld_map_env *env);
 t_bool	builtin_isbuiltin(char *name);
 
 // loader/loader_wrapper.c

@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 12:45:54 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/05 12:46:00 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/09 14:55:55 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 
 int	builtin_echo(char *args[], t_ld_map_env *env);
 
+/*
+int	builtin_echo(char *args[], t_ld_map_env *env)
+:args: arguments
+:env: not used
+:return: execution result(always 0)
+*/
 int	builtin_echo(char *args[], t_ld_map_env *env)
 {
 	int	i;

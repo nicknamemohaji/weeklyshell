@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_wrapper.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 06:04:49 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/01 13:18:40 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/09 15:07:35 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,16 @@
 #include "utils.h"
 #include "loader.h"
 
-pid_t		builtin_wrapper(t_ld_exec exec, t_ld_map_env *env);
+int			builtin_wrapper(t_ld_exec exec, t_ld_map_env *env);
 t_bool		builtin_isbuiltin(char *name);
 
-pid_t	builtin_wrapper(t_ld_exec exec, t_ld_map_env *env)
+/*
+int	builtin_wrapper(t_ld_exec exec, t_ld_map_env *env)
+:exec: execution infos. only use argv member variable
+:env: environment variables
+:return: execution result
+*/
+int	builtin_wrapper(t_ld_exec exec, t_ld_map_env *env)
 {
 	if (ft_strncmp(exec.argv[0], "cd", 2) == 0)
 		return (builtin_cd(exec.argv, env));
@@ -36,6 +42,11 @@ pid_t	builtin_wrapper(t_ld_exec exec, t_ld_map_env *env)
 	return (EXIT_FAILURE);
 }
 
+/*
+t_bool	builtin_isbuiltin(char *name)
+:name: command name to check
+:return: true if command is builtin function
+*/
 t_bool	builtin_isbuiltin(char *name)
 {
 	if (ft_strncmp(name, "cd", 2) == 0)

@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:17:56 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/05 16:19:20 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/09 14:48:42 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 // input_readline.c
 
-char	*input_readline_f(void);
+char	*input_readline_f(t_ld_map_env *env);
 
 // input_terminal.c
 

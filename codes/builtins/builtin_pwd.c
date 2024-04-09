@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 06:04:45 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/09 13:47:00 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:12:32 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 
 int	builtin_pwd(char *args[], t_ld_map_env *env);
 
+/*
+int	builtin_pwd(char *args[], t_ld_map_env *env)
+:args: not used
+:env: environment variables, used to get PWD
+:return: execution result (always 0)
+*/
 int	builtin_pwd(char *args[], t_ld_map_env *env)
 {
 	char	*pwd;
@@ -23,7 +29,7 @@ int	builtin_pwd(char *args[], t_ld_map_env *env)
 	pwd = ldpre_env_fetch("PWD", env);
 	if (pwd == NULL)
 	{
-		pwd = getcwd(NULL, 0);
+		pwd = do_getcwd_f(NULL, 0);
 		printf("%s\n", pwd);
 		ldpre_env_add(ft_strdup("PWD"), pwd, env);
 	}

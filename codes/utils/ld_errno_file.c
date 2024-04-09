@@ -6,25 +6,26 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 01:33:48 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/09 11:55:42 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:17:51 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 #include "types.h"
 
-t_bool	ld_errno_file(char *trace, char *path);
+t_bool	ld_errno_file(const char *trace, char *path);
 
 /*
-t_bool	ld_errno_file(char *trace, char *path)
+t_bool	ld_errno_file(const char *trace, char *path)
 :param trace: function info
 :param path: file that had error
-:return: always returns FALSE. I HATE NORM!!!!!!!
+:return: always returns FALSE, because this function will be used in 
+return statement.
 
 prints error message to STDOUT if recovable (ex. ENOENT, EACCESS),
 exits if error is unrecovable (ex. EIO, EFAULT)
 */
-t_bool	ld_errno_file(char *trace, char *path)
+t_bool	ld_errno_file(const char *trace, char *path)
 {
 	if (errno == ENOENT)
 		printf("%s: %s: no such file or directory\n", trace, path);

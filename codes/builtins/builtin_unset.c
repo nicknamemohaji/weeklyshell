@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 06:04:47 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/27 06:04:48 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/09 15:05:04 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 
 int	builtin_unset(char *args[], t_ld_map_env *env);
 
+/*
+int	builtin_unset(char *args[], t_ld_map_env *env)
+:args: unsets keys given
+:env: environment variables, used to unset
+:return: execution result (always 0)
+*/
 int	builtin_unset(char *args[], t_ld_map_env *env)
 {
 	int	i;

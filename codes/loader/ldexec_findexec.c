@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:47:55 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/05 17:55:31 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:20:07 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,11 @@ static char	*check_relative_f(char *cmd)
 	char	*ret;
 	int		idx;
 
-	cwd_prev = getcwd(NULL, 0);
+	cwd_prev = do_getcwd_f(NULL, 0);
 	if (cwd_prev == NULL)
 		do_exit("ldexec_findexec.check_relaive_f.getcwd");
 	ret = ft_substr(cmd, 0, ft_strrchr(cmd, '/') - cmd);
-	if (ld_chdir(ret) != TRUE)
+	if (ld_chdir("weeklyshell", ret) != TRUE)
 		ret = NULL;
 	free(ret);
 	if (ret != NULL)
@@ -112,7 +112,7 @@ static char	*check_cwd_f(char *cmd)
 	char	*cwd_with_slash;
 	char	*cmd_with_cwd;
 
-	cwd = getcwd(NULL, 0);
+	cwd = do_getcwd_f(NULL, 0);
 	if (cwd == NULL)
 		do_exit("ldexec_findexec.check_cwd_f.getcwd");
 	cwd_with_slash = ft_strjoin(cwd, "/");

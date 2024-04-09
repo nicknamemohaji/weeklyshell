@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   do_exit.c                                          :+:      :+:    :+:   */
+/*   do_getcwd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/13 20:23:16 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/09 15:18:11 by kyungjle         ###   ########.fr       */
+/*   Created: 2024/04/09 14:30:40 by kyungjle          #+#    #+#             */
+/*   Updated: 2024/04/09 15:21:19 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-void	do_exit(const char *errorstr);
+char	*do_getcwd_f(char *buf, size_t size);
 
-/*
-void	do_exit(const char *errorstr)
-:param errorstr: debug info to print on STDERR
-
-Wrapper function to print errno message and exit on unrecovable errors
-*/
-void	do_exit(const char *errorstr)
+char	*do_getcwd_f(char *buf, size_t size)
 {
-	perror(errorstr);
-	exit(EXIT_FAILURE);
+	char	*ret;
+
+	ret = getcwd(buf, size);
+	if (ret != NULL)
+		return (ret);
+	write(2, "[WARN] cwd not found. going up...\n", 34);
+	if (chdir("..") != 0)
+		exit(EXIT_FAILURE);
+	return (do_getcwd_f(buf, size));
 }

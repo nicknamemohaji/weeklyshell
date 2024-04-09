@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 19:54:44 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/05 15:43:58 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:18:07 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,19 @@ void			free_ft_split(char **ptr);
 
 // ld_errno_file.c
 
-t_bool			ld_errno_file(char *trace, char *path);
+t_bool			ld_errno_file(const char *trace, char *path);
 
 // ld_chdir.c
 
-t_bool			ld_chdir(char *path);
+t_bool			ld_chdir(const char *trace, char *path);
 
 // do_exit.c
 
-void			do_exit(char *errorstr);
+void			do_exit(const char *errorstr);
+
+// do_getcwd.c
+
+char			*do_getcwd_f(char *buf, size_t size);
 
 // ld_map_functions.c
 

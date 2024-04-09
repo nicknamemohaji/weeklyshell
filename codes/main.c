@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:17:43 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/05 14:26:21 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/09 14:48:47 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int argc, char *argv[], char *envp[])
 	ld_env_set_exitcode(env);
 	while (1)
 	{
-		input = input_readline_f();
+		input = input_readline_f(env);
 		if (input == NULL)
 			break ;
 		if (ft_strlen(input) != 0)

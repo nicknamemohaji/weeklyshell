@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 06:04:43 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/05 16:13:32 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:04:29 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@ int				builtin_export(char *args[], t_ld_map_env *env);
 static int		builtin_export_print(t_ld_map_env *env);
 static t_bool	cmp(const void *c1, const void *c2);
 
+/*
+int	builtin_export(char *args[], t_ld_map_env *env)
+:args: arguments. if no argument is given, print all the environment variables,
+and if argument is given, register environment variables
+:env: environment variables, used to set or print
+:return: execution result (always 0)
+*/
 int	builtin_export(char *args[], t_ld_map_env *env)
 {
 	int		i;

@@ -6,18 +6,19 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:19:01 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/08 18:46:05 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:12:32 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
 #include "utils.h"
 
-static char	*make_prompt_f(void);
-char		*input_readline_f(void);
+static char	*make_prompt_f(t_ld_map_env *env);
+char		*input_readline_f(t_ld_map_env *env);
 
 /*
-char	*input_readline_f(void)
+char	*input_readline_f(t_ld_map_env *env)
+:env: environemnt variable map, for getting $PWD
 :return: string containg user's input.
 
 Weeklyshell's input module wrapper function. Prompts interactive shell
@@ -26,14 +27,14 @@ actions, and uses history library to save inputs.
 
 Caller should free the returned pointer after use.
 */
-char	*input_readline_f(void)
+char	*input_readline_f(t_ld_map_env *env)
 {
 	char				*input;
 	char				*prompt;
 	struct sigaction	oldacts[2];
 	struct termios		oldterm;
 
-	prompt = make_prompt_f();
+	prompt = make_prompt_f(env);
 	input_sighandler_setup(oldacts);
 	input_terminal_setup(&oldterm);
 	g_sigint = INPUT_READLINE;
@@ -47,12 +48,15 @@ char	*input_readline_f(void)
 }
 
 /*
-static char	*make_prompt_f(void)
+static char	*make_prompt_f(t_ld_map_env *env)
+:env: environemnt variable map, for getting $PWD
 :return: string containg prompt string.
 
 Makes shell prompt containing Current Working Directory (CWD). 
+cwd info is fetched from $PWD value in environment variables.
+Caller should free the returned pointer after use.
 */
-static char	*make_prompt_f(void)
+static char	*make_prompt_f(t_ld_map_env *env)
 {
 	char	*ret;
 	char	*prompt_base;
@@ -62,9 +66,9 @@ static char	*make_prompt_f(void)
 			TERM_COLOR_END ":" TERM_COLOR_YELLOW);
 	if (prompt_base == NULL)
 		do_exit("make_prompt_f.malloc");
-	cwd = getcwd(NULL, 0);
+	cwd = ldpre_env_fetch("PWD", env);
 	if (cwd == NULL)
-		do_exit("make_prompt_f.getcwd");
+		cwd = do_getcwd_f(NULL, 0);
 	ret = malloc(ft_strlen(prompt_base) + ft_strlen(cwd) + 7 + 1);
 	if (ret == NULL)
 		do_exit("make_prompt_f.malloc");
@@ -72,6 +76,5 @@ static char	*make_prompt_f(void)
 	ft_strlcat(ret, cwd, ft_strlen(ret) + ft_strlen(cwd) + 1);
 	ft_strlcat(ret, TERM_COLOR_END "$ ", ft_strlen(ret) + 7 + 1);
 	free(prompt_base);
-	free(cwd);
 	return (ret);
 }
