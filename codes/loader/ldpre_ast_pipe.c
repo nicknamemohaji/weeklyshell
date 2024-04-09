@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ldpre_ast_pipe.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 18:08:58 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/09 15:50:43 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/09 20:47:59 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,11 @@ int	ldpre_ast_pipe(t_ast_node *ast, t_ld_map_env *env,
 		t_ld_exec_nodes *exec, t_ld_heredoc *heredoc)
 {
 	t_ld_exec_nodes	start;
-	int				status;
 
 	if (exec == NULL)
 	{
 		start.next = NULL;
-		status = run_pipe(ast, env, &start, heredoc);
+		run_pipe(ast, env, &start, heredoc);
 		return (exec_cleanup(start.next, env, FALSE));
 	}
 	else
@@ -61,15 +60,14 @@ static int	run_pipe(t_ast_node *ast, t_ld_map_env *env,
 {
 	int	preserve_fd[2];
 	int	pipe_fd[2];
-	int	status;
 
 	if (pipe(pipe_fd) < 0)
 		do_exit("ldpre_ast_pipe.pipe");
 	redirect_fd(&preserve_fd[1], STDOUT_FD, pipe_fd[1]);
-	status = ldpre_ast(ast->left, env, exec, heredoc);
+	ldpre_ast(ast->left, env, exec, heredoc);
 	restore_fd(preserve_fd[1], STDOUT_FD);
 	redirect_fd(&preserve_fd[0], STDIN_FD, pipe_fd[0]);
-	status = ldpre_ast(ast->right, env, exec, heredoc);
+	ldpre_ast(ast->right, env, exec, heredoc);
 	restore_fd(preserve_fd[0], STDIN_FD);
 	return (AST_SUCCESS_PIPE);
 }

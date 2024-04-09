@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ldpre_ast_redir2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:41:08 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/09 20:45:49 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/09 20:53:03 by nicknamemoh      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ t_bool	ldpre_ast_redir_infile(char *filename, t_ld_heredoc *heredoc,
 	int	stdout_fd;
 	int	ret;
 
-	dprintf(2, "infile %p \n", filename);
 	close(STDIN_FD);
 	if (mode == EXP_PRE_RHEREDOC)
 	{
@@ -100,6 +99,7 @@ static t_bool	infile_heredoc(char *filename,
 	if (fd < 0)
 		do_exit("ldpre_ast_redir.open");
 	res = ldexec_heredoc(fd, filename, expansion, env);
+	free(filename);
 	close(fd);
 	close(STDIN_FD);
 	fd = open(heredoc_name, O_RDONLY);
