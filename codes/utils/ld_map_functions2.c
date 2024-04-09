@@ -79,30 +79,27 @@ char	*ldpre_env_fetch(char *key, t_ld_map_env *map)
 void	ldpre_env_add(char *key, char *value, t_ld_map_env *map)
 {
 	t_ld_map_node	*node;
-	char			*key_copy;
-	char			*value_copy;
 
 	if (!ldpre_env_validate_key(key))
 	{
-		printf("syntax error: [%s]\n", key);
+		printf("export: syntax error: [%s]\n", key);
+		free(key);
+		free(value);
 		return ;
 	}
 	ldpre_env_remove(key, map);
 	node = malloc(sizeof(t_ld_map_node) * 1);
 	if (node == NULL)
 		do_exit("ldpre_env_add.malloc");
-	key_copy = ft_strdup(key);
-	value_copy = ft_strdup(value);
-	if (key_copy == NULL || value_copy == NULL)
-		do_exit("ldpre_env_add.ft_strdup");
+	node->key = ft_strdup(key);
+	node->value = ft_strdup(value);
 	free(key);
 	free(value);
-	node->key = key_copy;
-	node->value = value_copy;
 	node->next = NULL;
+	if (node->key == NULL || node->value == NULL)
+		do_exit("ldpre_env_add.ft_strdup");
 	ld_map_node_attach(map, node);
-	map->count++;
-	return ;
+	map->count += 1;
 }
 
 t_bool	ldpre_env_remove(char *key, t_ld_map_env *map)

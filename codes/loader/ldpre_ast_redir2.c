@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ldpre_ast_redir2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:41:08 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/09 20:53:03 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/09 21:01:10 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
