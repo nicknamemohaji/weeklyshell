@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:17:43 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/09 14:48:47 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:55:30 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,5 @@ static void	ld_env_set_exitcode(t_ld_map_env *env)
 		do_exit("main.ld_env_set_exitcode.malloc");
 	node->next = env->contents;
 	env->contents = node;
+	// TODO shlvl
 }

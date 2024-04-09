@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 18:08:58 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/09 13:23:18 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:50:43 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 #include "utils.h"
 
 int			ldpre_ast_pipe(t_ast_node *ast, t_ld_map_env *env,
-				t_ld_exec_nodes *exec, t_ld_heredoc heredoc);
+				t_ld_exec_nodes *exec, t_ld_heredoc *heredoc);
 static void	redirect_fd(int *fd_preserve, int fd_target, int fd_redirect);
 static void	restore_fd(int fd_preserve, int fd_target);
 static int	run_pipe(t_ast_node *ast, t_ld_map_env *env,
-				t_ld_exec_nodes *exec, t_ld_heredoc heredoc);
+				t_ld_exec_nodes *exec, t_ld_heredoc *heredoc);
 
 int	ldpre_ast_pipe(t_ast_node *ast, t_ld_map_env *env,
-		t_ld_exec_nodes *exec, t_ld_heredoc heredoc)
+		t_ld_exec_nodes *exec, t_ld_heredoc *heredoc)
 {
 	t_ld_exec_nodes	start;
 	int				status;
@@ -57,7 +57,7 @@ static void	restore_fd(int fd_preserve, int fd_target)
 }
 
 static int	run_pipe(t_ast_node *ast, t_ld_map_env *env,
-				t_ld_exec_nodes *exec, t_ld_heredoc heredoc)
+				t_ld_exec_nodes *exec, t_ld_heredoc *heredoc)
 {
 	int	preserve_fd[2];
 	int	pipe_fd[2];

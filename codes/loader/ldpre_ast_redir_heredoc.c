@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 14:37:13 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/05 17:49:04 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/09 16:07:29 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*ldexec_heredoc_assign_f(void)
 		tmpnum_str = ft_itoa(tmpnum);
 		if (tmpnum_str == NULL)
 			do_exit("ldexec_heredoc_assign_f.malloc");
-		tmpfile_name = ft_strjoin("/tmp/weeklyshell_heredoc_", tmpnum_str);
+		tmpfile_name = ft_strjoin("weeklyshell_heredoc_", tmpnum_str);
 		if (tmpfile_name == NULL)
 			do_exit("ldexec_heredoc_assign_f.malloc");
 		free(tmpnum_str);
@@ -94,7 +94,7 @@ static t_bool	heredoc_getline(int fd, char *delim,
 	while (ret == TRUE)
 	{
 		buf = readline("heredoc > ");
-		if (g_sigint == TRUE || buf == NULL || *buf == '\0')
+		if (g_sigint == TRUE || buf == NULL)
 			ret = FALSE;
 		if (ret == TRUE && ft_strlen(buf) == delim_len
 			&& ft_strncmp(buf, delim, delim_len) == 0)

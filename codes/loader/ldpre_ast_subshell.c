@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 18:07:00 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/08 20:54:07 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:50:43 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "utils.h"
 
 int	ldpre_ast_subshell(t_ast_node *ast, t_ld_map_env *env,
-		t_ld_exec_nodes *exec, t_ld_heredoc heredoc);
+		t_ld_exec_nodes *exec, t_ld_heredoc *heredoc);
 
 /*
 Note that on successful execution, the `return (-1)` expression
@@ -24,7 +24,7 @@ But compiler does not understand out custom wrapper, so i put an
 additional line here :(
 */
 int	ldpre_ast_subshell(t_ast_node *ast, t_ld_map_env *env,
-		t_ld_exec_nodes *exec, t_ld_heredoc heredoc)
+		t_ld_exec_nodes *exec, t_ld_heredoc *heredoc)
 {
 	pid_t	pid;
 	int		exitcode;

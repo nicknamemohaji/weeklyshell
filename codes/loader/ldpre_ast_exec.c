@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:04:57 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/08 20:38:20 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:50:43 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 #include "types.h"
 
 int						ldpre_ast_exec(t_ast_node *ast, t_ld_map_env *env,
-							t_ld_exec_nodes *exec, t_ld_heredoc heredoc);
+							t_ld_exec_nodes *exec, t_ld_heredoc *heredoc);
 static t_ld_exec_nodes	*prepare_exec(char **pcmd,
 							t_ld_map_env *env, t_bool *free_flag);
 static int				exec_child(t_ld_exec_nodes *node, pid_t pid,
 							t_bool free_flag, t_ld_map_env *env);
 
 int	ldpre_ast_exec(t_ast_node *ast, t_ld_map_env *env,
-		t_ld_exec_nodes *exec, t_ld_heredoc heredoc)
+		t_ld_exec_nodes *exec, t_ld_heredoc *heredoc)
 {
 	t_ld_exec_nodes	*node;
 	t_bool			free_flag;

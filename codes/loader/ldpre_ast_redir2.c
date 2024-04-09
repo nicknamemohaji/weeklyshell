@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ldpre_ast_redir2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:41:08 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/09 15:39:05 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/04/09 16:27:58 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "utils.h"
 
 t_bool			ldpre_ast_redir_outfile(char *filename, enum e_node_type mode);
-t_bool			ldpre_ast_redir_infile(char *filename, t_ld_heredoc heredoc,
+t_bool			ldpre_ast_redir_infile(char *filename, t_ld_heredoc *heredoc,
 					enum e_node_type mode, t_ld_map_env *env);
 static t_bool	infile_read(char *filename);
 static t_bool	infile_heredoc(char *filename,
@@ -37,7 +37,7 @@ t_bool	ldpre_ast_redir_outfile(char *filename, enum e_node_type mode)
 	return (TRUE);
 }
 
-t_bool	ldpre_ast_redir_infile(char *filename, t_ld_heredoc heredoc,
+t_bool	ldpre_ast_redir_infile(char *filename, t_ld_heredoc *heredoc,
 			enum e_node_type mode, t_ld_map_env *env)
 {
 	int	stdout_fd;
@@ -46,26 +46,18 @@ t_bool	ldpre_ast_redir_infile(char *filename, t_ld_heredoc heredoc,
 	close(STDIN_FD);
 	if (mode == EXP_PRE_RHEREDOC)
 	{
-		if (dup(heredoc.stdin_fd) < 0)
+		if (dup(heredoc->stdin_fd) < 0)
 			do_exit("ldpre_ast_redir.dup");
 		stdout_fd = dup(STDOUT_FD);
 		if (stdout_fd < 0)
 			do_exit("ldpre_ast_redir.dup");
 		close(STDOUT_FD);
-		if (dup(heredoc.stdout_fd) < 0)
+		if (dup(heredoc->stdout_fd) < 0)
 			do_exit("ldpre_ast_redir.dup");
-		///////////////////////////////////////////////////
-		// heredoc vector에 새로운 heredoc 파일을 생성 및 push back
-		// 생성된 heredoc 파일의 이름을 전달할것
-		// push_back 시 인자로 NULL을 전달, 필요 정보는 모두 ldexec_heredoc_assign_f()가 제공함.
-		if (!heredoc.phd_name_vec->push_back(heredoc.phd_name_vec, NULL))
-		{
-			// malloc error시 실행.
-		}
-		// 벡터의 가장 최근에 push한 원소 포인터 획득
-		//(char *)heredoc.phd_name_vec->back(heredoc.phd_name_vec);
-		///////////////////////////////////////////////////
-		//ret = infile_heredoc(filename, env, heredoc);
+		if (!heredoc->phd_name_vec->push_back(heredoc->phd_name_vec, NULL))
+			do_exit("ldpre_ast_redir.heredoc");
+		ret = infile_heredoc(filename, env,
+				*(char **)(heredoc->phd_name_vec->back(heredoc->phd_name_vec)));
 		close(STDOUT_FD);
 		if (dup(stdout_fd) < 0)
 			do_exit("ldpre_ast_redir.dup");

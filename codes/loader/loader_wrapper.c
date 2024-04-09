@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loader_wrapper.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 13:16:24 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/09 15:25:04 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/04/09 15:52:28 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static	t_bool	init_heredoc_f(t_ld_heredoc *self, int infd, int outfd)
 		return (FALSE);
 	self->stdin_fd = infd;
 	self->stdout_fd = outfd;
+	return (TRUE);
 }
 
 /*
@@ -46,7 +47,7 @@ static	t_bool	init_heredoc_f(t_ld_heredoc *self, int infd, int outfd)
 */
 static void	clean_heredoc(t_ld_heredoc *self)
 {
-	const char	*hhdoc_name_vec = self->phd_name_vec->pbuffer;
+	const char	**hhdoc_name_vec = self->phd_name_vec->pbuffer;
 	size_t		idx;
 
 	idx = -1;
@@ -75,7 +76,7 @@ void	loader_wrapper(char *input, t_ld_map_env *env)
 	}
 	ast = parse_f(input);
 	if (ast != NULL)
-		ldpre_ast(ast, env, NULL, heredoc);
+		ldpre_ast(ast, env, NULL, &heredoc);
 	fd_restore(stdin_fd, stdout_fd);
 	input_sighandler_restore(oldacts);
 	delete_ast_node(ast);

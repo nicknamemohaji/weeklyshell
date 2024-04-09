@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 18:56:03 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/09 13:17:22 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:50:43 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 #include "utils.h"
 
 int	ldpre_ast_wopen(t_ast_node *ast, t_ld_map_env *env,
-		t_ld_exec_nodes *exec, t_ld_heredoc heredoc);
+		t_ld_exec_nodes *exec, t_ld_heredoc *heredoc);
 int	ldpre_ast_ropen(t_ast_node *ast, t_ld_map_env *env,
-		t_ld_exec_nodes *exec, t_ld_heredoc heredoc);
+		t_ld_exec_nodes *exec, t_ld_heredoc *heredoc);
 int	ldpre_ast_wpopen(t_ast_node *ast, t_ld_map_env *env,
-		t_ld_exec_nodes *exec, t_ld_heredoc heredoc);
+		t_ld_exec_nodes *exec, t_ld_heredoc *heredoc);
 
 int	ldpre_ast_wopen(t_ast_node *ast, t_ld_map_env *env,
-		t_ld_exec_nodes *exec, t_ld_heredoc heredoc)
+		t_ld_exec_nodes *exec, t_ld_heredoc *heredoc)
 {
 	t_bool	left_isfile;
 
@@ -51,7 +51,7 @@ int	ldpre_ast_wopen(t_ast_node *ast, t_ld_map_env *env,
 }
 
 int	ldpre_ast_ropen(t_ast_node *ast, t_ld_map_env *env,
-		t_ld_exec_nodes *exec, t_ld_heredoc heredoc)
+		t_ld_exec_nodes *exec, t_ld_heredoc *heredoc)
 {
 	t_bool	right_isfile;
 
@@ -77,7 +77,7 @@ int	ldpre_ast_ropen(t_ast_node *ast, t_ld_map_env *env,
 }
 
 int	ldpre_ast_wpopen(t_ast_node *ast, t_ld_map_env *env,
-		t_ld_exec_nodes *exec, t_ld_heredoc heredoc)
+		t_ld_exec_nodes *exec, t_ld_heredoc *heredoc)
 {
 	t_bool	right_isfile;
 

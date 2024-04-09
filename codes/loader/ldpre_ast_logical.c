@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 18:49:18 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/09 12:36:51 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:50:43 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 #include "types.h"
 
 int			ldpre_ast_and(t_ast_node *ast, t_ld_map_env *env,
-				t_ld_exec_nodes *exec, t_ld_heredoc heredoc);
+				t_ld_exec_nodes *exec, t_ld_heredoc *heredoc);
 int			ldpre_ast_or(t_ast_node *ast, t_ld_map_env *env,
-				t_ld_exec_nodes *exec, t_ld_heredoc heredoc);
+				t_ld_exec_nodes *exec, t_ld_heredoc *heredoc);
 static void	save_fd(int *stdin_fd, int *stdout_fd);
 static void	restore_fd(int stdin_fd, int stdout_fd);
 
 int	ldpre_ast_and(t_ast_node *ast, t_ld_map_env *env,
-		t_ld_exec_nodes *exec, t_ld_heredoc heredoc)
+		t_ld_exec_nodes *exec, t_ld_heredoc *heredoc)
 {
 	int	exitcode;
 	int	stdin_fd;
@@ -37,7 +37,7 @@ int	ldpre_ast_and(t_ast_node *ast, t_ld_map_env *env,
 }
 
 int	ldpre_ast_or(t_ast_node *ast, t_ld_map_env *env,
-		t_ld_exec_nodes *exec, t_ld_heredoc heredoc)
+		t_ld_exec_nodes *exec, t_ld_heredoc *heredoc)
 {
 	int	exitcode;
 	int	stdin_fd;
