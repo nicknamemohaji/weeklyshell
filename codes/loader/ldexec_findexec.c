@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:47:55 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/09 17:48:24 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/10 16:25:48 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ char	*ldexec_exec_find_f(char *cmd, t_bool *need_free, const char *path)
 		else
 			return (check_relative_f(cmd));
 	}
-	ret = check_cwd_f(cmd);
+	ret = check_env_path_f(cmd, path);
 	if (ret != NULL)
 		return (ret);
-	ret = check_env_path_f(cmd, path);
+	ret = check_cwd_f(cmd);
 	return (ret);
 }
 
