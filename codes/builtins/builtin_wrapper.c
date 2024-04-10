@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_wrapper.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 06:04:49 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/09 21:04:40 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/10 15:38:44 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_bool	builtin_isbuiltin(char *name)
 		return (TRUE);
 	else if (ft_strlen(name) == 4 && ft_strncmp(name, "echo", 4) == 0)
 		return (TRUE);
-	else if (ft_strlen(name) == 5 && ft_strncmp(name, "exit", 4) == 0)
+	else if (ft_strlen(name) == 4 && ft_strncmp(name, "exit", 4) == 0)
 		return (TRUE);
 	else if (ft_strlen(name) == 6 && ft_strncmp(name, "export", 6) == 0)
 		return (TRUE);
