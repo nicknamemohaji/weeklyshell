@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 18:16:02 by dogwak            #+#    #+#             */
-/*   Updated: 2024/04/08 20:19:49 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/04/10 13:08:25 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static void	move_left_redirect(t_ft_vector *ptoken_stream)
 				htok_vec[idx + 1].type = FILE_NAME;
 			pull_two_token_front(htok_vec, idx, to);
 			to += 2;
+			idx++;
 		}
 		else if (htok_vec[idx].type == PIPE || htok_vec[idx].type == LPAR
 			|| htok_vec[idx].type == RPAR || htok_vec[idx].type == OPRT_AND
@@ -88,6 +89,7 @@ static void	move_right_redirect(t_ft_vector *ptoken_stream)
 				htok_vec[idx + 1].type = FILE_NAME;
 			pull_two_token_back(htok_vec, idx, to);
 			to -= 2;
+			idx--;
 		}
 		else if (htok_vec[idx].type == PIPE || htok_vec[idx].type == LPAR
 			|| htok_vec[idx].type == RPAR || htok_vec[idx].type == OPRT_AND
@@ -102,6 +104,8 @@ void	move_redirection_token(t_ft_vector *ptoken_stream)
 	const t_token	*htok_vec = ptoken_stream->pbuffer;
 
 	idx = -1;
+	if (ptoken_stream->size < 3)
+		return ;
 	while (++idx < ptoken_stream->size - 1)
 	{
 		if ((htok_vec[idx].type == RDICT_APPEND
