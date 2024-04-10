@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 18:16:02 by dogwak            #+#    #+#             */
-/*   Updated: 2024/04/10 13:06:44 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/04/10 15:57:35 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	move_redirection_token(t_ft_vector *ptoken_stream)
 	const t_token	*htok_vec = ptoken_stream->pbuffer;
 
 	idx = -1;
-	if (ptoken_stream->size < 3)
+	if (ptoken_stream->size < 1)
 		return ;
 	while (++idx < ptoken_stream->size - 1)
 	{
