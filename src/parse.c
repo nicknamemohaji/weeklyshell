@@ -6,11 +6,12 @@
 /*   By: dogwak <dogwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:08:56 by dogwak            #+#    #+#             */
-/*   Updated: 2024/04/08 22:26:17 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/04/10 11:56:50 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+#include <unistd.h>
 
 static int	construct_end_token(void *pos, void *ptoken)
 {

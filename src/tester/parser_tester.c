@@ -33,9 +33,9 @@ void	check_leak(void)
 
 int	main(void)
 {
-	t_ast_node	*tree;
 	t_ft_string	input_str;
 	t_ft_vector	*ptoken_stream;
+	t_ast_node	*tree;
 
 	input_str = construct_ftstr();
 	atexit(check_leak);
