@@ -6,18 +6,18 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:19:05 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/05 17:49:18 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/10 14:23:49 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
 #include "utils.h"
 
-void		ldexec_sigign_setup(struct sigaction oldacts[2]);
-void		input_sighandler_setup(struct sigaction oldacts[2]);
-void		input_sighandler_restore(struct sigaction oldacts[2]);
-void		input_sighandler(int sig, siginfo_t *info, void *ucontext);
-static int	rl_event_void(void);
+void	ldexec_sigign_setup(struct sigaction oldacts[2]);
+void	input_sighandler_setup(struct sigaction oldacts[2]);
+void	input_sighandler_restore(struct sigaction oldacts[2]);
+void	input_sighandler(int sig, siginfo_t *info, void *ucontext);
+int		rl_event_void(void);
 
 /*
 void	input_sighandler_setup(struct sigaction oldacts[2])
@@ -93,36 +93,32 @@ void	input_sighandler_restore(struct sigaction oldacts[2])
 
 /*
 void	input_sighandler(int sig, siginfo_t *info, void *ucontext)
-:param sig: defined in sigaction(2)
-:param info: defined in sigaction(2)
-:param ucontext: defined in sigaction(2)
+:param sig: defined in sigaction(2). not used 
+:param info: defined in sigaction(2). not used
+:param ucontext: defined in sigaction(2). not used
 
 signal handler for SIGINT in interactive mode.
-Modifies g_sigint variable to notice that sigint has occured,
-and changes readline state to print next prompt.
+Modifies g_sigint variable to notice that sigint has occured.
 
-Note) it uses signal unsafe functions(readline library),
-but using signal mask prevents handler to be reentranced.
-so i guess it'll be fine.
+Modified g_sigint value will be checked in rl_event_void function,
+which is registered as rl_event_hook, to finish current input.
 */
 void	input_sighandler(int sig, siginfo_t *info, void *ucontext)
 {
 	(void) ucontext;
 	(void) info;
 	(void) sig;
-	rl_done = 1;
-	if (g_sigint == INPUT_READLINE || g_sigint == TRUE)
-	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
 	g_sigint = TRUE;
-	rl_on_new_line();
 }
 
-static int	rl_event_void(void)
+int	rl_event_void(void)
 {
+	if (g_sigint == TRUE)
+	{
+		rl_done = 1;
+		rl_replace_line("", 0);
+	}
+	if (errno != 0)
+		perror("readline");
 	return (0);
 }
