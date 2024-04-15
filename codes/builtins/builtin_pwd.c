@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 06:04:45 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/09 15:12:32 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/15 15:11:11 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,8 @@ int	builtin_pwd(char *args[], t_ld_map_env *env)
 	if (pwd == NULL)
 	{
 		pwd = do_getcwd_f(NULL, 0);
-		printf("%s\n", pwd);
 		ldpre_env_add(ft_strdup("PWD"), pwd, env);
 	}
-	else
-		printf("%s\n", pwd);
+	printf("%s\n", pwd);
 	return (EXIT_SUCCESS);
 }

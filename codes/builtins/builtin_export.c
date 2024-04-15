@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 06:04:43 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/09 15:04:29 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/15 15:10:47 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,11 @@ int	builtin_export(char *args[], t_ld_map_env *env)
 	return (EXIT_SUCCESS);
 }
 
+/*
+static int	builtin_export_print(t_ld_map_env *env)
+:env: env to print
+:return: execution result (always 0)
+*/
 static int	builtin_export_print(t_ld_map_env *env)
 {
 	char	**envp;
@@ -70,6 +75,12 @@ static int	builtin_export_print(t_ld_map_env *env)
 	return (EXIT_SUCCESS);
 }
 
+/*
+static t_bool	cmp(const void *c1, const void *c2)
+
+compare function for ft_qsort. compare up to `=` delimeter.
+this will sort env keys ascending.
+*/
 static t_bool	cmp(const void *c1, const void *c2)
 {
 	unsigned char	*c1_ptr;

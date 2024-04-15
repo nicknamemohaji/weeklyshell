@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:04:57 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/09 15:50:43 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/15 15:17:32 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ldpre_ast_exec(t_ast_node *ast, t_ld_map_env *env,
 		while (exec->next != NULL)
 			exec = exec->next;
 		exec->next = node;
-		return (AST_SUCCESS_PIPE);
+		return (0);
 	}
 	return (exitcode);
 }

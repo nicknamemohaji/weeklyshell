@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 06:05:01 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/05 12:59:12 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/15 15:05:08 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		builtin_echo(char *args[], t_ld_map_env *env);
 // builtin_exit.c
 
 int		builtin_exit(char *args[], t_ld_map_env *env);
-t_bool	builtin_check_argument_count(const char *args[], int limit);
+t_bool	builtin_check_argument_count(const char *args[], int limit, char *cmd);
 
 // builtin_export.c
 

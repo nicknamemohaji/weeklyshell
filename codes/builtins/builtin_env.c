@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 06:04:39 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/09 15:01:34 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/15 15:02:39 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "utils.h"
 
 int			builtin_env(char *args[], t_ld_map_env *env);
-static int	builtin_env_print(t_ld_map_env *env);
 
 /*
 int	builtin_env(char *args[], t_ld_map_env *env)
@@ -24,14 +23,9 @@ int	builtin_env(char *args[], t_ld_map_env *env)
 */
 int	builtin_env(char *args[], t_ld_map_env *env)
 {
-	(void)args;
-	return (builtin_env_print(env));
-}
-
-static int	builtin_env_print(t_ld_map_env *env)
-{
 	t_ld_map_node	*node;
 
+	(void)args;
 	node = (env->contents)->next;
 	while (node != NULL)
 	{

@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 19:54:44 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/09 20:12:51 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/15 15:16:27 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ t_ld_map_node	**ldpre_env_searchkey_f(char *key, t_ld_map_env *map);
 t_bool			ldpre_env_validate_key(char *key);
 
 // ft_qsort.c
+
 void			ft_qsort(void **arr, int left, int right,
 					t_bool (*cmp)(const void*, const void*));
 

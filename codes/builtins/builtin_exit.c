@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 06:04:41 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/10 16:34:46 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/15 15:13:18 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 int				builtin_exit(char *args[], t_ld_map_env *env);
 static t_bool	check_digit(const char *c);
-t_bool			builtin_check_argument_count(const char *args[], int limit);
+t_bool			builtin_check_argument_count(const char *args[],
+					int limit, char *cmd);
 
 /*
 int	builtin_exit(char *args[], t_ld_map_env *env)
@@ -26,7 +27,7 @@ will return with argument given (0 if no argument given)
 */
 int	builtin_exit(char *args[], t_ld_map_env *env)
 {
-	if (!builtin_check_argument_count((const char **) args, 2))
+	if (!builtin_check_argument_count((const char **) args, 2, "exit"))
 		return (1);
 	if (args[1] != NULL)
 	{
@@ -70,14 +71,15 @@ static t_bool	check_digit(const char *c)
 }
 
 /*
-t_bool	builtin_check_argument_count(const char *args[], int limit)
+t_bool	builtin_check_argument_count(const char *args[], int limit, char *cmd)
 :args: argument list to be checked
 :limit: limit
+:cmd: command name for printing trace
 :return: true if arguments are given less than limit
 
 checks for how many arguments given, checking for max argument count
 */
-t_bool	builtin_check_argument_count(const char *args[], int limit)
+t_bool	builtin_check_argument_count(const char *args[], int limit, char *cmd)
 {
 	int	count;
 
@@ -89,7 +91,8 @@ t_bool	builtin_check_argument_count(const char *args[], int limit)
 	}
 	if (count > limit)
 	{
-		write(2, "exit: too many arguments\n", 25);
+		write(2, cmd, ft_strlen(cmd));
+		write(2, ": too many arguments\n", 21);
 		return (FALSE);
 	}
 	else

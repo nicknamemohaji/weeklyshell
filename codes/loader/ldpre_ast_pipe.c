@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 18:08:58 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/10 00:28:07 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/15 15:17:02 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,5 @@ static int	run_pipe(t_ast_node *ast, t_ld_map_env *env,
 	redirect_fd(&preserve_fd[0], STDIN_FD, pipe_fd[0]);
 	ldpre_ast(ast->right, env, exec, heredoc);
 	restore_fd(preserve_fd[0], STDIN_FD);
-	return (AST_SUCCESS_PIPE);
+	return (0);
 }

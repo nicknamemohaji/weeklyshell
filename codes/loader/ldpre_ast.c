@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:20:45 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/09 15:50:43 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/15 15:14:44 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,6 @@ int	ldpre_ast(t_ast_node *ast, t_ld_map_env *env,
 	else if (ast->node_type == EXP_PRE_RAPPEND
 		|| ast->node_type == EXP_PRE_RWRITE)
 		return (ldpre_ast_wpopen(ast, env, exec, heredoc));
-	dprintf(2, "unknown node type..!!! %d %s", ast->node_type, ast->pcmd[0]);
-	return (-2);
+	printf("unknown node type..!!! %d %s", ast->node_type, ast->pcmd[0]);
+	return (-42);
 }
