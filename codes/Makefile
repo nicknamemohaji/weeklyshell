@@ -30,7 +30,6 @@ LOADER_FILES = 	loader/ldpre_param_expansion.c \
 				loader/ldpre_param_wrapper.c \
 				loader/ldexec_findexec.c \
 				loader/ldexec_run.c \
-				loader/ldexec_env_exitcode.c \
 				loader/ldpre_ast.c \
 				loader/ldpre_ast_subshell.c \
 				loader/ldpre_ast_pipe.c \
@@ -49,6 +48,7 @@ UTIL_FILES = 	utils/do_exit.c \
 				utils/ld_errno_file.c \
 				utils/ld_map_functions.c \
 				utils/ld_map_functions2.c \
+				utils/ldexec_env_exitcode.c \
 				utils/ft_qsort.c
 BUILTIN_FILES = builtins/builtin_cd.c \
 				builtins/builtin_echo.c \

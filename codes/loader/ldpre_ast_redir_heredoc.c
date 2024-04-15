@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 14:37:13 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/09 16:07:29 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/15 15:43:53 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ t_bool	ldexec_heredoc(int fd, char *delim,
 	input_terminal_restore(&oldterm);
 	if (g_sigint != TRUE)
 		ret = TRUE;
+	else
+		ldexec_env_exitcode_update(1, env);
 	if (!ret)
 	{
 		write(1, "\n", 1);

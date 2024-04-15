@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:18:03 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/15 15:16:39 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/15 16:39:48 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ typedef enum e_bool
 }	t_bool;
 
 extern volatile sig_atomic_t	g_sigint;
-# define INPUT_READLINE 2
 
 // used by loader.preprocessor.ast
 typedef struct s_ld_heredoc

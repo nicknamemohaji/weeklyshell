@@ -6,11 +6,10 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 13:44:12 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/05 14:23:31 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/15 15:41:53 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "loader.h"
 #include "utils.h"
 
 char	*ldexec_env_exitcode_fetch_f(t_ld_map_env *env);

@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:19:01 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/10 14:08:20 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/15 16:39:52 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,14 @@ char	*input_readline_f(t_ld_map_env *env)
 	prompt = make_prompt_f(env);
 	input_sighandler_setup(oldacts);
 	input_terminal_setup(&oldterm);
-	g_sigint = INPUT_READLINE;
+	g_sigint = FALSE;
 	input = readline(prompt);
 	input_sighandler_restore(oldacts);
 	input_terminal_restore(&oldterm);
 	if (input != NULL && *input != '\0')
 		add_history(input);
+	else if (input != NULL && *input == '\0')
+		ldexec_env_exitcode_update(1, env);
 	free(prompt);
 	return (input);
 }
