@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 01:11:55 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/15 18:09:27 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/15 18:14:41 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	close_fds(void)
 	while (ent != NULL)
 	{
 		fd = ft_atoi(ent->d_name);
-		if (fd > 2 && fd != dir->__dd_fd)
+		if (fd > 2 && fd != *(int *) dir)
 			close(fd);
 		ent = readdir(dir);
 	}
