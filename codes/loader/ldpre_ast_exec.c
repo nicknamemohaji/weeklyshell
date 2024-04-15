@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:04:57 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/15 15:17:32 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/15 18:21:15 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	ldpre_ast_exec(t_ast_node *ast, t_ld_map_env *env,
 	t_ld_exec_nodes	*node;
 	t_bool			free_flag;
 	pid_t			pid;
-	int				exitcode;
 
 	(void) heredoc;
 	node = prepare_exec(ast->pcmd, env, &free_flag);
@@ -46,9 +45,10 @@ int	ldpre_ast_exec(t_ast_node *ast, t_ld_map_env *env,
 		while (exec->next != NULL)
 			exec = exec->next;
 		exec->next = node;
+		if (free_flag)
+			free(node->exec.path);
 		return (0);
 	}
-	return (exitcode);
 }
 
 static t_ld_exec_nodes	*prepare_exec(char **pcmd,
