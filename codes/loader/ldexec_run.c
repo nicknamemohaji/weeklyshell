@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 01:11:55 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/17 15:00:35 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/17 21:23:05 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ pid_t	ldexec_run_bin(t_ld_exec exec, pid_t pid)
 		do_exit("ldexec_run_bin.fork");
 	else if (pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		close_fds();
 		if (exec.argv[0][0] == '\0')
 			exit(EXIT_SUCCESS);

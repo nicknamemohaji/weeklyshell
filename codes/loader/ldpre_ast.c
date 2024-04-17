@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:20:45 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/17 14:30:09 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/17 18:10:39 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@
 int	ldpre_ast(t_ast_node *ast, t_ld_map_env *env,
 		t_ld_exec_nodes *exec, t_ld_heredoc *heredoc)
 {
-	if (ast->node_type == NODE_COMMAND)
+	if (ast == NULL)
+		return (0);
+	else if (ast->node_type == NODE_COMMAND)
 		return (ldpre_ast_exec(ast, env, exec, heredoc));
 	else if (ast->node_type == EXP_SUBSHELL)
 		return (ldpre_ast_subshell(ast, env, exec, heredoc));

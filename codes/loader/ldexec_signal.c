@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:04:37 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/17 15:07:38 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/17 21:33:42 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 #include "utils.h"
 
 void	ldexec_signal_setup(struct sigaction oldacts[2]);
-void	ldexec_handler(int sig, siginfo_t *info, void *ucontext);
 
 /*
 void	ldexec_signal_setup(struct sigaction oldacts[2])
@@ -39,17 +38,9 @@ void	ldexec_signal_setup(struct sigaction oldacts[2])
 		do_exit("ldexec_signal_setup.sigemptyset");
 	action.sa_flags = 0 | SA_RESTART;
 	action.sa_mask = mask;
-	action.sa_sigaction = ldexec_handler;
+	action.sa_handler = SIG_IGN;
 	if (sigaction(SIGINT, &action, &oldacts[OLDACT_SIGINT]) != 0)
 		do_exit("ldexec_signal_setup.sigaction");
 	if (sigaction(SIGQUIT, &action, &oldacts[OLDACT_SIGQUIT]) != 0)
 		do_exit("ldexec_signal_setup.sigaction");
-}
-
-void	ldexec_handler(int sig, siginfo_t *info, void *ucontext)
-{
-	write(1, "\n", 1);
-	(void)sig;
-	(void)info;
-	(void)ucontext;
 }
