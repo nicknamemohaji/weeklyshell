@@ -3,18 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 06:04:43 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/27 06:05:18 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/15 15:10:47 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 #include "utils.h"
 
-int	builtin_export(char *args[], t_ld_map_env *env);
+int				builtin_export(char *args[], t_ld_map_env *env);
+static int		builtin_export_print(t_ld_map_env *env);
+static t_bool	cmp(const void *c1, const void *c2);
 
+/*
+int	builtin_export(char *args[], t_ld_map_env *env)
+:args: arguments. if no argument is given, print all the environment variables,
+and if argument is given, register environment variables
+:env: environment variables, used to set or print
+:return: execution result (always 0)
+*/
 int	builtin_export(char *args[], t_ld_map_env *env)
 {
 	int		i;
@@ -22,7 +31,7 @@ int	builtin_export(char *args[], t_ld_map_env *env)
 	char	*value;
 
 	if (args[1] == NULL)
-		return (builtin_env_print(env));
+		return (builtin_export_print(env));
 	i = 1;
 	while (args[i] != NULL)
 	{
@@ -42,4 +51,55 @@ int	builtin_export(char *args[], t_ld_map_env *env)
 		i++;
 	}
 	return (EXIT_SUCCESS);
+}
+
+/*
+static int	builtin_export_print(t_ld_map_env *env)
+:env: env to print
+:return: execution result (always 0)
+*/
+static int	builtin_export_print(t_ld_map_env *env)
+{
+	char	**envp;
+	char	**envp_ptr;
+
+	envp = ldpre_env_toenvp_f(env);
+	envp_ptr = envp;
+	ft_qsort((void **)envp, 0, env->count - 1, cmp);
+	while (*envp != NULL)
+	{
+		printf("%s\n", *envp);
+		envp++;
+	}
+	free_ft_split(envp_ptr);
+	return (EXIT_SUCCESS);
+}
+
+/*
+static t_bool	cmp(const void *c1, const void *c2)
+
+compare function for ft_qsort. compare up to `=` delimeter.
+this will sort env keys ascending.
+*/
+static t_bool	cmp(const void *c1, const void *c2)
+{
+	unsigned char	*c1_ptr;
+	unsigned char	*c2_ptr;
+
+	if (c1 == c2)
+		return (FALSE);
+	c1_ptr = (unsigned char *) c1;
+	c2_ptr = (unsigned char *) c2;
+	while (*c1_ptr != '=' && *c2_ptr != '=')
+	{
+		if (*c1_ptr != *c2_ptr)
+			break ;
+		c1_ptr++;
+		c2_ptr++;
+	}
+	if (*c1_ptr == '=')
+		c1_ptr = (unsigned char *)"\0";
+	if (*c2_ptr == '=')
+		c2_ptr = (unsigned char *)"\0";
+	return (*c1_ptr < *c2_ptr);
 }

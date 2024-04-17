@@ -3,18 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ldpre_ast_redir_heredoc.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 14:37:13 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/01 14:37:16 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/15 15:43:53 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "loader.h"
 #include "utils.h"
+#include "input.h"
+#include "types.h"
 
-char	*ldexec_heredoc_assign_f(void);
-t_bool	ldexec_heredoc(int fd, char *delim);
+char			*ldexec_heredoc_assign_f(void);
+t_bool			ldexec_heredoc(int fd, char *delim,
+					t_bool expansion, t_ld_map_env *env);
+static t_bool	heredoc_getline(int fd, char *delim,
+					t_bool expansion, t_ld_map_env *env);
 
 /*
 char	*ldexec_heredoc_assign_f(void)
@@ -38,7 +43,7 @@ char	*ldexec_heredoc_assign_f(void)
 		tmpnum_str = ft_itoa(tmpnum);
 		if (tmpnum_str == NULL)
 			do_exit("ldexec_heredoc_assign_f.malloc");
-		tmpfile_name = ft_strjoin("/tmp/weeklyshell_heredoc_", tmpnum_str);
+		tmpfile_name = ft_strjoin("weeklyshell_heredoc_", tmpnum_str);
 		if (tmpfile_name == NULL)
 			do_exit("ldexec_heredoc_assign_f.malloc");
 		free(tmpnum_str);
@@ -55,30 +60,56 @@ char	*ldexec_heredoc_assign_f(void)
 	return (NULL);
 }
 
-t_bool	ldexec_heredoc(int fd, char *delim)
+t_bool	ldexec_heredoc(int fd, char *delim,
+			t_bool expansion, t_ld_map_env *env)
 {
-	char				*buf;
-	int					readcount;
-	const int			delim_len = ft_strlen(delim);
 	struct sigaction	oldacts[2];
+	struct termios		oldterm;
 	t_bool				ret;
 
 	input_sighandler_setup(oldacts);
+	input_terminal_setup(&oldterm);
+	g_sigint = FALSE;
+	ret = heredoc_getline(fd, delim, expansion, env);
+	input_sighandler_restore(oldacts);
+	input_terminal_restore(&oldterm);
+	if (g_sigint != TRUE)
+		ret = TRUE;
+	else
+		ldexec_env_exitcode_update(1, env);
+	if (!ret)
+	{
+		write(1, "\n", 1);
+		rl_on_new_line();
+	}
+	return (ret);
+}
+
+static t_bool	heredoc_getline(int fd, char *delim,
+					t_bool expansion, t_ld_map_env *env)
+{
+	t_bool			ret;
+	char			*buf;
+	const size_t	delim_len = ft_strlen(delim);
+
 	ret = TRUE;
 	while (ret == TRUE)
 	{
-		buf = get_next_line(STDIN_FD);
-		if (g_sigint == FALSE && buf != NULL)
-			readcount = ft_strlen(buf);
-		if (g_sigint == TRUE || readcount <= 0 || buf == NULL)
+		buf = readline("heredoc > ");
+		if (g_sigint == TRUE || buf == NULL)
 			ret = FALSE;
-		else if (g_sigint == FALSE && readcount - 1 == delim_len
+		if (ret == TRUE && ft_strlen(buf) == delim_len
 			&& ft_strncmp(buf, delim, delim_len) == 0)
 			break ;
-		if (fd != -1)
-			write(fd, buf, readcount);
-		free(buf);
+		if (ret == TRUE && expansion)
+			buf = ldpre_param_expansion_f(buf, env);
+		if (ret == TRUE)
+		{
+			write(fd, buf, ft_strlen(buf));
+			write(fd, "\n", 1);
+			free(buf);
+		}
 	}
-	input_sighandler_restore(oldacts);
+	free(buf);
 	return (ret);
 }

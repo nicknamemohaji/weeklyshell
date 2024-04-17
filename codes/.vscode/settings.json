@@ -1,0 +1,7 @@
+{
+	"files.associations": {
+		"utils.h": "c",
+		"input.h": "c",
+		"loader.h": "c"
+	}
+}

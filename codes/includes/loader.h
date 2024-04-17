@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loader.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:47:14 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/04 11:01:09 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/17 15:06:13 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 # include "libft.h"
 # include "types.h"
+# include "parser.h"
 
 # define HEREDOC_MAX 4242
 
@@ -54,10 +55,10 @@ void	ldpre_param_wc_dirlist_f(t_ld_dir_node *start);
 void	ldpre_param_wc_free_dirlist(t_ld_dir_node *node);
 char	**ldpre_param_wildcard_result_f(t_ld_dir_node *node);
 
-// ldexec_env_exitcode.c
+// ldexec_signal.c
 
-char	*ldexec_env_exitcode_fetch_f(t_ld_map_env *env);
-void	ldexec_env_exitcode_update(int code, t_ld_map_env *env);
+void	ldexec_signal_setup(struct sigaction oldacts[2]);
+void	ldexec_handler(int sig, siginfo_t *info, void *ucontext);
 
 // ldexec_findexec.c
 
@@ -65,18 +66,66 @@ char	*ldexec_exec_find_f(char *cmd, t_bool *need_free, const char *path);
 
 // ldexec_run.c
 
-pid_t	ldexec_run_bin(t_ld_exec exec);
+pid_t	ldexec_run_bin(t_ld_exec exec, pid_t pid);
 void	ldexec_select_type(t_ld_exec exec, t_ld_exec_nodes *node,
-			t_ld_map_env *env);
+			t_ld_map_env *env, pid_t pid);
+
+// ldpre_ast.c
+
+int		ldpre_ast(t_ast_node *ast, t_ld_map_env *env,
+			t_ld_exec_nodes *exec, t_ld_heredoc *heredoc);
+
+// ldpre_ast_subshell.c
+
+int		ldpre_ast_subshell(t_ast_node *ast, t_ld_map_env *env,
+			t_ld_exec_nodes *exec, t_ld_heredoc *heredoc);
+
+// ldpre_ast_pipe.c
+
+int		ldpre_ast_pipe(t_ast_node *ast, t_ld_map_env *env,
+			t_ld_exec_nodes *exec, t_ld_heredoc *heredoc);
+
+// ldpre_ast_logical.c
+
+int		ldpre_ast_and(t_ast_node *ast, t_ld_map_env *env,
+			t_ld_exec_nodes *exec, t_ld_heredoc *heredoc);
+int		ldpre_ast_or(t_ast_node *ast, t_ld_map_env *env,
+			t_ld_exec_nodes *exec, t_ld_heredoc *heredoc);
+
+// ldpre_ast_redir.c
+
+int		ldpre_ast_wopen(t_ast_node *ast, t_ld_map_env *env,
+			t_ld_exec_nodes *exec, t_ld_heredoc *heredoc);
+int		ldpre_ast_ropen(t_ast_node *ast, t_ld_map_env *env,
+			t_ld_exec_nodes *exec, t_ld_heredoc *heredoc);
+int		ldpre_ast_wpopen(t_ast_node *ast, t_ld_map_env *env,
+			t_ld_exec_nodes *exec, t_ld_heredoc *heredoc);
+
+// ldpre_ast_redir2.c
+
+t_bool	ldpre_ast_redir_outfile(char *filename, enum e_node_type mode);
+t_bool	ldpre_ast_redir_infile(char *filename, t_ld_heredoc *heredoc,
+			enum e_node_type mode, t_ld_map_env *env);
 
 // ldpre_ast_redir_heredoc.c
 
 char	*ldexec_heredoc_assign_f(void);
-t_bool	ldexec_heredoc(int fd, char *delim);
+t_bool	ldexec_heredoc(int fd, char *delim,
+			t_bool expansion, t_ld_map_env *env);
+
+// ldpre_heredoc_vector.c
+
+int		construct_heredoc_name(void *pos, void *param);
+void	destruct_heredoc_name(void *pos);
+
+// ldpre_ast_exec.c
+
+int		ldpre_ast_exec(t_ast_node *ast, t_ld_map_env *env,
+			t_ld_exec_nodes *exec, t_ld_heredoc *heredoc);
 
 // ldpre_ast_exec_execall.c
 
-void	exec_prepare(t_ld_exec_nodes *node, t_ld_map_env *env);
-void	exec_cleanup(t_ld_exec_nodes *node, t_ld_map_env *env);
+int		exec_cleanup(t_ld_exec_nodes *node,
+			t_ld_map_env *env, t_bool free_flag);
 
 #endif

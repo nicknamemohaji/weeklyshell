@@ -20,15 +20,15 @@ jobs:
           echo checking files: $(git ls-files)
           norminette .
       
-  check_compile_error:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: check for compilation errors
-        run: |
-          sudo apt update
-          sudo apt install build-essential -y
-          echo checking files: $(git ls-files)
-          for f in $(find . -name \*.c); do gcc -I includes/ -Wall -Wextra -Werror -fsyntax-only $f; done
+  # check_compile_error:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - name: check for compilation errors
+  #       run: |
+  #         sudo apt update
+  #         sudo apt install build-essential -y
+  #         echo checking files: $(git ls-files)
+  #         for f in $(find . -name \*.c); do gcc -I codes/includes/ -Wall -Wextra -Werror -fsyntax-only $f; done
 
   

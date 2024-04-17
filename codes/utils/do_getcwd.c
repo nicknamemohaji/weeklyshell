@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_ft_split.c                                    :+:      :+:    :+:   */
+/*   do_getcwd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/13 19:53:33 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/05 14:57:55 by kyungjle         ###   ########.fr       */
+/*   Created: 2024/04/09 14:30:40 by kyungjle          #+#    #+#             */
+/*   Updated: 2024/04/09 15:21:19 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-void	free_ft_split(char **ptr);
+char	*do_getcwd_f(char *buf, size_t size);
 
-/*
-void	free_ft_split(char **ptr)
-:param ptr: result of ft_split function to be freed
-*/
-void	free_ft_split(char **ptr)
+char	*do_getcwd_f(char *buf, size_t size)
 {
-	char	**ptr_ptr;
+	char	*ret;
 
-	ptr_ptr = ptr;
-	while (*ptr != NULL)
-		free(*(ptr++));
-	free(ptr_ptr);
+	ret = getcwd(buf, size);
+	if (ret != NULL)
+		return (ret);
+	write(2, "[WARN] cwd not found. going up...\n", 34);
+	if (chdir("..") != 0)
+		exit(EXIT_FAILURE);
+	return (do_getcwd_f(buf, size));
 }

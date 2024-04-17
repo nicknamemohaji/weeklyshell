@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ldexec_findexec.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:47:55 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/03/21 12:38:52 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/10 16:25:48 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,19 @@ char	*ldexec_exec_find_f(char *cmd, t_bool *need_free, const char *path)
 			*need_free = FALSE;
 			if (access(cmd, F_OK | X_OK) == 0)
 				return (cmd);
-			else if (errno != EACCES && errno != ENOENT)
-				do_exit("ldexec_exec_find_f.access");
 			else
+			{
+				ld_errno_file("weeklyshell", cmd);
 				return (NULL);
+			}
 		}
 		else
 			return (check_relative_f(cmd));
 	}
-	ret = check_cwd_f(cmd);
+	ret = check_env_path_f(cmd, path);
 	if (ret != NULL)
 		return (ret);
-	ret = check_env_path_f(cmd, path);
+	ret = check_cwd_f(cmd);
 	return (ret);
 }
 
@@ -78,18 +79,20 @@ static char	*check_relative_f(char *cmd)
 	char	*ret;
 	int		idx;
 
-	cwd_prev = getcwd(NULL, 0);
-	if (cwd_prev == NULL)
-		do_exit("ldexec_findexec.check_relaive_f.getcwd");
-	if (ld_chdir(cmd) != TRUE)
+	cwd_prev = do_getcwd_f(NULL, 0);
+	ret = ft_substr(cmd, 0, ft_strrchr(cmd, '/') - cmd);
+	if (ld_chdir("weeklyshell", ret) != TRUE)
 		ret = NULL;
-	else
+	free(ret);
+	if (ret != NULL)
 	{
 		idx = ft_strrchr(cmd, '/') - cmd + 1;
 		real_cmd = ft_substr(cmd, idx, (ft_strlen(cmd) - idx));
 		if (real_cmd == NULL)
 			do_exit("ldexec_findexec.check_relative_f.malloc");
 		ret = check_cwd_f(real_cmd);
+		if (ret == NULL)
+			ld_errno_file("weeklyshell", cmd);
 		free(real_cmd);
 	}
 	if (chdir(cwd_prev) != 0)
@@ -110,7 +113,7 @@ static char	*check_cwd_f(char *cmd)
 	char	*cwd_with_slash;
 	char	*cmd_with_cwd;
 
-	cwd = getcwd(NULL, 0);
+	cwd = do_getcwd_f(NULL, 0);
 	if (cwd == NULL)
 		do_exit("ldexec_findexec.check_cwd_f.getcwd");
 	cwd_with_slash = ft_strjoin(cwd, "/");
@@ -143,6 +146,8 @@ static char	*check_env_path_f(char *cmd, const char *path)
 	char	*ret;
 
 	ret = NULL;
+	if (path == NULL)
+		return (NULL);
 	paths = ft_split(path, ':');
 	if (paths == NULL)
 		do_exit("ldexec_findexec.check_env_path_f.malloc");

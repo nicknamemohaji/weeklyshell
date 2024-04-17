@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ldexec_run.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 01:11:55 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/01 15:18:19 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/17 15:00:35 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,28 @@
 #include "loader.h"
 #include "utils.h"
 
-pid_t	ldexec_run_bin(t_ld_exec exec);
-void	ldexec_select_type(t_ld_exec exec, t_ld_exec_nodes *node,
-				t_ld_map_env *env);
+pid_t		ldexec_run_bin(t_ld_exec exec, pid_t pid);
+void		ldexec_select_type(t_ld_exec exec, t_ld_exec_nodes *node,
+				t_ld_map_env *env, pid_t pid);
+static void	close_fds(void);
 
-pid_t	ldexec_run_bin(t_ld_exec exec)
+pid_t	ldexec_run_bin(t_ld_exec exec, pid_t pid)
 {
-	pid_t	pid;
-
 	if (exec.path == NULL)
 	{
-		printf("command not found\n");
-		return (-127);
+		if (ft_strchr(exec.argv[0], '/') == NULL)
+			write(2, "command not found\n", 18);
+		return (-1);
 	}
-	pid = fork();
+	if (pid < 0)
+		pid = fork();
 	if (pid < 0)
 		do_exit("ldexec_run_bin.fork");
 	else if (pid == 0)
 	{
+		close_fds();
+		if (exec.argv[0][0] == '\0')
+			exit(EXIT_SUCCESS);
 		if (execve(exec.path, exec.argv, exec.envp) < 0)
 			do_exit("ldexec_run_bin.execve");
 	}
@@ -39,28 +43,36 @@ pid_t	ldexec_run_bin(t_ld_exec exec)
 }
 
 void	ldexec_select_type(t_ld_exec exec, t_ld_exec_nodes *node,
-				t_ld_map_env *env)
+				t_ld_map_env *env, pid_t pid)
 {
-	pid_t	pid;
-
-	printf("argv %s\n", exec.argv[0]);
-	printf("path %s\n", exec.path);
+	node->exitcode = -1;
 	if (builtin_isbuiltin(exec.argv[0]))
 	{
-		// TODO builtin in subshell environment
-		if (FALSE)
-		{
-			pid = fork();
-			if (pid == 0)
-				exit(builtin_wrapper(exec, env));
-		}
-		else
-		{
-			pid = -1;
-			node->exitcode = builtin_wrapper(exec, env);
-		}
+		pid = -1;
+		node->exitcode = builtin_wrapper(exec, env);
 	}
 	else
-			pid = ldexec_run_bin(exec);
+		pid = ldexec_run_bin(exec, pid);
 	node->pid = pid;
+}
+
+static void	close_fds(void)
+{
+	int				fd;
+	DIR				*dir;
+	struct dirent	*ent;
+
+	dir = opendir("/dev/fd");
+	if (dir == NULL)
+		do_exit("ldexec_run.close_fds.opendir");
+	ent = readdir(dir);
+	while (ent != NULL)
+	{
+		fd = ft_atoi(ent->d_name);
+		if (ent->d_type != DT_DIR && fd > 2 && fd != *(int *) dir)
+			close(fd);
+		ent = readdir(dir);
+	}
+	if (closedir(dir) != 0)
+		do_exit("ldexec_run.close_fds.closedir");
 }

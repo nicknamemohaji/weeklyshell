@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_ft_split.c                                    :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/13 19:53:33 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/05 14:57:55 by kyungjle         ###   ########.fr       */
+/*   Created: 2024/04/04 18:34:24 by kyungjle          #+#    #+#             */
+/*   Updated: 2024/04/05 16:19:12 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "libft.h"
 
-void	free_ft_split(char **ptr);
+int	ft_strcmp(const char *s1, const char *s2);
 
-/*
-void	free_ft_split(char **ptr)
-:param ptr: result of ft_split function to be freed
-*/
-void	free_ft_split(char **ptr)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	char	**ptr_ptr;
+	size_t	i;
 
-	ptr_ptr = ptr;
-	while (*ptr != NULL)
-		free(*(ptr++));
-	free(ptr_ptr);
+	i = 0;
+	while (s1[i] != '\0' || s2[i] != '\0')
+	{
+		if (s1[i] != s2[i])
+			break ;
+		i++;
+	}
+	return ((unsigned const char)s1[i] - (unsigned const char)s2[i]);
 }

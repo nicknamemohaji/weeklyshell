@@ -2,6 +2,7 @@ NAME = minishell
 
 INPUT_FILES = 	input/input_readline.c \
 				input/input_terminal.c \
+				input/input_sighandler.c \
 				input/input_validator.c
 PARSER_FILES =	parser/ast_node.c \
 				parser/get_node_type.c \
@@ -27,19 +28,29 @@ LOADER_FILES = 	loader/ldpre_param_expansion.c \
 				loader/ldpre_param_wildcard.c \
 				loader/ldpre_param_wildcard2.c \
 				loader/ldpre_param_wrapper.c \
+				loader/ldexec_signal.c \
 				loader/ldexec_findexec.c \
 				loader/ldexec_run.c \
-				loader/ldexec_env_exitcode.c \
+				loader/ldpre_ast.c \
+				loader/ldpre_ast_subshell.c \
+				loader/ldpre_ast_pipe.c \
+				loader/ldpre_ast_redir.c \
+				loader/ldpre_ast_redir2.c \
 				loader/ldpre_ast_redir_heredoc.c \
+				loader/ldpre_ast_logical.c \
+				loader/ldpre_ast_exec.c \
 				loader/ldpre_ast_exec_execall.c \
-				loader/loader_wrapper.c
+				loader/loader_wrapper.c \
+				loader/ldpre_heredoc_vector.c
 UTIL_FILES = 	utils/do_exit.c \
+				utils/do_getcwd.c \
 				utils/free_ft_split.c \
-				utils/input_sighandler.c \
 				utils/ld_chdir.c \
 				utils/ld_errno_file.c \
 				utils/ld_map_functions.c \
-				utils/ld_map_functions2.c
+				utils/ld_map_functions2.c \
+				utils/ldexec_env_exitcode.c \
+				utils/ft_qsort.c
 BUILTIN_FILES = builtins/builtin_cd.c \
 				builtins/builtin_echo.c \
 				builtins/builtin_exit.c \
@@ -66,7 +77,7 @@ HEADER_DIR = includes/
 INCLUDES = -I $(HEADER_DIR) -I $(LIBFT_DIR)headers/ -I $(FT_STRING_DIR) -I $(FT_VECTOR_DIR)
 LIBRARIES = -lft -lftvector -lftstring -lreadline -L.
 
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 CC = cc
 
 all: $(NAME)
@@ -80,7 +91,7 @@ $(NAME): libft.a libftvector.a libftstring.a $(OBJECTS)
 %.o: %.c
 	@echo compiling $<
 	@$(CC) -c $< -o $*.o $(CFLAGS) $(INCLUDES)
-	
+
 libft.a:
 	@$(MAKE) -C $(LIBFT_DIR) all -j8
 	@cp $(LIBFT_DIR)libft.a .
@@ -98,11 +109,15 @@ libftstring.a:
 
 clean:
 	@$(MAKE) -C $(LIBFT_DIR) clean
+	@$(MAKE) -C $(FT_STRING_DIR) clean
+	@$(MAKE) -C $(FT_VECTOR_DIR) clean
 	@rm -rf $(OBJECTS)
 	@echo Cleaned!
 
 fclean: clean
 	@$(MAKE) -C $(LIBFT_DIR) fclean
+	@$(MAKE) -C $(FT_STRING_DIR) fclean
+	@$(MAKE) -C $(FT_VECTOR_DIR) fclean
 	@rm -f libft.a libftvector.a libftstring.a
 	@rm -rf $(NAME)
 	@echo Fcleaned!

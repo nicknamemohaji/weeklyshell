@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 06:05:01 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/01 13:05:08 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/15 15:05:08 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int		builtin_echo(char *args[], t_ld_map_env *env);
 // builtin_exit.c
 
 int		builtin_exit(char *args[], t_ld_map_env *env);
+t_bool	builtin_check_argument_count(const char *args[], int limit, char *cmd);
 
 // builtin_export.c
 
@@ -45,7 +46,6 @@ int		builtin_unset(char *args[], t_ld_map_env *env);
 
 // builtin_env.c
 
-int		builtin_env_print(t_ld_map_env *env);
 int		builtin_env(char *args[], t_ld_map_env *env);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:17:56 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/01 13:08:10 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/17 15:01:17 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 // input_readline.c
 
-char	*input_readline_f(void);
+char	*input_readline_f(t_ld_map_env *env);
 
 // input_terminal.c
 
@@ -35,5 +35,13 @@ void	input_terminal_restore(struct termios *oldterm);
 // input_validator.c
 
 t_bool	input_validate(const char *input);
+
+// input_sighandler.c
+# define OLDACT_SIGINT 0
+# define OLDACT_SIGQUIT 1
+
+void	input_sighandler_setup(struct sigaction oldacts[2]);
+void	input_sighandler_restore(struct sigaction oldacts[2]);
+void	input_sighandler(int sig, siginfo_t *info, void *ucontext);
 
 #endif

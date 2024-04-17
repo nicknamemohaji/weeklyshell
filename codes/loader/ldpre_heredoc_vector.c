@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_ft_split.c                                    :+:      :+:    :+:   */
+/*   ldpre_heredoc_vector.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/13 19:53:33 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/05 14:57:55 by kyungjle         ###   ########.fr       */
+/*   Created: 2024/04/09 14:31:52 by dogwak            #+#    #+#             */
+/*   Updated: 2024/04/09 15:57:05 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "loader.h"
 
-void	free_ft_split(char **ptr);
-
-/*
-void	free_ft_split(char **ptr)
-:param ptr: result of ft_split function to be freed
-*/
-void	free_ft_split(char **ptr)
+int	construct_heredoc_name(void *pos, void *param)
 {
-	char	**ptr_ptr;
+	param++;
+	*((char **)pos) = ldexec_heredoc_assign_f();
+	if (*((char **)pos) == NULL)
+		return (0);
+	return (1);
+}
 
-	ptr_ptr = ptr;
-	while (*ptr != NULL)
-		free(*(ptr++));
-	free(ptr_ptr);
+void	destruct_heredoc_name(void *pos)
+{
+	free(*(char **)pos);
 }
