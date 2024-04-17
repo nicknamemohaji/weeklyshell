@@ -28,6 +28,7 @@ LOADER_FILES = 	loader/ldpre_param_expansion.c \
 				loader/ldpre_param_wildcard.c \
 				loader/ldpre_param_wildcard2.c \
 				loader/ldpre_param_wrapper.c \
+				loader/ldexec_signal.c \
 				loader/ldexec_findexec.c \
 				loader/ldexec_run.c \
 				loader/ldpre_ast.c \

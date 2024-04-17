@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 18:49:18 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/09 15:50:43 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/17 14:45:06 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,21 @@ int	ldpre_ast_and(t_ast_node *ast, t_ld_map_env *env,
 	int	stdout_fd;
 
 	save_fd(&stdin_fd, &stdout_fd);
-	exitcode = ldpre_ast(ast->left, env, NULL, heredoc);
+	if (!env->should_postpone)
+		exitcode = ldpre_ast(ast->left, env, NULL, heredoc);
+	else
+	{
+		exitcode = ldexec_env_exitcode_fetch(env);
+		env->should_postpone = FALSE;
+	}
 	restore_fd(stdin_fd, stdout_fd);
 	if (exitcode == 0)
 		exitcode = ldpre_ast(ast->right, env, exec, heredoc);
+	else
+	{
+		env->should_postpone = TRUE;
+		ldpre_ast(ast->right, env, exec, heredoc);
+	}
 	return (exitcode);
 }
 
@@ -44,10 +55,21 @@ int	ldpre_ast_or(t_ast_node *ast, t_ld_map_env *env,
 	int	stdout_fd;
 
 	save_fd(&stdin_fd, &stdout_fd);
-	exitcode = ldpre_ast(ast->left, env, NULL, heredoc);
+	if (!env->should_postpone)
+		exitcode = ldpre_ast(ast->left, env, NULL, heredoc);
+	else
+	{
+		exitcode = ldexec_env_exitcode_fetch(env);
+		env->should_postpone = FALSE;
+	}
 	restore_fd(stdin_fd, stdout_fd);
 	if (exitcode != 0)
 		exitcode = ldpre_ast(ast->right, env, exec, heredoc);
+	else
+	{
+		env->should_postpone = TRUE;
+		ldpre_ast(ast->right, env, exec, heredoc);
+	}
 	return (exitcode);
 }
 

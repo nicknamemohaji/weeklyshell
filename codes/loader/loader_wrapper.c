@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 13:16:24 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/09 15:52:28 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/17 15:06:29 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@
 #include "utils.h"
 #include "parser.h"
 
-void		loader_wrapper(char *input, t_ld_map_env *env);
-static void	fd_preserve(int *stdin_fd, int *stdout_fd);
-static void	fd_restore(int stdin_fd, int stdout_fd);
+static	t_bool	init_heredoc_f(t_ld_heredoc *self, int infd, int outfd);
+static void		clean_heredoc(t_ld_heredoc *self);
+void			loader_wrapper(char *input, t_ld_map_env *env);
+static void		fd_preserve(int *stdin_fd, int *stdout_fd);
+static void		fd_restore(int stdin_fd, int stdout_fd);
 
 /*
 	initialize object 't_ld_heredoc'.
@@ -67,8 +69,9 @@ void	loader_wrapper(char *input, t_ld_map_env *env)
 	t_ast_node			*ast;
 	t_ld_heredoc		heredoc;
 
+	env->should_postpone = FALSE;
 	fd_preserve(&stdin_fd, &stdout_fd);
-	ldexec_sigign_setup(oldacts);
+	ldexec_signal_setup(oldacts);
 	if (!init_heredoc_f(&heredoc, stdin_fd, stdout_fd))
 	{
 		printf("cannot open heredoc :tried %d times :(\n", HEREDOC_MAX);

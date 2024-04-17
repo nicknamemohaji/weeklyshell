@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:18:03 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/15 16:39:48 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/17 14:13:47 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ typedef struct s_ld_map_node
 typedef struct s_ld_map_env
 {
 	int				count;
+	t_bool			should_postpone;
 	t_ld_map_node	*contents;
 }	t_ld_map_env;
 

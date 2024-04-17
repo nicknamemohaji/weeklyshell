@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:17:43 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/10 14:08:07 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/17 14:06:53 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,10 @@ static void	env_set_shlvl(t_ld_map_env *env)
 		shlvl = 0;
 	else
 		shlvl = ft_atoi(value);
-	key = ft_strdup("SHLVL");
+	if (shlvl < 0)
+		shlvl = 0;
 	value = ft_itoa(shlvl + 1);
+	key = ft_strdup("SHLVL");
 	if (key == NULL || value == NULL)
 		do_exit("main.env_set_shlvl.malloc");
 	ldpre_env_add(key, value, env);

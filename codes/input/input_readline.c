@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:19:01 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/15 16:39:52 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/17 14:53:31 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ char	*input_readline_f(t_ld_map_env *env)
 	input_sighandler_setup(oldacts);
 	input_terminal_setup(&oldterm);
 	g_sigint = FALSE;
+	rl_on_new_line();
 	input = readline(prompt);
 	input_sighandler_restore(oldacts);
 	input_terminal_restore(&oldterm);

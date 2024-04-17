@@ -6,14 +6,13 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:19:05 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/15 16:51:29 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/17 15:03:04 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
 #include "utils.h"
 
-void	ldexec_sigign_setup(struct sigaction oldacts[2]);
 void	input_sighandler_setup(struct sigaction oldacts[2]);
 void	input_sighandler_restore(struct sigaction oldacts[2]);
 void	input_sighandler(int sig, siginfo_t *info, void *ucontext);
@@ -52,34 +51,6 @@ void	input_sighandler_setup(struct sigaction oldacts[2])
 		do_exit("input_sighandler_setup.sigaction");
 	if (sigaction(SIGQUIT, &action, &oldacts[OLDACT_SIGQUIT]) != 0)
 		do_exit("input_sighandler_setup.sigaction");
-}
-
-/*
-void	ldexec_sigign_setup(struct sigaction oldacts[2])
-:param oldacts: sigaction array to store default handlers
-
-Similar to input_sighandler_setup, but choose to ignore.
-Shell environment after forking child should use this function.
-Deactivates SIGINT(Ctrl + C) and SIGQUIT(Ctrl + \)
-
-Stores previous signal handlers in *oldacts, making it available
-to restore default behaviors.
-*/
-void	ldexec_sigign_setup(struct sigaction oldacts[2])
-{
-	struct sigaction	action;
-	sigset_t			mask;
-
-	g_sigint = FALSE;
-	if (sigemptyset(&mask) != 0)
-		do_exit("ldexec_sigign_setup.sigemptyset");
-	action.sa_flags = 0 | SA_RESTART;
-	action.sa_mask = mask;
-	action.sa_handler = SIG_IGN;
-	if (sigaction(SIGINT, &action, &oldacts[OLDACT_SIGINT]) != 0)
-		do_exit("ldexec_sigign_setup.sigaction");
-	if (sigaction(SIGQUIT, &action, &oldacts[OLDACT_SIGQUIT]) != 0)
-		do_exit("ldexec_sigign_setup.sigaction");
 }
 
 /*

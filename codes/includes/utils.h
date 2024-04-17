@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 19:54:44 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/15 15:42:45 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/17 14:44:39 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ t_bool			ldpre_env_validate_key(char *key);
 // ldexec_env_exitcode.c
 
 char			*ldexec_env_exitcode_fetch_f(t_ld_map_env *env);
+int				ldexec_env_exitcode_fetch(t_ld_map_env *env);
 void			ldexec_env_exitcode_update(int code, t_ld_map_env *env);
 
 // ft_qsort.c

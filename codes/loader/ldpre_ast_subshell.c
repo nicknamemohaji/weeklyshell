@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 18:07:00 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/09 15:50:43 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/17 14:29:12 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	ldpre_ast_subshell(t_ast_node *ast, t_ld_map_env *env,
 	pid_t	pid;
 	int		exitcode;
 
+	if (env->should_postpone)
+		return (-1);
 	pid = fork();
 	if (pid < 0)
 		do_exit("ldpre_ast.fork");

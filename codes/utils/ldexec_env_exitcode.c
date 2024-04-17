@@ -6,12 +6,13 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 13:44:12 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/15 15:41:53 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/17 14:44:32 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
+int		ldexec_env_exitcode_fetch(t_ld_map_env *env);
 char	*ldexec_env_exitcode_fetch_f(t_ld_map_env *env);
 void	ldexec_env_exitcode_update(int code, t_ld_map_env *env);
 
@@ -35,6 +36,14 @@ char	*ldexec_env_exitcode_fetch_f(t_ld_map_env *env)
 	ret = ft_strdup(node->value);
 	if (ret == NULL)
 		do_exit("ldexec_env_exitcode_fetch_f.malloc");
+	return (ret);
+}
+
+int	ldexec_env_exitcode_fetch(t_ld_map_env *env)
+{
+	int		ret;
+
+	ret = ft_atoi((env->contents)->value);
 	return (ret);
 }
 

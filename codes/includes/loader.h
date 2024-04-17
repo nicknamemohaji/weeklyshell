@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:47:14 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/15 15:42:00 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/17 15:06:13 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,11 @@ char	**ldpre_param_wildcard_f(char *arg);
 void	ldpre_param_wc_dirlist_f(t_ld_dir_node *start);
 void	ldpre_param_wc_free_dirlist(t_ld_dir_node *node);
 char	**ldpre_param_wildcard_result_f(t_ld_dir_node *node);
+
+// ldexec_signal.c
+
+void	ldexec_signal_setup(struct sigaction oldacts[2]);
+void	ldexec_handler(int sig, siginfo_t *info, void *ucontext);
 
 // ldexec_findexec.c
 

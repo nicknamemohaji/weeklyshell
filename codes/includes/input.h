@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:17:56 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/09 14:48:42 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/17 15:01:17 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,5 @@ t_bool	input_validate(const char *input);
 void	input_sighandler_setup(struct sigaction oldacts[2]);
 void	input_sighandler_restore(struct sigaction oldacts[2]);
 void	input_sighandler(int sig, siginfo_t *info, void *ucontext);
-void	ldexec_sigign_setup(struct sigaction oldacts[2]);
 
 #endif

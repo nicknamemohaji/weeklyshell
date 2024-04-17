@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:04:57 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/15 18:21:15 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/17 14:40:41 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static t_ld_exec_nodes	*prepare_exec(char **pcmd,
 							t_ld_map_env *env, t_bool *free_flag);
 static int				exec_child(t_ld_exec_nodes *node, pid_t pid,
 							t_bool free_flag, t_ld_map_env *env);
+static int				exec_parent(t_ld_exec_nodes *node,
+							t_ld_exec_nodes *exec, t_bool free_flag);
 
 int	ldpre_ast_exec(t_ast_node *ast, t_ld_map_env *env,
 		t_ld_exec_nodes *exec, t_ld_heredoc *heredoc)
@@ -29,6 +31,8 @@ int	ldpre_ast_exec(t_ast_node *ast, t_ld_map_env *env,
 	pid_t			pid;
 
 	(void) heredoc;
+	if (env->should_postpone)
+		return (-1);
 	node = prepare_exec(ast->pcmd, env, &free_flag);
 	pid = -1;
 	if (exec != NULL)
@@ -42,12 +46,7 @@ int	ldpre_ast_exec(t_ast_node *ast, t_ld_map_env *env,
 	else
 	{
 		node->pid = pid;
-		while (exec->next != NULL)
-			exec = exec->next;
-		exec->next = node;
-		if (free_flag)
-			free(node->exec.path);
-		return (0);
+		return (exec_parent(node, exec, free_flag));
 	}
 }
 
@@ -77,4 +76,15 @@ static int	exec_child(t_ld_exec_nodes *node, pid_t pid,
 	if (pid == 0)
 		exit(exitcode);
 	return (exitcode);
+}
+
+static int	exec_parent(t_ld_exec_nodes *node, t_ld_exec_nodes *exec,
+				t_bool free_flag)
+{
+	while (exec->next != NULL)
+		exec = exec->next;
+	exec->next = node;
+	if (free_flag)
+		free(node->exec.path);
+	return (0);
 }
