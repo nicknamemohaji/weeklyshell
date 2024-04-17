@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 06:04:41 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/15 15:13:18 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/17 23:09:25 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,21 @@ will return with argument given (0 if no argument given)
 */
 int	builtin_exit(char *args[], t_ld_map_env *env)
 {
+	int	last_exitcode;
+
 	if (!builtin_check_argument_count((const char **) args, 2, "exit"))
 		return (1);
+	last_exitcode = ldexec_env_exitcode_fetch(env);
+	free_ld_map(env);
 	if (args[1] != NULL)
 	{
 		if (!check_digit(args[1]))
 			exit (255);
-		free_ld_map(env);
 		write(2, "exit\n", 5);
 		exit(ft_atoi(args[1]));
 	}
 	write(2, "exit\n", 5);
-	exit(EXIT_SUCCESS);
+	exit(last_exitcode);
 }
 
 /*
