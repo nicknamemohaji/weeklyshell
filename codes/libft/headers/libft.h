@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 00:59:19 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/04 18:35:51 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/22 14:49:43 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	ft_putnbr_fd(int n, int fd);
 
 // ft_printf
 int		ft_printf(const char *s, ...);
+int		ft_dprintf(int fd, const char *s, ...);
 int		ft_sprintf(char	*ret, const char *s, ...);
 
 // get_next_line

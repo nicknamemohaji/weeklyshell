@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicknamemohaji <nicknamemohaji@student.    +#+  +:+       +#+        */
+/*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 14:49:46 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/03/27 05:18:02 by nicknamemoh      ###   ########.fr       */
+/*   Updated: 2024/04/22 14:49:41 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_buf
 int		ft_printf(const char *s, ...);
 int		ft_sprintf_va(const char *s, char **buf, va_list va);
 int		ft_sprintf(char	*ret, const char *s, ...);
+int		ft_dprintf(int fd, const char *s, ...);
 
 // fp_conversion_charater.c
 char	*fp_char(char c);
