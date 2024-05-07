@@ -65,7 +65,7 @@ char	*ldpre_env_fetch(char *key, t_ld_map_env *map)
 
 	if (!ldpre_env_validate_key(key))
 	{
-		printf("syntax error: [%s]\n", key);
+		printf("export: syntax error: [%s]\n", key);
 		return (NULL);
 	}
 	node = ldpre_env_searchkey_f(key, map);

@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 22:19:01 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/04/17 14:53:31 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/17 21:29:16 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static char	*make_prompt_f(t_ld_map_env *env)
 	char	*prompt_base;
 	char	*cwd;
 
-	prompt_base = ft_strdup(TERM_COLOR_GREEN "weeklyshell"
+	prompt_base = ft_strdup(TERM_COLOR_GREEN "monthlyshell"
 			TERM_COLOR_END ":" TERM_COLOR_YELLOW);
 	if (prompt_base == NULL)
 		do_exit("make_prompt_f.malloc");

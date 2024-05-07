@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 01:11:55 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/17 15:00:35 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/17 23:19:44 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ pid_t	ldexec_run_bin(t_ld_exec exec, pid_t pid)
 	if (exec.path == NULL)
 	{
 		if (ft_strchr(exec.argv[0], '/') == NULL)
-			write(2, "command not found\n", 18);
+			write(2, "monthlyshell: command not found\n", 32);
 		return (-1);
 	}
 	if (pid < 0)
@@ -33,11 +33,13 @@ pid_t	ldexec_run_bin(t_ld_exec exec, pid_t pid)
 		do_exit("ldexec_run_bin.fork");
 	else if (pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		close_fds();
 		if (exec.argv[0][0] == '\0')
 			exit(EXIT_SUCCESS);
 		if (execve(exec.path, exec.argv, exec.envp) < 0)
-			do_exit("ldexec_run_bin.execve");
+			do_exit("monthlyshell");
 	}
 	return (pid);
 }
@@ -59,6 +61,7 @@ void	ldexec_select_type(t_ld_exec exec, t_ld_exec_nodes *node,
 static void	close_fds(void)
 {
 	int				fd;
+	int				dir_fd;
 	DIR				*dir;
 	struct dirent	*ent;
 
@@ -66,10 +69,11 @@ static void	close_fds(void)
 	if (dir == NULL)
 		do_exit("ldexec_run.close_fds.opendir");
 	ent = readdir(dir);
+	dir_fd = *(int *) dir;
 	while (ent != NULL)
 	{
 		fd = ft_atoi(ent->d_name);
-		if (ent->d_type != DT_DIR && fd > 2 && fd != *(int *) dir)
+		if (ent->d_type != DT_DIR && fd > 2 && fd != dir_fd)
 			close(fd);
 		ent = readdir(dir);
 	}

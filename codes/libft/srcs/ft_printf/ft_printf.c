@@ -6,13 +6,14 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:08:32 by kyungjle          #+#    #+#             */
-/*   Updated: 2024/01/03 19:45:51 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/22 14:49:17 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 int	ft_printf(const char *s, ...);
+int	ft_dpintf(int fd, const char *s, ...);
 int	ft_sprintf(char	*ret, const char *s, ...);
 int	ft_sprintf_va(const char *s, char **buf, va_list va);
 
@@ -31,6 +32,25 @@ int	ft_printf(const char *s, ...)
 	if (ret < 0)
 		return (ret);
 	write(1, buf, ret);
+	free(buf);
+	return (ret);
+}
+
+int	ft_dprintf(int fd, const char *s, ...)
+{
+	int		ret;
+	char	*buf;
+	va_list	va;
+
+	if (*s == 0)
+		return (0);
+	buf = NULL;
+	va_start(va, s);
+	ret = ft_sprintf_va(s, &buf, va);
+	va_end(va);
+	if (ret < 0)
+		return (ret);
+	write(fd, buf, ret);
 	free(buf);
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:47:55 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/10 16:25:48 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/17 23:17:08 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*ldexec_exec_find_f(char *cmd, t_bool *need_free, const char *path)
 				return (cmd);
 			else
 			{
-				ld_errno_file("weeklyshell", cmd);
+				ld_errno_file("monthlyshell", cmd);
 				return (NULL);
 			}
 		}
@@ -81,7 +81,7 @@ static char	*check_relative_f(char *cmd)
 
 	cwd_prev = do_getcwd_f(NULL, 0);
 	ret = ft_substr(cmd, 0, ft_strrchr(cmd, '/') - cmd);
-	if (ld_chdir("weeklyshell", ret) != TRUE)
+	if (ld_chdir("monthlyshell", ret) != TRUE)
 		ret = NULL;
 	free(ret);
 	if (ret != NULL)
@@ -92,7 +92,7 @@ static char	*check_relative_f(char *cmd)
 			do_exit("ldexec_findexec.check_relative_f.malloc");
 		ret = check_cwd_f(real_cmd);
 		if (ret == NULL)
-			ld_errno_file("weeklyshell", cmd);
+			ld_errno_file("monthlyshell", cmd);
 		free(real_cmd);
 	}
 	if (chdir(cwd_prev) != 0)
@@ -114,8 +114,6 @@ static char	*check_cwd_f(char *cmd)
 	char	*cmd_with_cwd;
 
 	cwd = do_getcwd_f(NULL, 0);
-	if (cwd == NULL)
-		do_exit("ldexec_findexec.check_cwd_f.getcwd");
 	cwd_with_slash = ft_strjoin(cwd, "/");
 	if (cwd_with_slash == NULL)
 		do_exit("ldexec_findexec.check_cwd_f.malloc");

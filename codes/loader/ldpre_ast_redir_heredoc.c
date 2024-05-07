@@ -6,7 +6,7 @@
 /*   By: kyungjle <kyungjle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 14:37:13 by nicknamemoh       #+#    #+#             */
-/*   Updated: 2024/04/15 15:43:53 by kyungjle         ###   ########.fr       */
+/*   Updated: 2024/04/17 23:13:20 by kyungjle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*ldexec_heredoc_assign_f(void)
 		tmpnum_str = ft_itoa(tmpnum);
 		if (tmpnum_str == NULL)
 			do_exit("ldexec_heredoc_assign_f.malloc");
-		tmpfile_name = ft_strjoin("weeklyshell_heredoc_", tmpnum_str);
+		tmpfile_name = ft_strjoin("monthlyshell_heredoc_", tmpnum_str);
 		if (tmpfile_name == NULL)
 			do_exit("ldexec_heredoc_assign_f.malloc");
 		free(tmpnum_str);
